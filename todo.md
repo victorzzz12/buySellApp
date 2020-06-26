@@ -2,29 +2,47 @@
 
 ## Planning
 
-* sell what?
+* ~~sell what?~~
+  - etsy merchandise
 * user stories
-* wireframe design
-* single or multi-page app?
+* ~~wireframe design~~
+  - more towards an audience base of artists
+  - creative; less industrial
+* ~~single or multi-page app?~~
+  - Search page that is single-page if new search is created
 * list routes
+  - users
+  - products
+
 
 
 ## Routes/Features
-  * main feed
+  * users 
+    * main feed
     * featured products
     * filter products by price
-  * favorited products
+    * send message to other users listing the items
+    * user login (email, password)
+    * favorited products
+    * send message by email, name in a form to bid for an item (Stretch)
 
 ## Data
-* ERD
+* ~~ERD~~
 * Create seeds, schema
+
+## HTML
+* index.ejs
 
 ## CSS
 * Bootstrap
+* Responsive Design for Mobile
 
 ## Stretch/cleanup
 * refactor
 * hosting
+* add messaging capabilities in app
+* signup/login
+  * check if user is admin or not
 
 # Requirements
 
@@ -41,7 +59,7 @@ An app where you can put different types of things up for sale. You can pick a s
 ### Admins can:
 
 * post items, which can be seen by others
-remove items from the site
+* remove items from the site
 * mark items as SOLD!,
 * send a message via app, email, or text back on negotiations in buying the said item
 
@@ -54,5 +72,5 @@ remove items from the site
 * One or more CSS or UI "framework"s:
 * jQuery
 * A CSS preprocessor such as SASS, Stylus, or PostCSS for styling or CSS Custom properties and no CSS preprocessor
-*PostgreSQL and pg (with promises) for DBMS
-*git for version control
+* PostgreSQL and pg (with promises) for DBMS
+* git for version control

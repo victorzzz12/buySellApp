@@ -3,7 +3,7 @@
 ## Planning
 
 * ~~sell what?~~
-  - etsy merchandise
+  - arts/crafts/merch
 * user stories
 * ~~wireframe design~~
   - more towards an audience base of artists

@@ -39,9 +39,9 @@ const productsRoutes = require("./routes/products");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-app.use("/api/users", usersRoutes(db));
-app.use("/api/admins", adminsRoutes(db));
-app.use("/api/products", productsRoutes(db));
+app.use("/users", usersRoutes(db));
+app.use("/admins", adminsRoutes(db));
+app.use("/products", productsRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 

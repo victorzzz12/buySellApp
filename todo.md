@@ -46,8 +46,10 @@
 * refactor
 * hosting
 * add messaging capabilities in app
+* drop down login/signup
 * signup/login
   * check if user is admin or not
+* include short descriptions in the product previews
 
 # Requirements
 

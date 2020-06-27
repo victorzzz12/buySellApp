@@ -3,9 +3,7 @@ const router  = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    let query = `SELECT * FROM products`;
-    console.log(query);
-    db.query(query)
+    db.query(`SELECT * FROM products;`)
       .then(data => {
         const products = data.rows;
         res.json({ products });

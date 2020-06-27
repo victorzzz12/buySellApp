@@ -13,21 +13,23 @@
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
   </head>
-
   <body>
     <header class="title">
-      <form class="login">
-        <input type="text" placeholder="username@example.com">
-        <input type="text" placeholder="password">
-        <button type="submit" action="POST">Login</button>
-      </form>
+      <nav>
+        <form class="login">
+          <input type="text" placeholder="username@example.com">
+          <input type="text" placeholder="password">
+          <button type="submit" action="POST">Login</button>
+        </form>
+      </nav>
+      <div>
+        <form class="search">
+          <input type="text" placeholder="Search">
+          <button type="submit" action="POST">Search</button>
+        </form>
+      </div>
     </header>
-    <div>
-      <form class="search" id="search">
-        <input type="text" placeholder="Search">
-        <button type="submit" action="POST">Search</button>
-      </form>
-    </div>
+    <%- include product_page.ejs %>
     <div class="container" id="products"> <!-- Will be fetched by ajax-->
       <div class="row product-row justify-content-left">
         <div class="col-6 col-sm-4 col-md-3">

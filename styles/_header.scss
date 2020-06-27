@@ -1,0 +1,44 @@
+//CSS for nav bar and search bars
+%flex-row-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+%flex-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
+  @extend %flex-col-center;
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+
+  form {
+    @extend %flex-row-center;
+  }
+
+  nav {
+    @extend %flex-row-center;
+    width: 100%;
+    background-color: yellow;
+    padding-bottom: 10px;
+
+    .login {
+      padding-top: 10px;
+    }
+  }
+  input {
+    width: 80%;
+  }
+}
+
+
+
+
+.search {
+  margin-top: 20px;
+}

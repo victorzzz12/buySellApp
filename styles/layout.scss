@@ -12,13 +12,12 @@ form {
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
+  input {
+    width: 50%;
+  }
 }
 
-input {
-  width: 50%;
-}
-
-ul {
+.product-row {
   background-color: maroon;
   display: flex;
   flex-direction: row;
@@ -27,7 +26,7 @@ ul {
   padding-top: 30px;
 }
 
-li {
+.product-display {
   color: white;
   background-image: url("https://i.etsystatic.com/20553919/r/il/729255/2292852133/il_1588xN.2292852133_2xr2.jpg");
   background-size: 100%;

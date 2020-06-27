@@ -34,8 +34,13 @@
 * index.ejs
 
 ## CSS
+* font choices
 * Bootstrap
 * Responsive Design for Mobile
+
+## Branding
+* site name
+* logo
 
 ## Stretch/cleanup
 * refactor

@@ -26,17 +26,26 @@
     * favorited products
     * send message by email, name in a form to bid for an item (Stretch)
 
+## Ajax Features
+* Click item thumbnail, detail page comes up
+* Cookies
+  * User
+  * Admin
+* Fetch data
+  * Search
+
 ## Data
 * ~~ERD~~
-* Create seeds, schema
+* ~~Create seeds, schema~~
 
 ## HTML
 * index.ejs
 
-## CSS
+## CSS 
 * font choices
-* Bootstrap
+* Make Everything Pretty
 * Responsive Design for Mobile
+  * Adjust/remove header
 
 ## Branding
 * site name

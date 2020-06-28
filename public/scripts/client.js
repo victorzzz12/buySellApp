@@ -4,7 +4,8 @@ $(document).ready(() => {
   //This section renders featured products on load
 
   const renderFeaturedProducts = function() {
-    const $featuredProducts = $(`<div class="container" id="products">
+    const $featuredProducts = $(`
+    <div class="container" id="products">
     <div class="row product-row justify-content-left">
       <div class="col-6 col-sm-4 col-md-3">
         <a href><div class="product-display">

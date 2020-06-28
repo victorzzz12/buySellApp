@@ -4,7 +4,7 @@ $(() => {
     url: "/users"
   }).done((users) => {
     for(user of users) {
-      $("<div>").text(user.name).appendTo($("body"));
+      $("<div>").text(user).appendTo($("body"));
     }
   });;
 });
@@ -15,7 +15,7 @@ $(() => {
     url: "/products"
   }).done((products) => {
     for(product of products) {
-      $("<div>").text(product.name).appendTo($("body"));
+      $("<div>").text(product).appendTo($("body"));
     }
   });;
 });
@@ -26,7 +26,7 @@ $(() => {
     url: "/admins"
   }).done((admins) => {
     for(admin of admins) {
-      $("<div>").text(admin.name).appendTo($("body"));
+      $("<div>").text(admin).appendTo($("body"));
     }
   });;
 });

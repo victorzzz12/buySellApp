@@ -3,28 +3,29 @@ $(document).ready(() => {
 
   //This section renders featured products on pageload
 
-  const renderFeaturedProducts = function() {
+  const renderFeaturedProducts = (e) => {
     const $featuredProducts = $(`
     <div class="container" id="products">
     <div class="row product-row justify-content-left">
       <div class="col-6 col-sm-4 col-md-3">
         <a href><div class="product-display">
-          <img src="" alt="">
-          <p>ProductName</p>
-          <p>Price</p>
-          <p>Seller</p>
+          <img src="${e.products[0].photo_url}" alt="item">
+          <p>${e.products[0].name}</p>
+          <p>${e.products[0].price}</p>
+          <p>${e.products[0].admin_id}</p>
         </div></a>
       </div>
     </div>`);
     $('.main-container').append($featuredProducts);
+    console.log(e.products[0].photo_url);
   }
 
-  const loadFeaturedProducts = function() {
-    $.get('/', function() {
-      renderFeaturedProducts();
+  function loadFeaturedProducts() {
+    $.ajax("/api/products/", { method: "GET" })
+    .then((data) => {
+      renderFeaturedProducts(data);
     })
   }
-
   loadFeaturedProducts();
 
 //This section brings up the "home interface" when the home logo is clicked
@@ -32,7 +33,7 @@ $(document).ready(() => {
   $('.home-button').on('click', function(event) {
     event.preventDefault();
     $('.main-container').empty();
-    renderFeaturedProducts();
+    loadFeaturedProducts();
   });
 //This section replaces whatever's in the .main-container with an individual product
 

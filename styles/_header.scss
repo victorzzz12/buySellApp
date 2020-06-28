@@ -19,6 +19,16 @@ header {
 
   form {
     @extend %flex-row-center;
+    width: 80vw;
+  }
+  .search {
+    @extend %flex-row-center;
+    margin-top: 10px;
+    width: 100vw;
+    input {
+      width: 100%;
+      margin-right: 10px;
+    }
   }
 
   nav {
@@ -31,14 +41,8 @@ header {
       padding-top: 10px;
     }
   }
-  input {
-    width: 50%;
+  * {
+    font-family: 'MuseoModerno', cursive;
   }
 }
 
-
-
-
-.search {
-  margin-top: 20px;
-}

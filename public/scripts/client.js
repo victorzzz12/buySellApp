@@ -1,7 +1,7 @@
 $(document).ready(() => {
   console.log('jQuery is go');
 
-  //This section renders featured products on load
+  //This section renders featured products on pageload
 
   const renderFeaturedProducts = function() {
     const $featuredProducts = $(`
@@ -27,6 +27,13 @@ $(document).ready(() => {
 
   loadFeaturedProducts();
 
+//This section brings up the "home interface" when the home logo is clicked
+
+  $('.home-button').on('click', function(event) {
+    event.preventDefault();
+    $('.main-container').empty();
+    renderFeaturedProducts();
+  });
 //This section replaces whatever's in the .main-container with an individual product
 
   const renderProductPopup = function() {

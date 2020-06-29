@@ -38,6 +38,10 @@ module.exports = (db) => {
         return null;
       })
       .then(user => {
+        if (!user) {
+          res.send({error: "error"});
+          return;
+        }
         req.session.userId = user.id;
         res.send({user: {name: user.name, email: user.email, id: user.id}})
       })
@@ -46,6 +50,10 @@ module.exports = (db) => {
   });
   return router;
 };
+
+
+
+
     // db.query(`SELECT * FROM users WHERE email = $1`, [`${email.toLowerCase()}`])
 
 

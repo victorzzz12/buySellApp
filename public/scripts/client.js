@@ -58,20 +58,18 @@ $(document).ready(() => {
   });
   //This section takes care of login
   const $loginForm = $('.login');
+
   $loginForm.on('submit', function(event) {
+    const $inputs = $('form :input')
     event.preventDefault();
     const data = $(this).serialize();
     logIn(data)
       .then(json => {
-        console.log(json);
         if (!json.user) {
-          console.log('no such ting');
-          // views_manager.show('error', 'Failed to login');
           return;
         }
-        console.log(json.user);
-        // header.update(json.user);
-        // views_manager.show('listings');
+        console.log(json);
       });
+    $inputs.val('');
   });
 });

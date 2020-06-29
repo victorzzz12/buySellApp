@@ -3,6 +3,9 @@ $(document).ready(() => {
 
   const $main = $('.product-row');
   const $login = $('.login');
+
+  //This Ajax request returns object containing user status details
+
   const getLoginStatus = function() {
    $.ajax({
       url: '/api/users/userStatus',
@@ -16,6 +19,7 @@ $(document).ready(() => {
       }
     })
   }
+
   getLoginStatus();
 
   //This section populates header
@@ -86,16 +90,6 @@ $(document).ready(() => {
     `);
     $main.append($productPopup);
   };
-<<<<<<< HEAD
-  $(document).on('click','.product-display', function(event) {
-    event.preventDefault();
-    $main.empty();
-    renderProductPopup();
-  });
-
-  //This section sets session userId after successful login
-
-=======
 
   for (let i = 0; i < 12; i++) {
     $(document).on('click',`.product-display-${i}`, function(event) {
@@ -109,7 +103,6 @@ $(document).ready(() => {
   }
 
   //This section takes care of login
->>>>>>> master
   const $loginForm = $('.login');
 
   $loginForm.on('submit', function(event) {

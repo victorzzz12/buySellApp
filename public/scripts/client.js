@@ -59,21 +59,20 @@ $(document).ready(() => {
   //This section takes care of login
   const $loginForm = $('.login');
   $loginForm.on('submit', function(event) {
-    console.log('itsahit');
     event.preventDefault();
-
     const data = $(this).serialize();
     console.log(data);
-  //   logIn(data)
-  //     .then(json => {
-  //       console.log(json);
-  //       if (!json.user) {
-  //         views_manager.show('error', 'Failed to login');
-  //         return;
-  //       }
-  //       console.log(json.user);
-  //       header.update(json.user);
-  //       views_manager.show('listings');
-  //     });
+
+    logIn(data)
+      .then(json => {
+        console.log(json);
+        if (!json.user) {
+          views_manager.show('error', 'Failed to login');
+          return;
+        }
+        console.log(json.user);
+        header.update(json.user);
+        views_manager.show('listings');
+      });
   });
 });

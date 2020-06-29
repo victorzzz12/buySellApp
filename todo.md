@@ -75,7 +75,7 @@ An app where you can put different types of things up for sale. You can pick a s
 
 ### Requirements:
 * users can see featured items on a main feed
-* users can filter items by price,
+* users can filter items by price
 * users can favourite items to check up on them later
 * users can send messages to the user that is listing the item
 

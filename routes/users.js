@@ -15,6 +15,19 @@ module.exports = (db) => {
       });
   });
 
+  router.get('/userStatus', (req, res) => {
+    //read cookie
+    //look up userId in database
+    //returns relevant info in obj.
+    const status = { isLoggedIn: false };
+    if (req.session.userId) {
+      status.isLoggedIn = true;
+      db.query(`SELECT id FROM users WHERE email = $1`, [`${req.bodyy.email}`])
+    }
+    console.log(status);
+    res.json(status);
+  });
+
   router.post('/login', (req, res) => {
     const {email, password} = req.body;
     const login = function(email, password) {
@@ -43,7 +56,7 @@ module.exports = (db) => {
           return;
         }
         req.session.userId = user.id;
-        res.send({user: {name: user.name, email: user.email, id: user.id}})
+        res.send({user: {name: user.name, email: user.email, id: user.id}}) // maybe change to res.json
       })
     }
     login(email, password);

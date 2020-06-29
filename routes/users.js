@@ -22,7 +22,6 @@ module.exports = (db) => {
     } else {
       status.isLoggedIn = false;
     }
-    console.log(status);
     res.send(status);
   });
 

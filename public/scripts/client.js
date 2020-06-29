@@ -12,7 +12,7 @@ $(document).ready(() => {
       method: 'get',
       dataType: 'json',
       success: (data) => {
-        console.log(data);
+        console.log('data', data);
         renderLogin(data);
       },
       error: (jqxr, textStatus, error) => {

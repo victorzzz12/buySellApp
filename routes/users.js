@@ -15,54 +15,79 @@ module.exports = (db) => {
       });
   });
 
-  const login =  function(email, password) {
-    return db.getUserWithEmail(email)
-    .then(user => {
-      if (bcrypt.compareSync(password, user.password)) {
-        return user;
-      }
-      return null;
-    });
-  }
-
-  exports.login = login;
-
   router.post('/login', (req, res) => {
-
     const {email, password} = req.body;
-
-    const login =  function(email, password) {
-      const getUserWithEmail = function(email) {
-        return db.query(`SELECT * FROM users WHERE email = $1`, [`${email.toLowerCase()}`])
-        .then(res => {
-            if (res.rows.length === 0) {
-              res = null;
-            } else {
-              res = res.rows[0];
-            }
-            return res;
-          }
-        ).catch(err => console.error('query error', err.stack));
-      }
-      return getUserWithEmail(email)
+    const login = function(email, password) {
+      db.query(`SELECT * FROM admins
+      WHERE admins.email = $1
+      UNION SELECT * FROM users
+      WHERE users.email = $1;
+      `, [`${email}`])
+      .then(res => {
+        if (res.rows.length === 0) {
+          res = null;
+        } else {
+          res = res.rows[0];
+        }
+        return res;
+      })
       .then(user => {
         if (user.password = password) {
           return user;
         }
         return null;
-      });
-    }
-
-    login(email, password)
-      .then(user => {
-        if (!user) {
-          res.send({error: "error"});
-          return;
-        }
-        req.session.userId = user.id;
-        res.send({user: {name: user.name, email: user.email, id: user.id}});
       })
-      .catch(e => res.send(e));
+      .then(user => {
+        req.session.userId = user.id;
+        res.send({user: {name: user.name, email: user.email, id: user.id}})
+      })
+    }
+    login(email, password);
   });
   return router;
 };
+    // db.query(`SELECT * FROM users WHERE email = $1`, [`${email.toLowerCase()}`])
+
+
+    // })
+  // }
+
+  // router.post('/login', (req, res) => {
+  //   const {email, password} = req.body;
+  //   const login =  function(email, password) {
+  //     const getUserWithEmail = function(email) {
+  //       db.query(`SELECT * FROM users WHERE email = $1`, [`${email.toLowerCase()}`])
+  //       .then(res =>
+  //         console.log(res))
+  //       //     if (res.rows.length === 0) {
+  //       //       res = null;
+  //       //     } else {
+  //       //       res = res.rows[0];
+  //       //     }
+  //       //     console.log(res);
+  //       //     return res;
+  //       //   }
+  //       // ).catch(err => console.error('query error', err.stack));
+  //     }
+  //     // return getUserWithEmail(email)
+  //     // .then(user => {
+  //     //   if (user.password = password) {
+  //     //     return user;
+  //     //   }
+  //     //   return null;
+  //     // });
+  //   }
+
+  //   // login(email, password)
+  //   //   .then(user => {
+  //   //     if (!user) {
+  //   //       res.send({error: "error"});
+  //   //       return;
+  //   //     }
+  //   //     req.session.userId = user.id;
+  //   //     res.send({user: {name: user.name, email: user.email, id: user.id}});
+  //   //   })
+  //   //   .catch(e => res.send(e));
+  // // });
+
+// };

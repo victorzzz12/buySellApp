@@ -61,7 +61,6 @@ $(document).ready(() => {
   $loginForm.on('submit', function(event) {
     event.preventDefault();
     const data = $(this).serialize();
-    console.log(data);
     logIn(data)
       .then(json => {
         console.log(json);

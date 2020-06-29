@@ -31,6 +31,13 @@ app.use("/styles", sass({
 }));
 app.use(express.static("public"));
 
+//cookie stuff
+const cookieSession = require('cookie-session');
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1']
+}));
+
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");

@@ -1,6 +1,7 @@
 $(document).ready(() => {
   console.log('jQuery is go');
 
+  const $main = $('.main-container');
   //This section renders featured products on pageload
 
   const renderFeaturedProducts = (e) => {
@@ -16,7 +17,7 @@ $(document).ready(() => {
         </div></a>
       </div>
     </div>`);
-    $('.main-container').append($featuredProducts);
+    $main.append($featuredProducts);
     console.log(e.products[0].photo_url);
   }
 
@@ -32,7 +33,7 @@ $(document).ready(() => {
 
   $('.home-button').on('click', function(event) {
     event.preventDefault();
-    $('.main-container').empty();
+    $main.empty();
     loadFeaturedProducts();
   });
 //This section replaces whatever's in the .main-container with an individual product
@@ -48,12 +49,12 @@ $(document).ready(() => {
       <p>Listed on: date</p>
       </div>
     `);
-    $('.main-container').append($productPopup);
+    $main.append($productPopup);
   };
 
   $(document).on('click','.product-display', function(event) {
     event.preventDefault();
-    $('.main-container').empty();
+    $main.empty();
     renderProductPopup();
   });
 });

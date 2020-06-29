@@ -10,7 +10,7 @@ $(document).ready(() => {
     <div class="row product-row justify-content-left">
       <div class="col-6 col-sm-4 col-md-3">
         <a href><div class="product-display">
-          <img src="${e.products[0].photo_url}" alt="item">
+          <img src="${e.products[0].photo_url}" style="width: 100%" alt="item">
           <p>${e.products[0].name}</p>
           <p>${e.products[0].price}</p>
           <p>${e.products[0].admin_id}</p>
@@ -18,7 +18,7 @@ $(document).ready(() => {
       </div>
     </div>`);
     $main.append($featuredProducts);
-    console.log(e.products[0].photo_url);
+    console.log(e);
   }
 
   function loadFeaturedProducts() {

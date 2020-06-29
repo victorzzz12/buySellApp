@@ -1,25 +1,24 @@
 $(document).ready(() => {
   console.log('jQuery is go');
 
-  const $main = $('.main-container');
+
+  const $main = $('.product-row');
 
   //This section renders featured products on pageload
 
   const renderFeaturedProducts = (e) => {
-    const $featuredProducts = $(`
-    <div class="container" id="products">
-    <div class="row product-row justify-content-left">
+    for (let i = 0; i < e.products.length; i++) {
+      const $featuredProducts = $(`
       <div class="col-6 col-sm-4 col-md-3">
         <a href><div class="product-display">
-          <img src="${e.products[0].photo_url}" style="width: 100%" alt="item">
-          <p>${e.products[0].name}</p>
-          <p>${e.products[0].price}</p>
-          <p>${e.products[0].admin_id}</p>
+        <img src="${e.products[i].photo_url}" style="width: 100%; height: 100px" alt="item">
+        <p>${e.products[i].name}</p>
+        <p>${e.products[i].price}</p>
+        <p>${e.products[i].admin_id}</p>
         </div></a>
-      </div>
-    </div>`);
-    $main.append($featuredProducts);
-    console.log(e);
+      </div>`);
+      $main.append($featuredProducts);
+    }
   }
 
   function loadFeaturedProducts() {

@@ -55,9 +55,8 @@ body {
   flex-direction: row;
 }
 
-.product-display {
+.product-box {
   color: white;
   background-image: url("https://i.etsystatic.com/20553919/r/il/729255/2292852133/il_1588xN.2292852133_2xr2.jpg");
-  background-size: 100%;
-  background-color: hotpink;
+  background-size: contain;
 }

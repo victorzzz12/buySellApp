@@ -36,6 +36,7 @@ $(document).ready(() => {
     } else {
       //logout form later
     }
+
   }
 
   //This section renders featured products on pageload

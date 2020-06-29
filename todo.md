@@ -15,22 +15,28 @@
   - products
 
 
-
 ## Routes/Features
-  * users 
-    * main feed
-    * featured products
-    * filter products by price
-    * send message to other users listing the items
-    * user login (email, password)
-    * favorited products
-    * send message by email, name in a form to bid for an item (Stretch)
+* users 
+  * main feed
+  * featured products
+  * filter products by price
+  * send message to other users listing the items
+  * user login (email, password)
+  * favorite products
+  * send message by email, name in a form to bid for an item (Stretch)
+* admin
+  * post items, which can be seen by others
+  * remove items from the site
+  * mark items as SOLD!,
+  * send a message via app, email, or text back on negotiations in buying the said item
+
+## Cookies
+  * User
+  * Admin
+
 
 ## Ajax Features
 * Click item thumbnail, detail page comes up
-* Cookies
-  * User
-  * Admin
 * Fetch data
   * Search
 

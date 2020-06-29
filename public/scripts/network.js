@@ -1,7 +1,7 @@
 function logIn(data) {
   return $.ajax({
     method: "POST",
-    url: "/users/login",
+    url: "/api/users/login",
     data
   });
 }

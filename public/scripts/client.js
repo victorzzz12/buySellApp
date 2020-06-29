@@ -10,9 +10,9 @@ $(document).ready(() => {
       <div class="col-6 col-sm-4 col-md-3">
         <a href><div class="product-display">
         <img src="${e.products[i].photo_url}" style="width: 100%; height: 100px" alt="item">
-        <p>${e.products[i].name}</p>
-        <p>${e.products[i].price}</p>
-        <p>${e.products[i].admin_id}</p>
+        <p class="name">${e.products[i].name}</p>
+        <p class="price">${e.products[i].price}</p>
+        <p class="admin-id">${e.products[i].admin_id}</p>
         </div></a>
       </div>`);
       $main.append($featuredProducts);

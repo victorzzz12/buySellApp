@@ -2,6 +2,7 @@ $(document).ready(() => {
   console.log('jQuery is go');
 
   const $main = $('.main-container');
+
   //This section renders featured products on pageload
 
   const renderFeaturedProducts = (e) => {
@@ -51,10 +52,29 @@ $(document).ready(() => {
     `);
     $main.append($productPopup);
   };
-
   $(document).on('click','.product-display', function(event) {
     event.preventDefault();
     $main.empty();
     renderProductPopup();
+  });
+  //This section takes care of login
+  const $loginForm = $('.login');
+  $loginForm.on('submit', function(event) {
+    console.log('itsahit');
+    event.preventDefault();
+
+    const data = $(this).serialize();
+    console.log(data);
+  //   logIn(data)
+  //     .then(json => {
+  //       console.log(json);
+  //       if (!json.user) {
+  //         views_manager.show('error', 'Failed to login');
+  //         return;
+  //       }
+  //       console.log(json.user);
+  //       header.update(json.user);
+  //       views_manager.show('listings');
+  //     });
   });
 });

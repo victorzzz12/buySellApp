@@ -1,20 +1,5 @@
 # To-Do List
 
-## Planning
-
-* ~~sell what?~~
-  - arts/crafts/merch
-* user stories
-* ~~wireframe design~~
-  - more towards an audience base of artists
-  - creative; less industrial
-* ~~single or multi-page app?~~
-  - Search page that is single-page if new search is created
-* list routes
-  - users
-  - products
-
-
 ## Routes/Features
 * users 
   * main feed
@@ -30,19 +15,21 @@
   * mark items as SOLD!,
   * send a message via app, email, or text back on negotiations in buying the said item
 
-## Cookies
+## Login
   * User
   * Admin
 
+## Signup
 
 ## Ajax Features
-* Click item thumbnail, detail page comes up
-* Fetch data
-  * Search
+* ~~Click item thumbnail, detail page comes up~~
+
 
 ## Data
 * ~~ERD~~
 * ~~Create seeds, schema~~
+* Fetch data
+  * Search
 
 ## HTML
 * index.ejs
@@ -65,6 +52,20 @@
 * signup/login
   * check if user is admin or not
 * include short descriptions in the product previews
+
+## Planning
+
+* ~~sell what?~~
+  - arts/crafts/merch
+* user stories
+* ~~wireframe design~~
+  - more towards an audience base of artists
+  - creative; less industrial
+* ~~single or multi-page app?~~
+  - Search page that is single-page if new search is created
+* list routes
+  - users
+  - products
 
 # Requirements
 

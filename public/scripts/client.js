@@ -62,17 +62,17 @@ $(document).ready(() => {
     event.preventDefault();
     const data = $(this).serialize();
     console.log(data);
-
     logIn(data)
       .then(json => {
         console.log(json);
         if (!json.user) {
-          views_manager.show('error', 'Failed to login');
+          console.log('no such ting');
+          // views_manager.show('error', 'Failed to login');
           return;
         }
         console.log(json.user);
-        header.update(json.user);
-        views_manager.show('listings');
+        // header.update(json.user);
+        // views_manager.show('listings');
       });
   });
 });

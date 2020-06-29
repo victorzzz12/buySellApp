@@ -18,17 +18,3 @@ const getFeaturedProducts = function(options, limit) {
 }
 
 exports.getFeaturedProducts = getFeaturedProducts;
-
-const getUserWithEmail = function(email) {
-  return db.query(`SELECT * FROM users WHERE email = $1`, [`${email.toLowerCase()}`])
-  .then(res => {
-      if (res.rows.length === 0) {
-        res = null;
-      } else {
-        res = res.rows[0];
-      }
-      return res;
-    }
-  ).catch(err => console.error('query error', err.stack));
-}
-exports.getUserWithEmail = getUserWithEmail;

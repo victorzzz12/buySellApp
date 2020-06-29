@@ -28,7 +28,31 @@ module.exports = (db) => {
   exports.login = login;
 
   router.post('/login', (req, res) => {
+
     const {email, password} = req.body;
+
+    const login =  function(email, password) {
+      const getUserWithEmail = function(email) {
+        return db.query(`SELECT * FROM users WHERE email = $1`, [`${email.toLowerCase()}`])
+        .then(res => {
+            if (res.rows.length === 0) {
+              res = null;
+            } else {
+              res = res.rows[0];
+            }
+            return res;
+          }
+        ).catch(err => console.error('query error', err.stack));
+      }
+      return getUserWithEmail(email)
+      .then(user => {
+        if (user.password = password) {
+          return user;
+        }
+        return null;
+      });
+    }
+
     login(email, password)
       .then(user => {
         if (!user) {

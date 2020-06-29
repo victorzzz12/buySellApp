@@ -12,6 +12,7 @@ $(document).ready(() => {
       method: 'get',
       dataType: 'json',
       success: (data) => {
+        console.log(data);
         renderLogin(data);
       },
       error: (jqxr, textStatus, error) => {
@@ -22,7 +23,7 @@ $(document).ready(() => {
 
   getLoginStatus();
 
-  //This section populates header
+  //This section populates header with login form or logout button
 
   const renderLogin = function(loginData) {
     $login.empty();
@@ -33,7 +34,7 @@ $(document).ready(() => {
       $login.append($loginForm);
 
     } else {
-
+      //logout form later
     }
   }
 
@@ -103,6 +104,7 @@ $(document).ready(() => {
   }
 
   //This section takes care of login
+
   const $loginForm = $('.login');
 
   $loginForm.on('submit', function(event) {
@@ -112,10 +114,9 @@ $(document).ready(() => {
     logIn(data)
       .then(json => {
         if (!json.user) {
-          return;
+          $inputs.val('');
         }
-        console.log(json);
+        getLoginStatus();
       });
-    $inputs.val('');
   });
 });

@@ -155,6 +155,18 @@ $(document).ready(() => {
     $main.empty();
     $main.append($addListing);
   });
+
+  $('.new-product-form').on('submit', function (event) {
+    const data = $(this).serialize();
+    submitProducts(data)
+    .then(() => {
+      loadFeaturedProducts();
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+  });
+
   //This section takes care of login
 
   const $loginForm = $('.login');
@@ -209,16 +221,8 @@ $(document).ready(() => {
   </div>
   <div class='search-submit-button-container'><button type="submit" class='search-submit-button'>Search Creations</button></div></form>
   `)
-
-
-  // $search.on('click', function(event) {
-  //   event.preventDefault();
-  //   $('.search-div').empty();
-  //   $('.search-div').append($searchForm);
-  // })
   $(document).on('click', $search, function(event) {
     const target = $(event.target);
-    console.log(target)
     if (target.is('.search-button')) {
       event.preventDefault();
       $search.empty();

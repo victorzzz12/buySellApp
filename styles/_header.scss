@@ -16,7 +16,35 @@ header {
   width: 100%;
   margin-bottom: 10px;
 
-  form {
+  .search-div {
+    @extend %flex-col-center;
+    width: 100%;
+
+    button {
+      background-color: rgb(235, 235, 235);
+      color: hotpink;
+    }
+    .search-popup {
+      p, label {
+        color: black;
+      }
+      .form-top-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      margin-top: 10px;
+      width: 80%;
+      background-color: forestgreen;
+      .search-submit-button {
+        @extend %flex-row-center;
+      }
+      .search-submit-button {
+        margin: auto;
+      }
+    }
+  }
+  .search-form {
     @extend %flex-row-center;
     width: 80vw;
   }
@@ -24,15 +52,6 @@ header {
   .search {
     @extend %flex-row-center;
     margin-top: 10px;
-    width: 100vw;
-    // input {
-    //   width: 100%;
-    //   margin-right: 10px;
-    // }
-      button {
-        background-color: rgb(235, 235, 235);
-        color: hotpink;
-      }
   }
 
   nav {

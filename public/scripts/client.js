@@ -133,10 +133,10 @@ $(document).ready(() => {
   });
 
   //This section takes care of search bar
-  const $searchForm = $(`<div class="form-keyword">
+  const $searchForm = $(`<form action="/api/products/search" method="get" class="search-popup"><div class='form-top-row'><div class="form-keyword">
     <label for="keywords">Search By Keyword</label>
     <input type="text" placeholder="birdhouse" name="keywords">
-  </div>
+  </div><a href="#"><p style="color:maroon">(exit)</p></a></div>
   <div class="form-creator">
     <label for="seller">Search By Creator</label>
     <input list="sellers" id ="seller-choice" name="seller"/>
@@ -153,7 +153,7 @@ $(document).ready(() => {
     <input type="checkbox" name="type" value="home">
     <label for="apparel">Apparel</label>
     <input type="checkbox" name="type" value="apparel">
-  </div><br>
+  </div>
   <div class="form-min-max-price">
     <label for="minimum-cost">Minimum Cost</label>
     <input type="number" name="minimum_price" placeholder="Minimum Cost" id="search-minimum-price"><br>
@@ -167,10 +167,12 @@ $(document).ready(() => {
     <label for="no">No</label>
     <input type="radio" name="available" value="no">
   </div>
+  <div class='search-submit-button-container'><button type="submit" class='search-submit-button'>Search Creations</button></div></form>
   `)
   $search.on('click', function(event) {
     event.preventDefault();
-    $('.search').prepend($searchForm);
+    $('.search-div').empty();
+    $('.search-div').append($searchForm);
     console.log('issahit');
   })
 });

@@ -95,5 +95,17 @@ module.exports = (db) => {
       });
   });
 
+
+  router.post('/addlisting', (req, res) => {
+    const userId = req.session.userId;
+    db.addProduct({...req.body, admin_id: userId})
+      .then(product => {
+        res.send(product);
+      })
+      .catch(e => {
+        console.error(e);
+        res.send(e)
+      });
+  });
   return router;
 };

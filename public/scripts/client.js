@@ -66,6 +66,11 @@ $(document).ready(() => {
     .then((data) => {
       renderFeaturedProducts(data);
     })
+    $main.append(`<div class="container" id="products">
+    <h2>Featured Products</h2>
+    <div class="row product-row justify-content-left">
+    </div>
+    </div>`);
   }
 
   loadFeaturedProducts();

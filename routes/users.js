@@ -15,13 +15,33 @@ module.exports = (db) => {
       });
   });
 
+  //returns object that shows if user is logged in or is admin
+  //switches isAdmin to true if admin check succeeds
   router.get('/userStatus', (req, res) => {
-    const status = {isLoggedIn: false}
+    const status = { isLoggedIn: false, isAdmin: false}
     if (req.session.userId) {
       status.isLoggedIn = true;
     } else {
       status.isLoggedIn = false;
     }
+
+    const adminCheck = function(email, callback) {
+      return db.query(`SELECT id FROM admins
+      WHERE email = $1`,
+      [`${email}`])
+      .then(res => {
+        if (res.rows[0]) {
+          callback();
+        }
+      })
+    }
+
+    const adminSwitch = function() {
+      req.session.isAdmin = true;
+    }
+
+    adminCheck(req.session.userEmail, adminSwitch);
+
     res.send(status);
   });
 
@@ -54,60 +74,12 @@ module.exports = (db) => {
         }
         req.session = { userId: user.id,
           userEmail: user.email,
-          isLoggedIn: true };
+          isLoggedIn: true,
+          isAdmin: false };
         res.json({user: {name: user.name, email: user.email, id: user.id}}) // maybe change to res.json
-      })
+      }).catch(err => console.error('query error', err.stack))
     }
     login(email, password);
   });
   return router;
 };
-
-
-
-
-    // db.query(`SELECT * FROM users WHERE email = $1`, [`${email.toLowerCase()}`])
-
-
-    // })
-  // }
-
-  // router.post('/login', (req, res) => {
-  //   const {email, password} = req.body;
-  //   const login =  function(email, password) {
-  //     const getUserWithEmail = function(email) {
-  //       db.query(`SELECT * FROM users WHERE email = $1`, [`${email.toLowerCase()}`])
-  //       .then(res =>
-  //         console.log(res))
-  //       //     if (res.rows.length === 0) {
-  //       //       res = null;
-  //       //     } else {
-  //       //       res = res.rows[0];
-  //       //     }
-  //       //     console.log(res);
-  //       //     return res;
-  //       //   }
-  //       // ).catch(err => console.error('query error', err.stack));
-  //     }
-  //     // return getUserWithEmail(email)
-  //     // .then(user => {
-  //     //   if (user.password = password) {
-  //     //     return user;
-  //     //   }
-  //     //   return null;
-  //     // });
-  //   }
-
-  //   // login(email, password)
-  //   //   .then(user => {
-  //   //     if (!user) {
-  //   //       res.send({error: "error"});
-  //   //       return;
-  //   //     }
-  //   //     req.session.userId = user.id;
-  //   //     res.send({user: {name: user.name, email: user.email, id: user.id}});
-  //   //   })
-  //   //   .catch(e => res.send(e));
-  // // });
-
-// };

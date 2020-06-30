@@ -49,6 +49,10 @@ body {
   }
 }
 
+.featured-title {
+  background-color: orange;
+  color: dodgerblue;
+}
 
 .product-row {
   @extend %box;

@@ -25,10 +25,14 @@ header {
     @extend %flex-row-center;
     margin-top: 10px;
     width: 100vw;
-    input {
-      width: 100%;
-      margin-right: 10px;
-    }
+    // input {
+    //   width: 100%;
+    //   margin-right: 10px;
+    // }
+      button {
+        background-color: rgb(235, 235, 235);
+        color: hotpink;
+      }
   }
 
   nav {

@@ -3,6 +3,7 @@ $(document).ready(() => {
 
   const $main = $('.product-row');
   const $login = $('.login');
+  const $search = $('.search-button')
 
   //This Ajax request returns object containing user status details
 
@@ -67,7 +68,7 @@ $(document).ready(() => {
       renderFeaturedProducts(data);
     })
     $main.append(`<div class="container" id="products">
-    <h2 class="featured-title">Featured Stuffs</h2>
+    <h2 class="featured-title">Featured Creations</h2>
     <div class="row product-row justify-content-left">
     </div>
     </div>`);
@@ -130,4 +131,46 @@ $(document).ready(() => {
         getLoginStatus();
       });
   });
+
+  //This section takes care of search bar
+  const $searchForm = $(`<div class="form-keyword">
+    <label for="keywords">Search By Keyword</label>
+    <input type="text" placeholder="birdhouse" name="keywords">
+  </div>
+  <div class="form-creator">
+    <label for="seller">Search By Creator</label>
+    <input list="sellers" id ="seller-choice" name="seller"/>
+    <datalist id="sellers">
+      <option value="Victor"></option>
+      <option value="Eileen"></option>
+    </datalist>
+  </div>
+  <div>
+    <p>Creation type:</p>
+    <label for="art">Art</label>
+    <input type="checkbox" name="type" value="art">
+    <label for="home">Home</label>
+    <input type="checkbox" name="type" value="home">
+    <label for="apparel">Apparel</label>
+    <input type="checkbox" name="type" value="apparel">
+  </div><br>
+  <div class="form-min-max-price">
+    <label for="minimum-cost">Minimum Cost</label>
+    <input type="number" name="minimum_price" placeholder="Minimum Cost" id="search-minimum-price"><br>
+    <label for="search-property-form__maximum-price-per-night">Maximum Cost</label>
+    <input type="number" name="maximum_price" placeholder="Maximum Cost" id="search-maximum-price">
+  </div>
+  <div class="form-sold-radio">
+    <p>Only show available (unsold) creations?</p>
+    <label for="yes">Yes</label>
+    <input type="radio" name="available" value="yes" checked>
+    <label for="no">No</label>
+    <input type="radio" name="available" value="no">
+  </div>
+  `)
+  $search.on('click', function(event) {
+    event.preventDefault();
+    $('.search').prepend($searchForm);
+    console.log('issahit');
+  })
 });

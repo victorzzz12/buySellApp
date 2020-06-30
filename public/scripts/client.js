@@ -3,7 +3,7 @@ $(document).ready(() => {
 
   const $main = $('.product-row');
   const $login = $('.login');
-  const $search = $('.search-button')
+  const $search = $('.search-div')
 
   //This Ajax request returns object containing user status details
 
@@ -136,7 +136,7 @@ $(document).ready(() => {
   const $searchForm = $(`<form action="/api/products/search" method="get" class="search-popup"><div class='form-top-row'><div class="form-keyword">
     <label for="keywords">Search By Keyword</label>
     <input type="text" placeholder="birdhouse" name="keywords">
-  </div><a href="#"><p style="color:maroon">(exit)</p></a></div>
+  </div><a href="#"><p style="color:maroon" class='close-search'>(close)</p></a></div>
   <div class="form-creator">
     <label for="seller">Search By Creator</label>
     <input list="sellers" id ="seller-choice" name="seller"/>
@@ -169,10 +169,29 @@ $(document).ready(() => {
   </div>
   <div class='search-submit-button-container'><button type="submit" class='search-submit-button'>Search Creations</button></div></form>
   `)
-  $search.on('click', function(event) {
-    event.preventDefault();
-    $('.search-div').empty();
-    $('.search-div').append($searchForm);
-    console.log('issahit');
+
+
+  // $search.on('click', function(event) {
+  //   event.preventDefault();
+  //   $('.search-div').empty();
+  //   $('.search-div').append($searchForm);
+  // })
+  $(document).on('click', $search, function(event) {
+    const target = $(event.target);
+    console.log(target)
+    if (target.is('.search-button')) {
+      event.preventDefault();
+      $search.empty();
+      $search.append($searchForm);
+    }
+    if (target.is('.close-search')) {
+      event.preventDefault();
+      $search.empty();
+      $search.append(`<div class="search">
+      <form class="search-form">
+        <button type="submit" class='search-button'>Search Creations</button>
+      </form>
+      </div>`);
+    }
   })
 });

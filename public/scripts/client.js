@@ -46,11 +46,11 @@ $(document).ready(() => {
       <div class="col-6 col-sm-4 col-md-3">
         <a href><div class="product-display-${i} product-box">
         <img src="${e.products[i].photo_url}" style="width: 100%; height: 100px" alt="item">
-        <p class="name">${e.products[i].name}</p>
-        <p class="price">${e.products[i].price}</p>
+        <p class="name">${e.products[i].product}</p>
+        <p class="price">$${e.products[i].price}</p>
         <p class="description">${e.products[i].description}</p>
         <p class="date-added">${e.products[i].date_added}</p>
-        <p class="admin-id">${e.products[i].admin_id}</p>
+        <p class="admin-id">Made by: ${e.products[i].seller}</p>
         </div></a>
       </div>`);
       $main.append($featuredProducts);
@@ -97,21 +97,13 @@ $(document).ready(() => {
     for (let i = 0; i < data.products.length; i++) {
       $(document).on('click',`.product-display-${i}`, function(event) {
         event.preventDefault();
-        let $name = $(`.product-display-${i} .name`).text();
-        let $img = $(`.product-display-${i} img`).text();
+
+        let $name = $(`.product-display-${i} .product`).text();
         let $description = $(`.product-display-${i} .description`).text();
-        let $time = $(`.product-display-${i} .date-added`).text();
-        let $id = $(`.product-display-${i} .admin-id`).text();
-        let $seller = "";
-        $.ajax("/api/admins/" , {method: "GET"})
-        .then((res) => {
-          for (let i = 0; i < res.admins.length; i++) {
-            if ($id === `${res.admins[i].id}`)
-            $seller = `${res.admins[i].name}`;
-          }
+        let $time = $(`.product-display-${i} .date_added`).text();
+        let $seller = $(`.product-display-${i} .seller`).text();
         $main.empty();
-        renderProductPopup($name, $img, $description, $seller, $time);
-        });
+        renderProductPopup($name, $description, $seller, $time);
       });
     }
   })

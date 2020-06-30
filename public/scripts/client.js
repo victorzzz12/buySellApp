@@ -4,6 +4,7 @@ $(document).ready(() => {
   const $main = $('.product-row');
   const $login = $('.login');
   const $search = $('.search-div')
+  const $admins = $(".admins-only")
 
   //This Ajax request returns object containing user status details
 
@@ -27,15 +28,19 @@ $(document).ready(() => {
 
   const renderLogin = function(loginData) {
     $login.empty();
+    console.log(loginData);
     if (loginData.isLoggedIn === false) {
       const $loginForm = `<input type="text" name="email" placeholder="username@example.com">
       <input type="text" name="password" placeholder="password">
       <button type="submit" action="POST">Login</button>`
       $login.append($loginForm);
     } else {
+      if (loginData.isAdmin === true) {
+        $admins.css('visibility','visible');
+        $admins.css('visibility');
+      }
       //logout form later
     }
-
   }
 
   //This section renders featured products on pageload
@@ -118,7 +123,8 @@ $(document).ready(() => {
   })
 
   //This section pops up an add listing page
-  $(document).on('click','nav button', function(event) {
+
+  $(document).on('click','add-listing', function(event) {
     const $addListing = $(`
     <div class="listing-container">
       <h2>Add New Listing</h2>
@@ -154,6 +160,8 @@ $(document).ready(() => {
     $main.empty();
     $main.append($addListing);
   });
+
+  //this section handles submission of new listing form
 
   $(document).on('submit', '.new-product-form', function(event) {
     event.preventDefault();
@@ -245,7 +253,6 @@ $(document).ready(() => {
   $(document).on('submit', '.search-div form', function(event) {
 
       event.preventDefault();
-      console.log('issahit');
       const data = $(this).serialize();
       console.log(data);
       $.ajax("/api/products/search", { method: "POST", data: data })

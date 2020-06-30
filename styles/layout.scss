@@ -22,9 +22,9 @@ body {
   background-color: aqua;
 }
 
-// .admins-only {
-  // visibility: hidden;
-// }
+.admins-only {
+  visibility: hidden;
+}
 
 .product-popup {
   @extend %box;

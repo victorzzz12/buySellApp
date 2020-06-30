@@ -1,23 +1,23 @@
-const getFeaturedProducts = function(options, limit) {
-  limit = 10;
+// const getFeaturedProducts = function(options, limit) {
+//   limit = 10;
 
-  let queryString = `
-  SELECT products.*,
-  FROM products;`
+//   let queryString = `
+//   SELECT products.*,
+//   FROM products;`
 
-  queryParams.push(limit);
-  queryString += `
-  ORDER BY id
-  LIMIT $${queryParams.length};`
+//   queryParams.push(limit);
+//   queryString += `
+//   ORDER BY id
+//   LIMIT $${queryParams.length};`
 
-  console.log(queryString, queryParams);
+//   console.log(queryString, queryParams);
 
-  return db.query(queryString, queryParams)
-  .then(res => res.rows)
-  .catch(err => console.error('query error', err.stack))
-}
+//   return db.query(queryString, queryParams)
+//   .then(res => res.rows)
+//   .catch(err => console.error('query error', err.stack))
+// }
 
-exports.getFeaturedProducts = getFeaturedProducts;
+// exports.getFeaturedProducts = getFeaturedProducts;
 
 const addProduct = function(product) {
   return db.query(`

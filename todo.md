@@ -23,6 +23,8 @@
 * Responsive Design for Mobile
   * Adjust/remove header
   * Stack login
+* Decrease size of text box on featured page
+* Make images not stretch on popup boxes 
 
 ## Stretch/cleanup
 * refactor

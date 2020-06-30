@@ -96,7 +96,8 @@ module.exports = (db) => {
   });
 
 
-  router.post('/add', (req, res) => {
+  router.post('/addlisting', (req, res) => {
+    console.log(req.body);
     const userId = req.session.userId;
     db.addProduct({...req.body, admin_id: userId})
       .then(product => {

@@ -32,7 +32,6 @@ $(document).ready(() => {
       <input type="text" name="password" placeholder="password">
       <button type="submit" action="POST">Login</button>`
       $login.append($loginForm);
-
     } else {
       //logout form later
     }

@@ -22,6 +22,10 @@ body {
   background-color: aqua;
 }
 
+.admins-only {
+  visibility: hidden;
+}
+
 .product-popup {
   @extend %box;
   flex-direction: column;

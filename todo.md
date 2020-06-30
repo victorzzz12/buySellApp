@@ -3,10 +3,10 @@
 ## Routes/Features
 * users 
   * main feed
-  * featured products
+  * ~~featured products~~
   * filter products by price
   * send message to other users listing the items
-  * user login (email, password)
+  * ~~user login (email, password)~~
   * favorite products
   * send message by email, name in a form to bid for an item (Stretch)
 * admin

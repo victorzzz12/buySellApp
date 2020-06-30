@@ -22,9 +22,12 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+  //this route is the destination for product search
   router.post("/search", (req, res) => {
+
     const options = req.body;
     console.log(options);
+
     let queryString =`SELECT products.name as product,
     products.photo_url as photo_url,
     products.price as price,
@@ -36,7 +39,13 @@ module.exports = (db) => {
     ON admins.id = admin_id `;
 
     const queryParams = [];
-    queryString += `WHERE products.sold = ${options.sold} `
+
+    if (options.sold === false) {
+      queryString += `WHERE products.sold = false `
+    } else {
+      queryString += 'WHERE products.sold IN (true, false) '
+    }
+
     if (options.keywords) {
       queryParams.push(`%${options.keywords.toLowerCase()}%`);
       queryString += `AND LOWER(products.name) LIKE $${queryParams.length}
@@ -70,15 +79,13 @@ module.exports = (db) => {
       queryParams.push(`${options.maximum_price}`);
       queryString += `AND products.price <= $${queryParams.length} `;
     }
+
     queryString = queryString.trim() + `;`
-    console.log(queryString);
-    console.log(queryParams);
+
     db.query(queryString, queryParams)
       .then(data => {
-        // console.log(queryString);
-        // console.log(queryParams);
-        console.log(data.rows);
         const products = data.rows;
+        console.log(products);
         res.json({ products });
       })
       .catch(err => {
@@ -87,5 +94,6 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
   return router;
 };

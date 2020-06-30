@@ -83,15 +83,17 @@ header {
       display: flex;
       flex-direction: column;
       justify-content: left;
+      margin-left: 30px;
     }
     .motto {
       font-size: 1em;
       color: forestgreen;
       font-weight: bolder;
     }
-    p {
+    button {
       display: flex;
       justify-content: center;
+      margin: 30px;
     }
   }
 

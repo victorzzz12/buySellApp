@@ -5,3 +5,12 @@ function logIn(data) {
     data
   });
 }
+
+const submitProducts = function(data) {
+  console.log('ajax hit');
+  return $.ajax({
+    method: "POST",
+    url: "/api/products",
+    data
+  });
+}

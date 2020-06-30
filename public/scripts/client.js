@@ -46,11 +46,11 @@ $(document).ready(() => {
       <div class="col-6 col-sm-4 col-md-3">
         <a href><div class="product-display-${i} product-box">
         <img src="${e.products[i].photo_url}" style="width: 100%; height: 100px" alt="item">
-        <p class="name">${e.products[i].name}</p>
-        <p class="price">${e.products[i].price}</p>
+        <p class="name">${e.products[i].product}</p>
+        <p class="price">$${e.products[i].price}</p>
         <p class="description">${e.products[i].description}</p>
         <p class="date-added">${e.products[i].date_added}</p>
-        <p class="admin-id">${e.products[i].admin_id}</p>
+        <p class="admin-id">Made by: ${e.products[i].seller}</p>
         </div></a>
       </div>`);
       $main.append($featuredProducts);
@@ -85,7 +85,7 @@ $(document).ready(() => {
       <h2>SOLD</h2>
       <a href="#"><p>Message seller</p></a>
       <p>${description}</p>
-      <p>Listed by: Eileen</p>
+      <p>Listed by: ${seller}</p>
       <p>Listed on: ${time}</p>
       </div>
     `);
@@ -96,11 +96,12 @@ $(document).ready(() => {
     for (let i = 0; i < data.products.length; i++) {
       $(document).on('click',`.product-display-${i}`, function(event) {
         event.preventDefault();
-        let $name = $(`.product-display-${i} .name`).text();
+        let $name = $(`.product-display-${i} .product`).text();
         let $description = $(`.product-display-${i} .description`).text();
-        let $time = $(`.product-display-${i} .date-added`).text();
+        let $time = $(`.product-display-${i} .date_added`).text();
+        let $seller = $(`.product-display-${i} .seller`).text();
         $main.empty();
-        renderProductPopup($name, $description, null, $time);
+        renderProductPopup($name, $description, $seller, $time);
       });
     }
   })

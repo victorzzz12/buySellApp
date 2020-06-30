@@ -205,7 +205,11 @@ $(document).ready(() => {
   </div>
   <div class='search-submit-button-container'><button type="submit" class='search-submit-button'>Search Creations</button></div></form>
   `)
-
+  const $searchButton = `<div class="search">
+  <form class="search-form">
+    <button type="submit" class='search-button'>Search Creations</button>
+  </form>
+  </div>`
   $(document).on('click', $search, function(event) {
     const target = $(event.target);
     // console.log(target)
@@ -217,11 +221,7 @@ $(document).ready(() => {
     if (target.is('.close-search')) {
       event.preventDefault();
       $search.empty();
-      $search.append(`<div class="search">
-      <form class="search-form">
-        <button type="submit" class='search-button'>Search Creations</button>
-      </form>
-      </div>`);
+      $search.append($searchButton);
     }
 
   })
@@ -234,7 +234,15 @@ $(document).ready(() => {
       console.log(data);
       $.ajax("/api/products/search", { method: "POST", data: data })
       .then((data) => {
-
+        $main.empty();
+        renderFeaturedProducts(data);
+        $main.prepend(`<div class="container" id="products">
+        <h2 class="featured-title">Search Results</h2>
+        <div class="row product-row justify-content-left">
+        </div>
+        </div>`);
+        $search.empty();
+        $search.append($searchButton);
       })
     })
 });

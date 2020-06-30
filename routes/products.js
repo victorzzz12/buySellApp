@@ -80,7 +80,7 @@ module.exports = (db) => {
       queryString += `AND products.price <= $${queryParams.length} `;
     }
 
-    queryString = queryString.trim() + `;`
+    queryString += `ORDER BY products.price;`
 
     db.query(queryString, queryParams)
       .then(data => {

@@ -77,29 +77,40 @@ $(document).ready(() => {
 
 //This section replaces whatever's in the .main-container with an individual product
 
-  const renderProductPopup = function(name, description, seller, time) {
+  const renderProductPopup = function(name, image, description, seller, time) {
     const $productPopup = $(`<div class="container product-popup">
       <h1>${name}</h1>
-      <img src="https://i.etsystatic.com/20553919/r/il/729255/2292852133/il_1588xN.2292852133_2xr2.jpg" alt="cute embroidered shirt">
+      <img src="${image}" alt="cute embroidered shirt">
       <h2>SOLD</h2>
       <a href="#"><p>Message seller</p></a>
       <p>${description}</p>
-      <p>Listed by: Eileen</p>
+      <p>Listed by: ${seller}</p>
       <p>Listed on: ${time}</p>
       </div>
     `);
     $main.append($productPopup);
   };
+
   $.ajax("/api/products/", { method: "GET" })
   .then((data) => {
     for (let i = 0; i < data.products.length; i++) {
       $(document).on('click',`.product-display-${i}`, function(event) {
         event.preventDefault();
         let $name = $(`.product-display-${i} .name`).text();
+        let $img = $(`.product-display-${i} img`).text();
         let $description = $(`.product-display-${i} .description`).text();
         let $time = $(`.product-display-${i} .date-added`).text();
+        let $id = $(`.product-display-${i} .admin-id`).text();
+        let $seller = "";
+        $.ajax("/api/admins/" , {method: "GET"})
+        .then((res) => {
+          for (let i = 0; i < res.admins.length; i++) {
+            if ($id === `${res.admins[i].id}`)
+            $seller = `${res.admins[i].name}`;
+          }
         $main.empty();
-        renderProductPopup($name, $description, null, $time);
+        renderProductPopup($name, $img, $description, $seller, $time);
+        });
       });
     }
   })

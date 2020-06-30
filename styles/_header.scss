@@ -19,12 +19,21 @@ header {
   .search-div {
     @extend %flex-col-center;
     width: 100%;
+    .form-top-row {
+      background-color: orange;
+      color: purple;
+      margin-bottom: 10px;
+    }
 
     button {
-      background-color: rgb(235, 235, 235);
+      background-color: purple;
       color: hotpink;
+      height: 3rem;
+      width: 15rem;
+      font-size: 1rem;
     }
     .search-popup {
+    padding: 10px;
       p, label {
         color: black;
       }
@@ -38,8 +47,8 @@ header {
       background-color: forestgreen;
       .search-submit-button {
         @extend %flex-row-center;
-      }
-      .search-submit-button {
+        height: auto;
+        width: auto;
         margin: auto;
       }
     }

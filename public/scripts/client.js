@@ -169,10 +169,10 @@ $(document).ready(() => {
   });
 
   //This section takes care of search bar
-  const $searchForm = $(`<form action="/api/products/search" method="get" class="search-popup"><div class='form-top-row'><div class="form-keyword">
+  const $searchForm = $(`<form action="/api/products/search" method="get" class="search-popup"><div class='form-top-row'><h2>Search Creations</h2><a href="#"><p style="color:maroon" class='close-search'>(close)</p></a></div><div class="form-keyword">
     <label for="keywords">Search By Keyword</label>
     <input type="text" placeholder="birdhouse" name="keywords">
-  </div><a href="#"><p style="color:maroon" class='close-search'>(close)</p></a></div>
+  </div>
   <div class="form-creator">
     <label for="seller">Search By Creator</label>
     <input list="sellers" id ="seller-choice" name="seller"/>

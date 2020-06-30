@@ -2,70 +2,33 @@
 
 ## Routes/Features
 * users 
-  * main feed
-  * ~~featured products~~
-  * filter products by price
+  * featured products (actually showed featured rather than all)
+  * return search results
   * send message to other users listing the items
-  * ~~user login (email, password)~~
   * favorite products
-  * send message by email, name in a form to bid for an item (Stretch)
 * admin
   * post items, which can be seen by others
   * remove items from the site
-  * mark items as SOLD!,
+  * mark items as SOLD!
   * send a message via app, email, or text back on negotiations in buying the said item
 
-## Login
-  * User
-  * Admin
+## Nav bar
+  *adjust nav bar based on admin/user(OR show a dashboard)
+  *Welcome back message for user (stretch)
 
-## Signup
-
-## Ajax Features
-* ~~Click item thumbnail, detail page comes up~~
-
-
-## Data
-* ~~ERD~~
-* ~~Create seeds, schema~~
-* Fetch data
-  * Search
-
-## HTML
-* index.ejs
+## Signup (Stretch)
 
 ## CSS 
-* font choices
 * Make Everything Pretty
 * Responsive Design for Mobile
   * Adjust/remove header
-
-## Branding
-* site name
-* logo
+  * Stack login
 
 ## Stretch/cleanup
 * refactor
 * hosting
 * add messaging capabilities in app
 * drop down login/signup
-* signup/login
-  * check if user is admin or not
-* include short descriptions in the product previews
-
-## Planning
-
-* ~~sell what?~~
-  - arts/crafts/merch
-* user stories
-* ~~wireframe design~~
-  - more towards an audience base of artists
-  - creative; less industrial
-* ~~single or multi-page app?~~
-  - Search page that is single-page if new search is created
-* list routes
-  - users
-  - products
 
 # Requirements
 

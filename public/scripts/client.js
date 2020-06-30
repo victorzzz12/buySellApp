@@ -38,7 +38,10 @@ $(document).ready(() => {
     } else {
       if (loginData.isAdmin === true) {
         $admins.css('visibility','visible');
-        $admins.css('visibility');
+      }
+      if (loginData.isAdmin === false) {
+        $customers.removeClass('invisible');
+        $customers.addClass('visible');
       }
       //logout form later
     }
@@ -98,7 +101,7 @@ $(document).ready(() => {
       <h1>${name}</h1>
       <img src="${image}" alt="cute embroidered shirt">
       <h2>SOLD</h2>
-      <a href="#" class="customers-only"><p >Message seller</p></a>
+      <a href="#"><p class="customers-only">Message seller</a></p>
       <p>${description}</p>
       <p>${seller}</p>
       <p>Listed on: ${time}</p>

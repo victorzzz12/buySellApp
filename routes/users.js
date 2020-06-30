@@ -18,8 +18,6 @@ module.exports = (db) => {
   //returns object that shows if user is logged in or is admin
   //switches isAdmin to true if admin check succeeds
   router.get('/userStatus', (req, res) => {
-    console.log(req.session);
-
     const status = { isLoggedIn: false, isAdmin: false}
 
     if (req.session.userId) {
@@ -41,6 +39,7 @@ module.exports = (db) => {
         req.session.isAdmin = true;
         status.isAdmin = true;
       }
+      console.log(status);
       res.send(status);
     });
 

@@ -27,7 +27,12 @@ body {
 }
 
 .customers-only {
-  visibility: hidden;
+  .invisible {
+    visibility: hidden;
+  }
+  .visible {
+    visibility: visible;
+  }
 }
 
 .product-popup {

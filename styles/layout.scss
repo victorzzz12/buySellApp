@@ -51,7 +51,7 @@ body {
 
 .featured-title {
   background-color: orange;
-  color: dodgerblue;
+  color: white;
 }
 
 .product-row {
@@ -81,8 +81,15 @@ body {
     a {
       color: white;
     }
+    button {
+      color: white;
+      background-color: blue;
+    }
     a:hover{
       color: red;
+    }
+    button:hover {
+      opacity: 50%;
     }
   }
 }

@@ -81,6 +81,8 @@ $(document).ready(() => {
   $('.home-button').on('click', function(event) {
     event.preventDefault();
     $main.empty();
+    $('.search-div').show();
+    $('.search-popup').show();
     loadFeaturedProducts();
   });
 
@@ -117,7 +119,7 @@ $(document).ready(() => {
   })
 
   //This section pops up an add listing page
-  $(document).on('click','nav p', function(event) {
+  $(document).on('click','nav button', function(event) {
     const $addListing = $(`
     <div class="listing-container">
       <h2>Add New Listing</h2>
@@ -143,13 +145,15 @@ $(document).ready(() => {
           <textarea placeholder="Description" name="description" id="product-form__description" cols="50" rows="5"></textarea>
         </div>
         <div class="new-product-form__field-wrapper">
-          <button class="btn btn-primary">Add Listing</button>
+          <button>Add Listing</button>
           <a id="product-form__cancel" href="/">Cancel</a>
         </div>
       </form>
     </div>`)
-  $main.empty();
-  $main.append($addListing);
+    $('.search-popup').hide();
+    $('.search-div').hide();
+    $main.empty();
+    $main.append($addListing);
   });
   //This section takes care of login
 

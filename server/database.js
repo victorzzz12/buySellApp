@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // const getFeaturedProducts = function(options, limit) {
 //   limit = 10;
 
@@ -19,12 +20,14 @@
 
 // exports.getFeaturedProducts = getFeaturedProducts;
 
+=======
+>>>>>>> 743d0b65122246b30f02dfd0ff6848b777cc4940
 const addProduct = function(product) {
   return db.query(`
-  INSERT INTO products (id, admin_id, name, photo_url, price, description, date_added)
-  VALUES($1, $2, $3, $4, $5, $6, $7)
+  INSERT INTO products (admin_id, name, photo_url, price, description, date_added)
+  VALUES($1, $2, $3, $4, $5, $6)
   RETURNING *;`,
-  [product.id, product.admin_id, product.name, product.photo_url, product.price, product.description, Date.now()])
+  [product.admin_id, product.name, product.photo_url, product.price, product.description, Date.now()])
   .then(res => res.rows);
 }
 

@@ -123,12 +123,11 @@ $(document).ready(() => {
   })
 
   //This section pops up an add listing page
-
-  $(document).on('click','add-listing', function(event) {
+  $(document).on('click','.add-listing', function(event) {
     const $addListing = $(`
     <div class="listing-container">
       <h2>Add New Listing</h2>
-      <form action="/api/addlisting" method="post" class="new-product-form">
+      <form action="/api/products/" method="post" class="new-product-form">
         <div class="new-product-form__field-wrapper">
           <label for="new-product-form__title"></label>
           <input type="text" name="product-name" placeholder="Product Name" id="new-product-form__product-name">
@@ -171,6 +170,7 @@ $(document).ready(() => {
       loadFeaturedProducts();
     })
     .catch((error) => {
+      console.log('fail');
       console.error(error);
     })
   });
@@ -180,12 +180,12 @@ $(document).ready(() => {
   const $loginForm = $('.login');
 
   $loginForm.on('submit', function(event) {
-    const $inputs = $('form :input')
     event.preventDefault();
+    const $inputs = $('form :input')
     const data = $(this).serialize();
     logIn(data)
-      .then(json => {
-        if (!json.user) {
+    .then(json => {
+    if (!json.user) {
           $inputs.val('');
         }
         getLoginStatus();

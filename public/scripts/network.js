@@ -5,11 +5,3 @@ function logIn(data) {
     data
   });
 }
-
-const submitProducts = function(data) {
-  return $.ajax({
-    method: "POST",
-    url: "/api/products/",
-    data
-  });
-}

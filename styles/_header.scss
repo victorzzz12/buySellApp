@@ -14,7 +14,6 @@
 header {
   @extend %flex-col-center;
   width: 100%;
-  height: 100px;
   margin-bottom: 10px;
 
   form {
@@ -33,12 +32,29 @@ header {
 
   nav {
     @extend %flex-row-center;
+    justify-content: space-between;
     width: 100%;
     background-color: yellow;
-    padding-bottom: 10px;
 
     .login {
+      display: flex;
+      flex-direction: row;
+      align-items: right;
       padding-top: 10px;
+      height: 30%;
+    }
+    input {
+      width: 30%;
+    }
+    .nav-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: left;
+    }
+    .motto {
+      font-size: 1em;
+      color: forestgreen;
+      font-weight: bolder;
     }
   }
   * {

@@ -154,6 +154,18 @@ $(document).ready(() => {
     $main.empty();
     $main.append($addListing);
   });
+
+  $('.new-product-form').on('submit', function (event) {
+    const data = $(this).serialize();
+    submitProducts(data)
+    .then(() => {
+      loadFeaturedProducts();
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+  });
+
   //This section takes care of login
 
   const $loginForm = $('.login');

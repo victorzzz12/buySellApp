@@ -199,22 +199,16 @@ $(document).ready(() => {
   <div class="form-sold-radio">
     <p>Only show available (unsold) creations?</p>
     <label for="yes">Yes</label>
-    <input type="radio" name="available" value="yes" checked>
+    <input type="radio" name="sold" value="false" checked>
     <label for="no">No</label>
-    <input type="radio" name="available" value="no">
+    <input type="radio" name="sold" value="true">
   </div>
   <div class='search-submit-button-container'><button type="submit" class='search-submit-button'>Search Creations</button></div></form>
   `)
 
-
-  // $search.on('click', function(event) {
-  //   event.preventDefault();
-  //   $('.search-div').empty();
-  //   $('.search-div').append($searchForm);
-  // })
   $(document).on('click', $search, function(event) {
     const target = $(event.target);
-    console.log(target)
+    // console.log(target)
     if (target.is('.search-button')) {
       event.preventDefault();
       $search.empty();
@@ -229,5 +223,18 @@ $(document).ready(() => {
       </form>
       </div>`);
     }
+
   })
+
+  $(document).on('submit', '.search-div form', function(event) {
+
+      event.preventDefault();
+      console.log('issahit');
+      const data = $(this).serialize();
+      console.log(data);
+      $.ajax("/api/products/search", { method: "POST", data: data })
+      .then((data) => {
+
+      })
+    })
 });

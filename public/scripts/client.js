@@ -91,18 +91,19 @@ $(document).ready(() => {
     `);
     $main.append($productPopup);
   };
-
-  for (let i = 0; i < 12; i++) {
-    $(document).on('click',`.product-display-${i}`, function(event) {
-      event.preventDefault();
-      let $name = $(`.product-display-${i} .name`).text();
-      let $description = $(`.product-display-${i} .description`).text();
-      let $time = $(`.product-display-${i} .date-added`).text();
-      $main.empty();
-      renderProductPopup($name, $description, null, $time);
-    });
-  }
-
+  $.ajax("/api/products/", { method: "GET" })
+  .then((data) => {
+    for (let i = 0; i < data.products.length; i++) {
+      $(document).on('click',`.product-display-${i}`, function(event) {
+        event.preventDefault();
+        let $name = $(`.product-display-${i} .name`).text();
+        let $description = $(`.product-display-${i} .description`).text();
+        let $time = $(`.product-display-${i} .date-added`).text();
+        $main.empty();
+        renderProductPopup($name, $description, null, $time);
+      });
+    }
+  })
   //This section takes care of login
 
   const $loginForm = $('.login');

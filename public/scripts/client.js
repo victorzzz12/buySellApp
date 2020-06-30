@@ -122,7 +122,7 @@ $(document).ready(() => {
     const $addListing = $(`
     <div class="listing-container">
       <h2>Add New Listing</h2>
-      <form action="/api/products" method="post" class="new-product-form">
+      <form action="/api/addlisting" method="post" class="new-product-form">
         <div class="new-product-form__field-wrapper">
           <label for="new-product-form__title"></label>
           <input type="text" name="product-name" placeholder="Product Name" id="new-product-form__product-name">
@@ -155,7 +155,8 @@ $(document).ready(() => {
     $main.append($addListing);
   });
 
-  $('.new-product-form').on('submit', function (event) {
+  $(document).on('submit', '.new-product-form', function(event) {
+    event.preventDefault();
     const data = $(this).serialize();
     submitProducts(data)
     .then(() => {

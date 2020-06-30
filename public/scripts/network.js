@@ -9,7 +9,7 @@ function logIn(data) {
 const submitProducts = function(data) {
   return $.ajax({
     method: "POST",
-    url: "/api/products/add",
-    data,
+    url: "/api/products/",
+    data
   });
 }

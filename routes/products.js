@@ -23,7 +23,7 @@ module.exports = (db) => {
       });
   });
   //this route is the destination for product search
-  router.post("/search", (req, res) => {
+    router.post("/search", (req, res) => {
 
     const options = req.body;
     console.log(options);
@@ -96,17 +96,15 @@ module.exports = (db) => {
   });
 
 
-  router.post('/addlisting', (req, res) => {
-    console.log(req.body);
+  router.post('/', (req, res) => {
     const userId = req.session.userId;
-    db.addProduct({...req.body, admin_id: userId})
-      .then(product => {
-        res.send(product);
-      })
-      .catch(e => {
-        console.error(e);
-        res.send(e)
-      });
+    return db.query(`
+    INSERT INTO products (admin_id, name, photo_url, price, description, type, date_added)
+    VALUES($1, $2, $3, $4, $5, $6, $7)
+    RETURNING *;`,
+    [`${userId}`, `${req.body['product-name']}`, `${req.body['product-image']}`, `${req.body.price}`, `${req.body.description}`, `${req.body['product-type']}`, `9-30-20`])
+    .then(res => res.rows);
   });
+
   return router;
 };

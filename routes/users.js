@@ -19,31 +19,31 @@ module.exports = (db) => {
   //switches isAdmin to true if admin check succeeds
   router.get('/userStatus', (req, res) => {
     console.log(req.session);
+
     const status = { isLoggedIn: false, isAdmin: false}
+
     if (req.session.userId) {
       status.isLoggedIn = true;
     } else {
       status.isLoggedIn = false;
     }
 
-    const adminCheck = function(email, callback) {
+    const adminCheck = function(email) {
       return db.query(`SELECT id FROM admins
       WHERE email = $1`,
       [`${email}`])
-      .then(res => {
-        if (res.rows[0]) {
-          callback();
-        }
-      })
+      .then(res =>res.rows[0])
     }
 
-    const adminSwitch = function() {
-      req.session.isAdmin = true;
-    }
+    adminCheck(req.session.userEmail)
+    .then(user => {
+      if (user) {
+        req.session.isAdmin = true;
+        status.isAdmin = true;
+      }
+      res.send(status);
+    });
 
-    adminCheck(req.session.userEmail, adminSwitch);
-
-    res.send(status);
   });
 
   router.post('/login', (req, res) => {

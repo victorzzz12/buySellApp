@@ -26,6 +26,10 @@ body {
   visibility: hidden;
 }
 
+.customers-only {
+  visibility: hidden;
+}
+
 .product-popup {
   @extend %box;
   flex-direction: column;

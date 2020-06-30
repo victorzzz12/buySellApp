@@ -5,6 +5,7 @@ $(document).ready(() => {
   const $login = $('.login');
   const $search = $('.search-div')
   const $admins = $(".admins-only")
+  const $customers = $('.customers-only');
 
   //This Ajax request returns object containing user status details
 
@@ -97,7 +98,7 @@ $(document).ready(() => {
       <h1>${name}</h1>
       <img src="${image}" alt="cute embroidered shirt">
       <h2>SOLD</h2>
-      <a href="#"><p>Message seller</p></a>
+      <a href="#" class="customers-only"><p >Message seller</p></a>
       <p>${description}</p>
       <p>${seller}</p>
       <p>Listed on: ${time}</p>

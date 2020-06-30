@@ -2,8 +2,7 @@
 
 ## Routes/Features
 * users 
-  * featured products (actually showed featured rather than all)
-  * return search results
+  * featured products (actually show featured rather than all)
   * send message to other users listing the items
   * favorite products
 * admin
@@ -27,6 +26,7 @@
 * Make images not stretch on popup boxes 
 
 ## Stretch/cleanup
+* debug search results
 * refactor
 * hosting
 * add messaging capabilities in app

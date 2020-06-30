@@ -112,6 +112,7 @@ $(document).ready(() => {
     for (let i = 0; i < data.products.length; i++) {
       $(document).on('click',`.product-display-${i}`, function(event) {
         event.preventDefault();
+        event.stopPropagation();
         let $name = $(`.product-display-${i} .name`).text();
         let $img = $(`.product-display-${i} .image`).text();
         let $description = $(`.product-display-${i} .description`).text();
@@ -128,7 +129,7 @@ $(document).ready(() => {
     const $addListing = $(`
     <div class="listing-container">
       <h2>Add New Listing</h2>
-      <form action="/api/products/" method="post" class="new-product-form">
+      <form action="/api/products" method="post" class="new-product-form">
         <div class="new-product-form__field-wrapper">
           <label for="new-product-form__title"></label>
           <input type="text" name="product-name" placeholder="Product Name" id="new-product-form__product-name">
@@ -150,8 +151,9 @@ $(document).ready(() => {
           <textarea placeholder="Description" name="description" id="product-form__description" cols="50" rows="5"></textarea>
         </div>
         <div class="new-product-form__field-wrapper">
-          <button>Add Listing</button>
+          <button class="add-listing-button">Add Listing</button>
           <a id="product-form__cancel" href="/">Cancel</a>
+          <p class="listing-message">Added! Please return to the homepage or add more by clicking the button above!</p>
         </div>
       </form>
     </div>`)
@@ -159,6 +161,7 @@ $(document).ready(() => {
     $('.search-div').hide();
     $main.empty();
     $main.append($addListing);
+    $('.listing-message').hide();
   });
 
   //this section handles submission of new listing form
@@ -168,12 +171,14 @@ $(document).ready(() => {
     const data = $(this).serialize();
     submitProducts(data)
     .then(() => {
-      loadFeaturedProducts();
     })
     .catch((error) => {
       console.log('fail');
       console.error(error);
     })
+    $('.add-listing-button').hide();
+    $('#product-form__cancel').hide();
+    $('.listing-message').show();
   });
 
   //This section takes care of login

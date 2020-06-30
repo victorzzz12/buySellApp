@@ -80,6 +80,10 @@ header {
       color: forestgreen;
       font-weight: bolder;
     }
+    p {
+      display: flex;
+      justify-content: center;
+    }
   }
 
   * {

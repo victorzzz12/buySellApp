@@ -26,13 +26,11 @@ body {
   visibility: hidden;
 }
 
-.customers-only {
-  .invisible {
-    visibility: hidden;
-  }
-  .visible {
-    visibility: visible;
-  }
+.invisible {
+  display: none;
+}
+.visible {
+  display: block;
 }
 
 .product-popup {

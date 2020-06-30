@@ -37,7 +37,8 @@ $(document).ready(() => {
       $login.append($loginForm);
     } else {
       if (loginData.isAdmin === true) {
-        $admins.css('visibility','visible');
+        $admins.removeClass('invisible');
+        $admins.addClass('visible')
       }
       if (loginData.isAdmin === false) {
         $customers.removeClass('invisible');
@@ -100,8 +101,8 @@ $(document).ready(() => {
     const $productPopup = $(`<div class="container product-popup">
       <h1>${name}</h1>
       <img src="${image}" alt="cute embroidered shirt">
-      <h2>SOLD</h2>
-      <a href="#"><p class="customers-only">Message seller</a></p>
+      <h2 class="invisible">SOLD</h2>
+      <a href="#"><p class="customers-only invisible">Message seller</a></p>
       <p>${description}</p>
       <p>${seller}</p>
       <p>Listed on: ${time}</p>

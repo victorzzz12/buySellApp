@@ -47,13 +47,13 @@ module.exports = (db) => {
     }
 
     if (options.keywords) {
-      queryParams.push(`%${options.keywords.toLowerCase()}%`);
-      queryString += `AND LOWER(products.name) LIKE $${queryParams.length}
-      OR LOWER(products.description) LIKE $${queryParams.length} `
+      queryParams.push(`%${options.keywords}%`);
+      queryString += `AND products.name ILIKE $${queryParams.length}
+      OR products.description ILIKE $${queryParams.length} `
     }
     if (options.seller) {
-      queryParams.push(`%${options.seller.toLowerCase()}%`);
-      queryString += `AND LOWER(admins.name) LIKE $${queryParams.length} `;
+      queryParams.push(`%${options.seller}%`);
+      queryString += `AND admins.name ILIKE $${queryParams.length} `;
     }
     if (options.type) {
       let optionsArray = options.type

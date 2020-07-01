@@ -120,7 +120,6 @@ $(document).ready(() => {
 
   const renderProductPopup = function(id, name, image, description, seller, time) {
     const $productPopup = $(`<div class="container product-popup">
-      <a href="#"><p class="customers-only invisible add-to-favorites">Add To Favorites</p></a>
       <div class="product-buttons">
         <button data-product-id="${id}" class="delete btn btn-danger admins-only invisible">Delete</button>
         <button data-product-id="${id}" class="sold btn btn-success admins-only invisible">Mark as sold</button>

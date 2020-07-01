@@ -34,6 +34,10 @@ body {
   display: block;
 }
 
+.main-container {
+  margin-bottom: 20px;
+}
+
 .product-popup {
   @extend %box;
   flex-direction: column;
@@ -65,6 +69,13 @@ body {
     justify-content: space-around;
     margin-bottom: 20px;
   }
+  p.customers-only {
+    text-align: center;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    color: white;
+    background-color: transparent;
+  }
 }
 
 .featured-title {
@@ -93,6 +104,10 @@ body {
   color: white;
   font-size: 1em;
   margin-top: 20px;
+}
+
+.message-form label {
+  color: white;
 }
 
 .new-product-form {

@@ -86,6 +86,33 @@ module.exports = (db) => {
     req.session = null;
     res.send(null);
   });
+  //messaging routes
+
+  router.post("/messages", (req, res) => {
+    const fromId = req.session.userId;
+    const toName = req.body['product-seller'];
+    const message = req.body.message;
+    const customerSendQuery = `
+    INSERT INTO messages (user_id, admin_id, content, from_user)
+    SELECT $1 as user_id, admins.id as admin_id, $3, TRUE
+    FROM admins
+    WHERE admins.name = $2;`
+    const customerParams = [`${fromId}`, `${toName}`, `${message}`]
+    // const sellerSendQuery;
+    // const sellerParams;
+    let query;
+    let params;
+    console.log(req.body);
+    // if (req.body.fromCustomer === true) {
+      query = customerSendQuery;
+      params = customerParams;
+    // } else {
+    //   query = sellerSendQuery;
+    //   params = sellerParams;
+    // }
+    return db.query(query, params)
+    .then(() => console.log('success'))
+  });
 
   return router;
 };

@@ -4,8 +4,6 @@ $(document).ready(() => {
   const $main = $('.product-row');
   const $login = $('.login');
   const $search = $('.search-div')
-  const $admins = $(".admins-only")
-  const $customers = $('.customers-only');
 
   //This Ajax request returns object containing user status details
 
@@ -122,15 +120,15 @@ $(document).ready(() => {
 
   const renderProductPopup = function(name, image, description, seller, time) {
     const $productPopup = $(`<div class="container product-popup">
-      <a href="#"><p class="customers-only invisible add-to-favorites">Add To Favorites</p></a>
       <div class="product-buttons ">
         <button class="delete btn btn-danger admins-only invisible">Delete</button>
         <button class="sold btn btn-success admins-only invisible">Mark as sold</button>
       </div>
       <h1 class='product-name'>${name}</h1>
       <img src="${image}" alt="cute embroidered shirt">
+      <a href="#"><p class="customers-only invisible add-to-favorites">⭐️Add To Favorites</p></a>
+      <a href="#"><p class="customers-only invisible message-seller">✉️Message seller</p></a>
       <h2 class="invisible">SOLD</h2>
-      <a href="#"><p class="customers-only invisible">Message seller</a></p>
       <p>${description}</p>
       <p>${seller}</p>
       <p>Listed on: ${time}</p>
@@ -215,6 +213,10 @@ $(document).ready(() => {
     })
   })
 
+  //This section handles the "message seller" link
+  $(document).on('click','.message-seller', function(event) {
+    event.preventDefault();
+  })
   //This section handles the add listing button
   $(document).on('click','.add-listing', function(event) {
     const $addListing = $(`

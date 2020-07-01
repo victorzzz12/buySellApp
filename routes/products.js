@@ -107,7 +107,6 @@ module.exports = (db) => {
 
   //favorites post; favorites get
   router.post('/favorites',(req, res) => {
-    console.log('issahit');
     const name = req.body.name;
     const user = req.session.userId;
     return db.query(`
@@ -115,7 +114,7 @@ module.exports = (db) => {
     SELECT $1, id
     FROM products
     WHERE name = $2;`, [`${user}`, `${name}`])
-    .then(res => {console.log(res.rows)})
+    .then(res => {console.log('post/favorites', res.rows)})
     .catch(err => (console.log('post/favorites', err)));
   })
   router.get('/favorites', (req, res) => {
@@ -128,14 +127,14 @@ module.exports = (db) => {
     products.date_added as date_added,
     admins.name as seller,
     admins.email as email
-    FROM products JOIN admins
-    ON admins.id = admin_id
+    FROM favorites
+    JOIN products ON product_id = products.id
+    JOIN admins ON admins.id = admin_id
     JOIN users ON users.id = user_id
     WHERE user_id = $1;`, [`${user}`])
-    .then(res => {
-      console.log('hit');
-      const favoriteProducts = res.rows;
-      res.json({ favoriteProducts })
+    .then(data => {
+      const products = data.rows;
+      res.json({ products })
     })
     .catch(err => (console.log('get/favorites', err)));
   })

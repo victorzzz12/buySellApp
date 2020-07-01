@@ -15,20 +15,4 @@ const submitProducts = function(data) {
   });
 }
 
-const addToFavorites = function(data) {
-  return $.ajax({
-    method: "POST",
-    url: "/api/products/favorites",
-    data
-  });
-}
-
-const getFavorites = function() {
-  return $.ajax({
-    method:'GET',
-    dataType: 'json',
-    url: "/api/products/favorites"
-  });
-}
-
 

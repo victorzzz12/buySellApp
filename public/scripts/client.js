@@ -72,8 +72,16 @@ getLoginStatus();
   function loadFeaturedProducts() {
     $.ajax("/api/products/", { method: "GET" })
     .then((data) => {
-      renderFeaturedProducts(data);
-    })
+      $main.empty();
+        renderFeaturedProducts(data);
+        $main.prepend(`<div class="container" id="products">
+        <h2 class="featured-title">Featured Creations</h2>
+        <div class="row product-row justify-content-left">
+        </div>
+        </div>`);
+        $search.empty();
+        $search.append($searchButton);
+    });
     $main.append(`<div class="container" id="products">
     <h2 class="featured-title">Featured Creations</h2>
     <div class="row product-row justify-content-left">
@@ -133,14 +141,51 @@ getLoginStatus();
   })
 
   //This section handles the "add to favorites" link
+  const addToFavorites = function(data) {
+    return $.ajax({
+      method: "POST",
+      url: "/api/products/favorites",
+      data,
+      success: console.log('success')
+    });
+  }
+
+  const getFavorites = function() {
+    return $.ajax({
+      url: "/api/products/favorites",
+      method:'GET',
+      dataType: 'json',
+      success: function(data) {
+        console.log(data)
+        $main.empty();
+        renderFeaturedProducts(data);
+        $main.prepend(`<div class="container" id="products">
+        <h2 class="featured-title">Favorites</h2>
+        <div class="row product-row justify-content-left">
+        </div>
+        </div>`);
+        $search.empty();
+        $search.append($searchButton);
+      }
+    })
+  };
 
   $(document).on('click', '#add-to-favorites', function(event) {
     event.preventDefault();
     let name = $(this).parent().parent().find('.product-name').html();
-    console.log(name);
-    addToFavorites({name});
-    getFavorites()
-    .then(data => renderFeaturedProducts(data));
+    addToFavorites({name})
+    .then(getFavorites())
+    .then((data) => {
+      $main.empty();
+      renderFeaturedProducts(data);
+      $main.prepend(`<div class="container" id="products">
+      <h2 class="featured-title">Search Results</h2>
+      <div class="row product-row justify-content-left">
+      </div>
+      </div>`);
+      $search.empty();
+      $search.append($searchButton);
+    })
   })
 
   //This section pops up an add listing page

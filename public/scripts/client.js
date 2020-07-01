@@ -74,8 +74,16 @@ $(document).ready(() => {
   function loadFeaturedProducts() {
     $.ajax("/api/products/", { method: "GET" })
     .then((data) => {
-      renderFeaturedProducts(data);
-    })
+      $main.empty();
+        renderFeaturedProducts(data);
+        $main.prepend(`<div class="container" id="products">
+        <h2 class="featured-title">Featured Creations</h2>
+        <div class="row product-row justify-content-left">
+        </div>
+        </div>`);
+        $search.empty();
+        $search.append($searchButton);
+    });
     $main.append(`<div class="container" id="products">
     <h2 class="featured-title">Featured Creations</h2>
     <div class="row product-row justify-content-left">
@@ -99,7 +107,7 @@ $(document).ready(() => {
 
   const renderProductPopup = function(name, image, description, seller, time) {
     const $productPopup = $(`<div class="container product-popup">
-      <a href="#"><p class="customers-only invisible customer-options">Add To Favorites</p></a>
+      <a href="#"><p class="customers-only invisible add-to-favorites">Add To Favorites</p></a>
       <div class="product-buttons">
         <button class="delete btn btn-danger">Delete</button>
         <button class="sold btn btn-success">Mark as sold</button>
@@ -134,6 +142,57 @@ $(document).ready(() => {
     }
   })
 
+  //This section handles the "add to favorites" link
+  const addToFavorites = function(data) {
+    return $.ajax({
+      method: "POST",
+      url: "/api/products/favorites",
+      data,
+      success: console.log('success')
+    });
+  }
+
+  const getFavorites = function() {
+    return $.ajax({
+      url: "/api/products/favorites",
+      method:'GET',
+      dataType: 'json',
+      success: function(data) {
+        console.log(data)
+        $main.empty();
+        renderFeaturedProducts(data);
+        $main.prepend(`<div class="container" id="products">
+        <h2 class="featured-title">Favorites</h2>
+        <div class="row product-row justify-content-left">
+        </div>
+        </div>`);
+        $search.empty();
+        $search.append($searchButton);
+      }
+    })
+  };
+
+  $(document).on('click', '.add-to-favorites', function(event) {
+    event.preventDefault();
+    let name = $(this).parent().parent().find('.product-name').html();
+    console.log(name);
+    addToFavorites({name});
+    getFavorites()
+    .then(data => renderFeaturedProducts(data));
+    addToFavorites({name})
+    .then(getFavorites())
+    .then((data) => {
+      $main.empty();
+      renderFeaturedProducts(data);
+      $main.prepend(`<div class="container" id="products">
+      <h2 class="featured-title">Search Results</h2>
+      <div class="row product-row justify-content-left">
+      </div>
+      </div>`);
+      $search.empty();
+      $search.append($searchButton);
+    })
+  })
   //This section pops up an add listing page
   $(document).on('click','.add-listing', function(event) {
     const $addListing = $(`

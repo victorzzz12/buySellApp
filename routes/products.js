@@ -115,5 +115,33 @@ module.exports = (db) => {
     db.query(queryString, req.body.name);
   });
 
+  router.get('/favorites', (req, res) => {
+    const user = req.session.userId;
+    return db.query(`
+    SELECT products.name as product,
+    products.photo_url as photo_url,
+    products.price as price,
+    products.description as description,
+    products.date_added as date_added,
+    admins.name as seller,
+    admins.email as email
+    FROM products JOIN admins
+    ON admins.id = admin_id
+    FROM favorites
+    JOIN products ON product_id = products.id
+    JOIN admins ON admins.id = admin_id
+    JOIN users ON users.id = user_id
+    WHERE user_id = $1;`, [`${user}`])
+    .then(res => {
+      console.log('hit');
+      const favoriteProducts = res.rows;
+      res.json({ favoriteProducts })
+    .then(data => {
+      const products = data.rows;
+      res.json({ products })
+    })
+    .catch(err => (console.log('get/favorites', err)));
+  })
+});
   return router;
 };

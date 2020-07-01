@@ -6,6 +6,13 @@ function logIn(data) {
   });
 }
 
+function logOut() {
+  return $.ajax({
+    method: "POST",
+    url: "/api/users/logout"
+  });
+}
+
 const submitProducts = function(data) {
   return $.ajax({
     method: "POST",

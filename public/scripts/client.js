@@ -38,7 +38,8 @@ $(document).ready(() => {
     } else {
       if (loginData.isAdmin === true) {
         $admins.removeClass('invisible');
-        $admins.addClass('visible')
+        $admins.addClass('visible');
+
       }
       if (loginData.isAdmin === false) {
         $customers.removeClass('invisible');
@@ -99,6 +100,10 @@ $(document).ready(() => {
 
   const renderProductPopup = function(name, image, description, seller, time) {
     const $productPopup = $(`<div class="container product-popup">
+      <div class="product-buttons">
+        <button class="delete btn btn-danger">Delete</button>
+        <button class="sold btn btn-success">Mark as sold</button>
+      </div>
       <h1>${name}</h1>
       <img src="${image}" alt="cute embroidered shirt">
       <h2 class="invisible">SOLD</h2>
@@ -278,4 +283,21 @@ $(document).ready(() => {
         $search.append($searchButton);
       })
     })
+    $(document).on('click', '.product-buttons .sold', function(event) {
+      $('.sold').hide();
+      if ($('.product-popup h2').hasClass('invisible')) {
+        $('.product-popup h2').removeClass('invisible');
+        $('.product-popup h2').addClass('visible');
+      }
+      if ($('.product-popup h2').hasClass('visible')) {
+        $('.sold').hide();
+      }
+    });
+    $(document).on('click', '.product-buttons .delete', function(event) {
+      $.ajax("/api/products", { method: "get" })
+      .then((data) => {
+        console.log(data.products);
+        console.log('deleted');
+      })
+    });
 });

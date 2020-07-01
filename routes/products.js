@@ -33,6 +33,7 @@ module.exports = (db) => {
     products.price as price,
     products.description as description,
     products.date_added as date_added,
+    products.sold as sold,
     admins.name as seller,
     admins.email as email
     FROM products JOIN admins
@@ -104,6 +105,14 @@ module.exports = (db) => {
     RETURNING *;`,
     [`${userId}`, `${req.body['product-name']}`, `${req.body['product-image']}`, `${req.body.price}`, `${req.body.description}`, `${req.body['product-type']}`, `9-30-20`])
     .then(res => res.rows);
+  });
+
+  router.post('/delete', (req, res) => {
+    let queryString =`
+    DELETE FROM products
+    WHERE product.name = $1`;
+
+    db.query(queryString, req.body.name);
   });
 
   return router;

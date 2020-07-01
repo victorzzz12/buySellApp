@@ -58,6 +58,11 @@ body {
     background: yellow;
     font-size: 1em;
   }
+  .product-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
 }
 
 .featured-title {

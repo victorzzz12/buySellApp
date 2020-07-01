@@ -9,6 +9,7 @@
 
 @media only screen and (min-width: 768px){
   .container.product-popup {
+
     img {
       height: auto;
       width: auto;
@@ -23,7 +24,7 @@ body {
 }
 
 .admins-only {
-  visibility: hidden;
+  display: none;
 }
 
 .invisible {
@@ -36,6 +37,7 @@ body {
 .product-popup {
   @extend %box;
   flex-direction: column;
+  padding-top: 0px;
   h1 {
     background-color: rgb(255, 255, 0);
     padding: 7px;

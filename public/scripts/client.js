@@ -37,8 +37,8 @@ $(document).ready(() => {
       $login.append($loginForm);
     } else {
       if (loginData.isAdmin === true) {
-        $admins.removeClass('invisible');
-        $admins.addClass('visible');
+        $('.admins-only').removeClass('invisible');
+        $('.admins-only').addClass('visible');
       }
       if (loginData.isAdmin === false) {
         $('.customers-only').removeClass('invisible');
@@ -74,6 +74,7 @@ $(document).ready(() => {
   function loadFeaturedProducts() {
     $.ajax("/api/products/", { method: "GET" })
     .then((data) => {
+      console.log(data)
       $main.empty();
         renderFeaturedProducts(data);
         $main.prepend(`<div class="container" id="products">
@@ -84,6 +85,7 @@ $(document).ready(() => {
         $search.empty();
         $search.append($searchButton);
     });
+
     $main.append(`<div class="container" id="products">
     <h2 class="featured-title">Featured Creations</h2>
     <div class="row product-row justify-content-left">
@@ -108,9 +110,9 @@ $(document).ready(() => {
   const renderProductPopup = function(name, image, description, seller, time) {
     const $productPopup = $(`<div class="container product-popup">
       <a href="#"><p class="customers-only invisible add-to-favorites">Add To Favorites</p></a>
-      <div class="product-buttons">
-        <button class="delete btn btn-danger">Delete</button>
-        <button class="sold btn btn-success">Mark as sold</button>
+      <div class="product-buttons ">
+        <button class="delete btn btn-danger admins-only invisible">Delete</button>
+        <button class="sold btn btn-success admins-only invisible">Mark as sold</button>
       </div>
       <h1 class='product-name'>${name}</h1>
       <img src="${image}" alt="cute embroidered shirt">
@@ -127,6 +129,7 @@ $(document).ready(() => {
 
   $.ajax("/api/products/", { method: "GET" })
   .then((data) => {
+    console.log(data);
     for (let i = 0; i < data.products.length; i++) {
       $(document).on('click',`.product-display-${i}`, function(event) {
         event.preventDefault();
@@ -142,7 +145,24 @@ $(document).ready(() => {
     }
   })
 
+   //this section handles the see favorites button
+
+   $(document).on('click','.see-favorites', function(event) {
+    event.preventDefault();
+    getFavorites()
+    .then((data) => {
+      $main.empty();
+      renderFeaturedProducts(data);
+      $main.prepend(`<div class="container" id="products">
+      <h2 class="featured-title">Favorites</h2>
+      <div class="row product-row justify-content-left">
+      </div>
+      </div>`);
+    })
+  });
+
   //This section handles the "add to favorites" link
+
   const addToFavorites = function(data) {
     return $.ajax({
       method: "POST",
@@ -166,8 +186,6 @@ $(document).ready(() => {
         <div class="row product-row justify-content-left">
         </div>
         </div>`);
-        $search.empty();
-        $search.append($searchButton);
       }
     })
   };
@@ -180,17 +198,11 @@ $(document).ready(() => {
     .then(getFavorites())
     .then((data) => {
       $main.empty();
-      renderFeaturedProducts(data);
-      $main.prepend(`<div class="container" id="products">
-      <h2 class="featured-title">Search Results</h2>
-      <div class="row product-row justify-content-left">
-      </div>
-      </div>`);
-      $search.empty();
-      $search.append($searchButton);
+      // renderFeaturedProducts(data);
     })
   })
-  //This section pops up an add listing page
+
+  //This section handles the add listing button
   $(document).on('click','.add-listing', function(event) {
     const $addListing = $(`
     <div class="listing-container">

@@ -4,6 +4,8 @@ $(document).ready(() => {
   const $main = $('.product-row');
   const $login = $('.login');
   const $search = $('.search-div')
+  const $admins = $(".admins-only")
+  const $customers = $('.customers-only');
 
   //This Ajax request returns object containing user status details
 
@@ -120,24 +122,17 @@ $(document).ready(() => {
 
   const renderProductPopup = function(id, name, image, description, seller, time) {
     const $productPopup = $(`<div class="container product-popup">
-<<<<<<< HEAD
-      <div class="product-buttons ">
-        <button class="delete btn btn-danger admins-only invisible">Delete</button>
-        <button class="sold btn btn-success admins-only invisible">Mark as sold</button>
-=======
       <a href="#"><p class="customers-only invisible add-to-favorites">Add To Favorites</p></a>
       <div class="product-buttons">
         <button data-product-id="${id}" class="delete btn btn-danger admins-only invisible">Delete</button>
         <button data-product-id="${id}" class="sold btn btn-success admins-only invisible">Mark as sold</button>
->>>>>>> delete2
       </div>
       <h1 class='product-name'>${name}</h1>
       <img src="${image}" alt="cute embroidered shirt">
-      <a href="#"><p class="customers-only invisible add-to-favorites">⭐️Add To Favorites</p></a>
-      <a href="#"><p class="customers-only invisible message-seller">✉️Message seller</p></a>
       <h2 class="invisible">SOLD</h2>
+      <a href="#"><p class="customers-only invisible">Message seller</a></p>
       <p>${description}</p>
-      <p class='seller-name'>${seller}</p>
+      <p>${seller}</p>
       <p>Listed on: ${time}</p>
       </div>
     `);
@@ -216,69 +211,8 @@ $(document).ready(() => {
     .then(getFavorites())
     .then((data) => {
       $main.empty();
-      renderFeaturedProducts(data);
+      // renderFeaturedProducts(data);
     })
-  })
-
-  //This section handles the "message seller" link
-  const renderMessageForm = function(object) {
-    const productName = object.name;
-    const sellerName = object.seller;
-    const fromCustomer = object.fromCustomer;
-    const $messageForm = `<div class="listing-container">
-    <h2>Conduct A Message</h2>
-    <form action = "" method="" class="message-form">
-      <div class="new-product-form__field-wrapper">
-        <label for="product-name">Subject: ${productName}</label><br>
-        <input class="invisible" type="text" name="product-name" value="${productName}">
-      </div>
-      <div class="new-product-form__field-wrapper">
-        <label for="product-seller">Seller: ${sellerName}</label><br>
-        <input class="invisible" value="${sellerName}" type="text" name="product-seller">
-      </div>
-      <div class="new-product-form__field-wrapper">
-        <label for="message">Your message:</label>
-        <textarea placeholder="Description" name="message" cols="50" rows="5"></textarea>
-      </div>
-      <input class='invisible' name = "fromCustomer" type="text" value="${fromCustomer}">
-      <div class="new-product-form__field-wrapper">
-        <button class="add-listing-button">Send Message</button>
-        <a id="product-form__cancel" href="/">Cancel</a>
-        <p class="listing-message">Sent!</p>
-      </div>
-    </form>
-  </div>`;
-    $('.search-popup').hide();
-    $('.search-div').hide();
-    $main.empty();
-    $main.append($messageForm);
-    $('.listing-message').hide();
-  }
-
-  $(document).on('click','.message-seller', function(event) {
-    event.preventDefault();
-    console.log('issahit');
-    let name = $(this).parent().parent().find('.product-name').html();
-    let seller =$(this).parent().parent().find('.seller-name').html();
-    seller = seller.slice(9);
-    let fromCustomer = true;
-    renderMessageForm({name, seller, fromCustomer});
-  })
-
-  $(document).on('submit', '.message-form', function(event) {
-    event.preventDefault();
-    const data = $(this).serialize();
-    console.log(data);
-    submitMessage(data)
-    // .then(() => {
-    // })
-    // .catch((error) => {
-    //   console.log('fail');
-    //   console.error(error);
-    // })
-    // $('.add-listing-button').hide();
-    // $('#product-form__cancel').hide();
-    // $('.listing-message').show();;
   })
 
   //This section handles the add listing button
@@ -450,7 +384,8 @@ $(document).ready(() => {
         data: {id: $(this).data("product-id")}
       }).done((products) => {
         console.log(products);
-
+        $('.product-popup h2').removeClass('invisible');
+        $('.product-popup h2').addClass('visible');
       })
     });
 

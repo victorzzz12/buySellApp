@@ -81,8 +81,8 @@ module.exports = (db) => {
     }
 
     queryString += `ORDER BY products.price;`
-    console.log(queryString);
-    console.log(queryParams);
+    // console.log(queryString);
+    // console.log(queryParams);
     db.query(queryString, queryParams)
       .then(data => {
         const products = data.rows;
@@ -95,7 +95,6 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-
 
   router.post('/', (req, res) => {
     const userId = req.session.userId;
@@ -113,11 +112,13 @@ module.exports = (db) => {
     console.log(user);
     return db.query(`
     INSERT INTO favorites(user_id, product_id)
-    SELECT id FROM, $2
-    SELECT products.id, users.id
-    FROM products OUTER JOIN users
-    WHERE `, [`${name}`, `${user}`])
-    .then();
+    SELECT $1, id
+    FROM products
+    WHERE name = $2
+    RETURNING product_id
+    FROM favorites
+    WHERE user_id = $1;`, [`${user}`, `${name}`])
+    .then(res => {console.log(res)});
   })
 
   router.post('/delete', (req, res) => {

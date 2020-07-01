@@ -98,16 +98,13 @@ $(document).ready(() => {
 
   const renderProductPopup = function(name, image, description, seller, time) {
     const $productPopup = $(`<div class="container product-popup">
-<<<<<<< HEAD
       <a href="#"><p class="customers-only invisible customer-options" id="add-to-favorites">Add To Favorites</p></a>
       <h1 class="product-name">${name}</h1>
-=======
       <div class="product-buttons">
         <button class="delete btn btn-danger">Delete</button>
         <button class="sold btn btn-success">Mark as sold</button>
       </div>
       <h1>${name}</h1>
->>>>>>> f9cb930c26d5a08339e2b8cf38e90305f11dac7f
       <img src="${image}" alt="cute embroidered shirt">
       <h2 class="invisible">SOLD</h2>
       <a href="#"><p class="customers-only invisible">Message seller</a></p>

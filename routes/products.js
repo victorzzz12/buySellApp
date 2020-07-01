@@ -44,7 +44,7 @@ module.exports = (db) => {
     if (options.sold === false) {
       queryString += `WHERE products.sold = false `
     } else {
-      queryString += `WHERE products.sold IN (true, false) `
+      queryString += 'WHERE products.sold IN (true, false) '
     }
 
     if (options.keywords) {
@@ -63,13 +63,14 @@ module.exports = (db) => {
       }
       const arrayLength = optionsArray.length;
       for (let i = 0; i < arrayLength; i++) {
-        queryParams.push(`%${optionsArray[i]}%`);
+        queryParams.push(`${optionsArray[i]}`);
         if (i === 0) {
-          queryString += `AND products.type ILIKE $${queryParams.length}`;
+          queryString += `AND products.type IN ($${queryParams.length}`;
         } else {
-          queryString += `OR products.type ILIKE $${queryParams.length}`;
+          queryString += `, $${queryParams.length}`;
         }
       }
+      queryString += ') ';
     }
     if (options.minimum_price) {
       queryParams.push(`${options.minimum_price}`);
@@ -81,11 +82,11 @@ module.exports = (db) => {
     }
 
     queryString += `ORDER BY products.price;`
-    // console.log(queryString);
-    // console.log(queryParams);
+
     db.query(queryString, queryParams)
       .then(data => {
         const products = data.rows;
+        console.log(products);
         res.json({ products });
       })
       .catch(err => {
@@ -94,6 +95,7 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
 
   router.post('/', (req, res) => {
     const userId = req.session.userId;
@@ -104,40 +106,6 @@ module.exports = (db) => {
     [`${userId}`, `${req.body['product-name']}`, `${req.body['product-image']}`, `${req.body.price}`, `${req.body.description}`, `${req.body['product-type']}`, `9-30-20`])
     .then(res => res.rows);
   });
-
-  //favorites post; favorites get
-  router.post('/favorites',(req, res) => {
-    const name = req.body.name;
-    const user = req.session.userId;
-    return db.query(`
-    INSERT INTO favorites(user_id, product_id)
-    SELECT $1, id
-    FROM products
-    WHERE name = $2;`, [`${user}`, `${name}`])
-    .then(res => {console.log('post/favorites', res.rows)})
-    .catch(err => (console.log('post/favorites', err)));
-  })
-  router.get('/favorites', (req, res) => {
-    const user = req.session.userId;
-    return db.query(`
-    SELECT products.name as product,
-    products.photo_url as photo_url,
-    products.price as price,
-    products.description as description,
-    products.date_added as date_added,
-    admins.name as seller,
-    admins.email as email
-    FROM favorites
-    JOIN products ON product_id = products.id
-    JOIN admins ON admins.id = admin_id
-    JOIN users ON users.id = user_id
-    WHERE user_id = $1;`, [`${user}`])
-    .then(data => {
-      const products = data.rows;
-      res.json({ products })
-    })
-    .catch(err => (console.log('get/favorites', err)));
-  })
 
   router.post('/delete', (req, res) => {
     let queryString =`

@@ -22,6 +22,9 @@ body {
   background-color: aqua;
 }
 
+.admins-only {
+  visibility: hidden;
+}
 
 .invisible {
   display: none;
@@ -33,7 +36,6 @@ body {
 .product-popup {
   @extend %box;
   flex-direction: column;
-  padding-top: 0;
   h1 {
     background-color: rgb(255, 255, 0);
     padding: 7px;
@@ -56,12 +58,6 @@ body {
     background: yellow;
     font-size: 1em;
   }
-  .customer-options {
-    margin: none;
-    background: none;
-    color: white;
-    text-align: center;
-
   .product-buttons {
     display: flex;
     justify-content: space-around;
@@ -118,5 +114,4 @@ body {
       opacity: 50%;
     }
   }
-}
 }

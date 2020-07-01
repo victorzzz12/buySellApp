@@ -5,7 +5,7 @@ $(document).ready(() => {
   const $login = $('.login');
   const $search = $('.search-div')
   const $admins = $(".admins-only")
-  const $favorites = $('#add-to-favorites');
+  const $customers = $('.customers-only');
 
   //This Ajax request returns object containing user status details
 
@@ -22,7 +22,9 @@ $(document).ready(() => {
       }
     })
   }
-getLoginStatus();
+
+  getLoginStatus();
+
   //This section populates header with login form or logout button
 
   const renderLogin = function(loginData) {
@@ -37,10 +39,11 @@ getLoginStatus();
       if (loginData.isAdmin === true) {
         $admins.removeClass('invisible');
         $admins.addClass('visible');
+
       }
       if (loginData.isAdmin === false) {
-        $('.customers-only').removeClass('invisible');
-        $('.customers-only').addClass('visible');
+        $customers.removeClass('invisible');
+        $customers.addClass('visible');
       }
       //logout form later
     }
@@ -72,16 +75,8 @@ getLoginStatus();
   function loadFeaturedProducts() {
     $.ajax("/api/products/", { method: "GET" })
     .then((data) => {
-      $main.empty();
-        renderFeaturedProducts(data);
-        $main.prepend(`<div class="container" id="products">
-        <h2 class="featured-title">Featured Creations</h2>
-        <div class="row product-row justify-content-left">
-        </div>
-        </div>`);
-        $search.empty();
-        $search.append($searchButton);
-    });
+      renderFeaturedProducts(data);
+    })
     $main.append(`<div class="container" id="products">
     <h2 class="featured-title">Featured Creations</h2>
     <div class="row product-row justify-content-left">
@@ -110,7 +105,7 @@ getLoginStatus();
         <button class="delete btn btn-danger">Delete</button>
         <button class="sold btn btn-success">Mark as sold</button>
       </div>
-      <h1 class='product-name'>${name}</h1>
+      <h1>${name}</h1>
       <img src="${image}" alt="cute embroidered shirt">
       <h2 class="invisible">SOLD</h2>
       <a href="#"><p class="customers-only invisible">Message seller</a></p>
@@ -119,7 +114,6 @@ getLoginStatus();
       <p>Listed on: ${time}</p>
       </div>
     `);
-    getLoginStatus();
     $main.append($productPopup);
   };
 
@@ -138,54 +132,6 @@ getLoginStatus();
         renderProductPopup($name, $img, $description, $seller, $time);
       });
     }
-  })
-
-  //This section handles the "add to favorites" link
-  const addToFavorites = function(data) {
-    return $.ajax({
-      method: "POST",
-      url: "/api/products/favorites",
-      data,
-      success: console.log('success')
-    });
-  }
-
-  const getFavorites = function() {
-    return $.ajax({
-      url: "/api/products/favorites",
-      method:'GET',
-      dataType: 'json',
-      success: function(data) {
-        console.log(data)
-        $main.empty();
-        renderFeaturedProducts(data);
-        $main.prepend(`<div class="container" id="products">
-        <h2 class="featured-title">Favorites</h2>
-        <div class="row product-row justify-content-left">
-        </div>
-        </div>`);
-        $search.empty();
-        $search.append($searchButton);
-      }
-    })
-  };
-
-  $(document).on('click', '#add-to-favorites', function(event) {
-    event.preventDefault();
-    let name = $(this).parent().parent().find('.product-name').html();
-    addToFavorites({name})
-    .then(getFavorites())
-    .then((data) => {
-      $main.empty();
-      renderFeaturedProducts(data);
-      $main.prepend(`<div class="container" id="products">
-      <h2 class="featured-title">Search Results</h2>
-      <div class="row product-row justify-content-left">
-      </div>
-      </div>`);
-      $search.empty();
-      $search.append($searchButton);
-    })
   })
 
   //This section pops up an add listing page

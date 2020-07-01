@@ -9,7 +9,8 @@ module.exports = (db) => {
     products.description as description,
     products.date_added as date_added,
     admins.name as seller,
-    admins.email as email
+    admins.email as email,
+    products.sold as sold
     FROM products JOIN admins
     ON admins.id = admin_id;`)
       .then(data => {
@@ -108,12 +109,39 @@ module.exports = (db) => {
   });
 
   router.post('/delete', (req, res) => {
-    let queryString =`
+    console.log(req.body);
+    return db.query(`
     DELETE FROM products
-    WHERE product.name = $1`;
-
-    db.query(queryString, req.body.name);
+    WHERE product.name = $1;` , [`${req.body.name}`])
+    .then(data => {
+      const products = data.rows;
+      console.log(products);
+      res.json({ products });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
   });
+
+  router.post('/sold', (req, res) => {
+    console.log(req.body)
+    return db.query(`
+    UPDATE products
+    SET sold = true
+    WHERE product.name = $1;` , [`3-D Printed Skull`])
+    .then(data => {
+      const products = data.rows;
+      console.log(products);
+      res.json({ products });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+  })
 
   router.post('/favorites',(req, res) => {
     console.log('issahit');

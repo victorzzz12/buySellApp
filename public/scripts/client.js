@@ -112,7 +112,7 @@ $(document).ready(() => {
         <button class="delete btn btn-danger">Delete</button>
         <button class="sold btn btn-success">Mark as sold</button>
       </div>
-      <h1>${name}</h1>
+      <h1 class='product-name'>${name}</h1>
       <img src="${image}" alt="cute embroidered shirt">
       <h2 class="invisible">SOLD</h2>
       <a href="#"><p class="customers-only invisible">Message seller</a></p>
@@ -176,9 +176,6 @@ $(document).ready(() => {
     event.preventDefault();
     let name = $(this).parent().parent().find('.product-name').html();
     console.log(name);
-    addToFavorites({name});
-    getFavorites()
-    .then(data => renderFeaturedProducts(data));
     addToFavorites({name})
     .then(getFavorites())
     .then((data) => {

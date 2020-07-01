@@ -43,7 +43,7 @@ module.exports = (db) => {
     if (options.sold === false) {
       queryString += `WHERE products.sold = false `
     } else {
-      queryString += 'WHERE products.sold IN (true, false) '
+      queryString += `WHERE products.sold IN (true, false) `
     }
 
     if (options.keywords) {
@@ -62,14 +62,13 @@ module.exports = (db) => {
       }
       const arrayLength = optionsArray.length;
       for (let i = 0; i < arrayLength; i++) {
-        queryParams.push(`${optionsArray[i]}`);
+        queryParams.push(`%${optionsArray[i]}%`);
         if (i === 0) {
-          queryString += `AND products.type IN ($${queryParams.length}`;
+          queryString += `AND products.type ILIKE $${queryParams.length}`;
         } else {
-          queryString += `, $${queryParams.length}`;
+          queryString += `OR products.type ILIKE $${queryParams.length}`;
         }
       }
-      queryString += ') ';
     }
     if (options.minimum_price) {
       queryParams.push(`${options.minimum_price}`);
@@ -81,7 +80,8 @@ module.exports = (db) => {
     }
 
     queryString += `ORDER BY products.price;`
-
+    console.log(queryString);
+    console.log(queryParams);
     db.query(queryString, queryParams)
       .then(data => {
         const products = data.rows;

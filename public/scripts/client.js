@@ -87,11 +87,7 @@ $(document).ready(() => {
   function loadFeaturedProducts() {
     $.ajax("/api/products/", { method: "GET" })
     .then((data) => {
-<<<<<<< HEAD
-      console.log(data)
-=======
       console.log(data.products);
->>>>>>> f8f82b57ad4652d5c40f0e4619807b88a7b22130
       $main.empty();
         renderFeaturedProducts(data);
         $main.prepend(`<div class="container" id="products">
@@ -124,12 +120,12 @@ $(document).ready(() => {
 
 //This section replaces whatever's in the .main-container with an individual product
 
-  const renderProductPopup = function(name, image, description, seller, time) {
+  const renderProductPopup = function(id, name, image, description, seller, time) {
     const $productPopup = $(`<div class="container product-popup">
       <a href="#"><p class="customers-only invisible add-to-favorites">Add To Favorites</p></a>
-      <div class="product-buttons ">
-        <button class="delete btn btn-danger admins-only invisible">Delete</button>
-        <button class="sold btn btn-success admins-only invisible">Mark as sold</button>
+      <div class="product-buttons">
+        <button data-product-id="${id}" class="delete btn btn-danger admins-only invisible">Delete</button>
+        <button data-product-id="${id}" class="sold btn btn-success admins-only invisible">Mark as sold</button>
       </div>
       <h1 class='product-name'>${name}</h1>
       <img src="${image}" alt="cute embroidered shirt">
@@ -146,18 +142,18 @@ $(document).ready(() => {
 
   $.ajax("/api/products/", { method: "GET" })
   .then((data) => {
-    console.log(data);
     for (let i = 0; i < data.products.length; i++) {
       $(document).on('click',`.product-display-${i}`, function(event) {
         event.preventDefault();
         event.stopPropagation();
+        let $id = data.products[i].id;
         let $name = $(`.product-display-${i} .name`).text();
         let $img = $(`.product-display-${i} .image`).text();
         let $description = $(`.product-display-${i} .description`).text();
         let $time = $(`.product-display-${i} .date-added`).text();
         let $seller = $(`.product-display-${i} .admin`).text();
         $main.empty();
-        renderProductPopup($name, $img, $description, $seller, $time);
+        renderProductPopup($id, $name, $img, $description, $seller, $time);
       });
     }
   })
@@ -377,25 +373,32 @@ $(document).ready(() => {
         $search.append($searchButton);
       })
     })
+
+    //Changing whether an item is sold or not
+
     $(document).on('click', '.product-buttons .sold', function(event) {
-      $.ajax("/api/products/sold", { method: "post" })
-        .then((data) => {
-        console.log(data);
-        // if ($('.product-popup h2').hasClass('invisible')) {
-        //   $('.product-popup h2').removeClass('invisible');
-        //   $('.product-popup h2').addClass('visible');
-        // }
-        // if ($('.product-popup h2').hasClass('visible')) {
-        //   $('.sold').hide();
-        // }
-      });
-    });
-    $(document).on('click', '.product-buttons .delete', function(event) {
-      $.ajax("/api/products/delete", { method: "post" })
-      .then((data) => {
-        data.products.slice(0,9);
-        console.log(data.products);
-        console.log('deleted');
+      event.preventDefault();
+      $.ajax({
+        url: "/api/products/sold",
+        method: "POST",
+        data: {id: $(this).data("product-id")}
+      }).done((products) => {
+        console.log(products);
+
       })
+    });
+
+    //Deleting an item from the database
+    $(document).on('click', '.product-buttons .delete', function(event) {
+      event.preventDefault();
+      $.ajax({
+        url: "/api/products/delete",
+        method: "POST",
+        data: {id: $(this).data("product-id")}
+      }).done((products) => {
+        console.log(products);
+      })
+      $main.empty();
+      loadFeaturedProducts();
     });
 });

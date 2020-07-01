@@ -31,6 +31,8 @@ $(document).ready(() => {
     $login.empty();
     console.log(loginData);
     if (loginData.isLoggedIn === false) {
+      $('.right-buttons').removeClass('visible');
+      $('.right-buttons').addClass('invisible');
       $('.logout').removeClass('visible');
       $('.logout').addClass('invisible');
       $('.admins-only').addClass('invisible');
@@ -40,6 +42,8 @@ $(document).ready(() => {
       <button type="submit" action="POST">Login</button>`
       $login.append($loginForm);
     } else {
+      $('.right-buttons').removeClass('invisible');
+      $('.right-buttons').addClass('visible');
       $('.logout').removeClass('invisible');
       $('.logout').addClass('visible');
       if (loginData.isAdmin === true) {
@@ -289,7 +293,8 @@ $(document).ready(() => {
  $(document).on('click', '.logout', function(event) {
   event.preventDefault();
   logOut()
-  .then(() => getLoginStatus());
+  .then(() => getLoginStatus())
+  .then(()=> loadFeaturedProducts());
 });
 
   //This section takes care of search bar

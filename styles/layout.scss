@@ -34,6 +34,10 @@ body {
   display: block;
 }
 
+.main-container {
+  margin-bottom: 20px;
+}
+
 .product-popup {
   @extend %box;
   flex-direction: column;
@@ -100,6 +104,10 @@ body {
   color: white;
   font-size: 1em;
   margin-top: 20px;
+}
+
+.message-form label {
+  color: white;
 }
 
 .new-product-form {

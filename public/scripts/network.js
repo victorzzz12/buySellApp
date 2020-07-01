@@ -21,4 +21,11 @@ const submitProducts = function(data) {
   });
 }
 
+const submitMessage = function(data) {
+  return $.ajax({
+    method: "POST",
+    url: "/api/users/messages",
+    data
+  });
+}
 

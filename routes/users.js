@@ -86,6 +86,12 @@ module.exports = (db) => {
     req.session = null;
     res.send(null);
   });
+  //messaging routes
+
+  router.post("/logout", (req, res) => {
+    req.session = null;
+    res.send(null);
+  });
 
   return router;
 };

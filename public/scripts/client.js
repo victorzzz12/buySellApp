@@ -130,7 +130,7 @@ $(document).ready(() => {
       <a href="#"><p class="customers-only invisible message-seller">✉️Message seller</p></a>
       <h2 class="invisible">SOLD</h2>
       <p>${description}</p>
-      <p>${seller}</p>
+      <p class='seller-name'>${seller}</p>
       <p>Listed on: ${time}</p>
       </div>
     `);
@@ -209,14 +209,67 @@ $(document).ready(() => {
     .then(getFavorites())
     .then((data) => {
       $main.empty();
-      // renderFeaturedProducts(data);
+      renderFeaturedProducts(data);
     })
   })
 
   //This section handles the "message seller" link
+  const renderMessageForm = function(object) {
+    let productName = object.name;
+    let sellerName = object.seller;
+    const $messageForm = `<div class="listing-container">
+    <h2>Conduct A Message</h2>
+    <form action = "" method="" class="message-form">
+      <div class="new-product-form__field-wrapper">
+        <label for="product-name">Subject: ${productName}</label><br>
+        <input class="invisible" type="text" name="product-name" value="${productName}">
+      </div>
+      <div class="new-product-form__field-wrapper">
+        <label for="product-seller">Seller: ${sellerName}</label><br>
+        <input class="invisible" value="${sellerName}" type="text" name="product-seller">
+      </div>
+      <div class="new-product-form__field-wrapper">
+        <label for="message">Your message:</label>
+        <textarea placeholder="Description" name="message" cols="50" rows="5"></textarea>
+      </div>
+      <div class="new-product-form__field-wrapper">
+        <button class="add-listing-button">Send Message</button>
+        <a id="product-form__cancel" href="/">Cancel</a>
+        <p class="listing-message">Sent!</p>
+      </div>
+    </form>
+  </div>`;
+    $('.search-popup').hide();
+    $('.search-div').hide();
+    $main.empty();
+    $main.append($messageForm);
+    $('.listing-message').hide();
+  }
+
   $(document).on('click','.message-seller', function(event) {
     event.preventDefault();
+    console.log('issahit');
+    let name = $(this).parent().parent().find('.product-name').html();
+    let seller =$(this).parent().parent().find('.seller-name').html();
+    seller = seller.slice(9);
+    renderMessageForm({name, seller});
   })
+
+  $(document).on('submit', '.message-form', function(event) {
+    event.preventDefault();
+    const data = $(this).serialize();
+    submitMessage(data)
+    // .then(() => {
+    // })
+    // .catch((error) => {
+    //   console.log('fail');
+    //   console.error(error);
+    // })
+    // $('.add-listing-button').hide();
+    // $('#product-form__cancel').hide();
+    // $('.listing-message').show();;
+  })
+
   //This section handles the add listing button
   $(document).on('click','.add-listing', function(event) {
     const $addListing = $(`

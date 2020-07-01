@@ -3,6 +3,6 @@ CREATE TABLE messages (
   id SERIAL PRIMARY KEY NOT NULL,
   user_id INTEGER NOT NULL REFERENCES users(id),
   admin_id INTEGER NOT NULL REFERENCES admins(id),
-  content TEXTNOT NULL,
+  content TEXT NOT NULL,
   from_user BOOLEAN NOT NULL /* this checks if the message is from user vs. from sender*/
 );

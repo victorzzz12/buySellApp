@@ -215,8 +215,9 @@ $(document).ready(() => {
 
   //This section handles the "message seller" link
   const renderMessageForm = function(object) {
-    let productName = object.name;
-    let sellerName = object.seller;
+    const productName = object.name;
+    const sellerName = object.seller;
+    const fromCustomer = object.fromCustomer;
     const $messageForm = `<div class="listing-container">
     <h2>Conduct A Message</h2>
     <form action = "" method="" class="message-form">
@@ -232,6 +233,7 @@ $(document).ready(() => {
         <label for="message">Your message:</label>
         <textarea placeholder="Description" name="message" cols="50" rows="5"></textarea>
       </div>
+      <input class='invisible' name = "fromCustomer" type="text" value="${fromCustomer}">
       <div class="new-product-form__field-wrapper">
         <button class="add-listing-button">Send Message</button>
         <a id="product-form__cancel" href="/">Cancel</a>
@@ -252,12 +254,14 @@ $(document).ready(() => {
     let name = $(this).parent().parent().find('.product-name').html();
     let seller =$(this).parent().parent().find('.seller-name').html();
     seller = seller.slice(9);
-    renderMessageForm({name, seller});
+    let fromCustomer = true;
+    renderMessageForm({name, seller, fromCustomer});
   })
 
   $(document).on('submit', '.message-form', function(event) {
     event.preventDefault();
     const data = $(this).serialize();
+    console.log(data);
     submitMessage(data)
     // .then(() => {
     // })

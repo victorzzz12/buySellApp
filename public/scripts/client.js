@@ -130,7 +130,7 @@ $(document).ready(() => {
       <a href="#"><p class="customers-only invisible message-seller">✉️Message seller</p></a>
       <h2 class="invisible">SOLD</h2>
       <p>${description}</p>
-      +      <p class='seller-name'>${seller}</p>
+      <p class='seller-name'>${seller}</p>
       <p>Listed on: ${time}</p>
       </div>
     `);
@@ -237,7 +237,7 @@ const renderMessageForm = function(object) {
       <div class="new-product-form__field-wrapper">
  <button class="add-listing-button">Send Message</button>
         <a id="product-form__cancel" href="/">Cancel</a>
-        <p class="listing-message">Sent!</p>
+        <p class="listing-message">Sent! Await a response from the seller. </p>
       </div>
     </form>
   </div>`;
@@ -261,16 +261,15 @@ $(document).on('click','.message-seller', function(event) {
      event.preventDefault();
      const data = $(this).serialize();
      console.log(data);
-   submitMessage(data)
-    // .then(() => {
-    // })
-    // .catch((error) => {
-    //   console.log('fail');
-    //   console.error(error);
-    // })
-    // $('.add-listing-button').hide();
-    // $('#product-form__cancel').hide();
-    // $('.listing-message').show();;
+    submitMessage(data)
+    .then(() => {
+    })
+    .catch((error) => {
+      console.log('fail', error);
+    })
+    $('.add-listing-button').hide();
+    $('#product-form__cancel').hide();
+    $('.listing-message').show();;
   })
 
 

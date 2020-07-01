@@ -41,8 +41,8 @@ $(document).ready(() => {
         $admins.addClass('visible');
       }
       if (loginData.isAdmin === false) {
-        $('customers-only').removeClass('invisible');
-        $('customers-only').addClass('visible');
+        $('.customers-only').removeClass('invisible');
+        $('.customers-only').addClass('visible');
       }
       //logout form later
     }
@@ -113,6 +113,7 @@ $(document).ready(() => {
       <p>Listed on: ${time}</p>
       </div>
     `);
+    getLoginStatus();
     $main.append($productPopup);
   };
 

@@ -10,7 +10,7 @@
   * mark items as SOLD! - V
     * add sold display to product popup if product is sold - V
   * send a message via app, email, or text back on negotiations in buying the said item - V & E
-* fix dates - V
+* fix dates/Or remove them altogether :) :) :) :) - V
 
 ## Nav bar
   *adjust nav bar based on admin/user(OR show a dashboard) - E

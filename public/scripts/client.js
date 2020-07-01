@@ -105,7 +105,7 @@ getLoginStatus();
 
   const renderProductPopup = function(name, image, description, seller, time) {
     const $productPopup = $(`<div class="container product-popup">
-      <a href="#"><p class="customers-only invisible customer-options" id="add-to-favorites">Add To Favorites</p></a>
+      <a href="#"><p class="customers-only invisible customer-options">Add To Favorites</p></a>
       <div class="product-buttons">
         <button class="delete btn btn-danger">Delete</button>
         <button class="sold btn btn-success">Mark as sold</button>

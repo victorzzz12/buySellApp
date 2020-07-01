@@ -1,4 +1,3 @@
-
 function logIn(data) {
   return $.ajax({
     method: "POST",

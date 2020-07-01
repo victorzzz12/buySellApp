@@ -1,3 +1,4 @@
+
 function logIn(data) {
   return $.ajax({
     method: "POST",
@@ -7,10 +8,11 @@ function logIn(data) {
 }
 
 const submitProducts = function(data) {
-  console.log('ajax hit');
   return $.ajax({
     method: "POST",
-    url: "/",
+    url: "/api/products",
     data
   });
 }
+
+

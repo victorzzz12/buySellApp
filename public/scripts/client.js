@@ -85,7 +85,6 @@ $(document).ready(() => {
   function loadFeaturedProducts() {
     $.ajax("/api/products/", { method: "GET" })
     .then((data) => {
-      console.log(data.products);
       $main.empty();
         renderFeaturedProducts(data);
         $main.prepend(`<div class="container" id="products">
@@ -118,7 +117,7 @@ $(document).ready(() => {
 
 //This section replaces whatever's in the .main-container with an individual product
 
-  const renderProductPopup = function(id, name, image, description, seller, time) {
+  const renderProductPopup = function(id, name, image, description, seller, sold, price) {
     const $productPopup = $(`<div class="container product-popup">
       <div class="product-buttons">
         <button data-product-id="${id}" class="delete btn btn-danger admins-only invisible">Delete</button>
@@ -128,14 +127,18 @@ $(document).ready(() => {
       <img src="${image}" alt="cute embroidered shirt">
       <a href="#"><p class="customers-only invisible add-to-favorites">⭐️Add To Favorites</p></a>
       <a href="#"><p class="customers-only invisible message-seller">✉️Message seller</p></a>
-      <h2 class="invisible">SOLD</h2>
+      <h2>SOLD</h2>
       <p>${description}</p>
+      <p>Price: ${price}</p>
       <p class='seller-name'>${seller}</p>
-      <p>Listed on: ${time}</p>
       </div>
     `);
     getLoginStatus();
     $main.append($productPopup);
+    $('.product-popup h2').hide();
+    if (sold === true) {
+      $('.product-popup h2').show();
+    }
   };
 
   $.ajax("/api/products/", { method: "GET" })
@@ -147,11 +150,12 @@ $(document).ready(() => {
         let $id = data.products[i].id;
         let $name = $(`.product-display-${i} .name`).text();
         let $img = $(`.product-display-${i} .image`).text();
+        let $price = $(`.product-display-${i} .price`).text();
         let $description = $(`.product-display-${i} .description`).text();
-        let $time = $(`.product-display-${i} .date-added`).text();
         let $seller = $(`.product-display-${i} .admin`).text();
+        let $sold = data.products[i].sold;
         $main.empty();
-        renderProductPopup($id, $name, $img, $description, $seller, $time);
+        renderProductPopup($id, $name, $img, $description, $seller, $sold, $price);
       });
     }
   })
@@ -444,8 +448,7 @@ $(document).on('click','.message-seller', function(event) {
         data: {id: $(this).data("product-id")}
       }).done((products) => {
         console.log(products);
-        $('.product-popup h2').removeClass('invisible');
-        $('.product-popup h2').addClass('visible');
+        $('.product-popup h2').show();
       })
     });
 

@@ -154,7 +154,7 @@ module.exports = (db) => {
     SELECT $1, id
     FROM products
     WHERE name = $2;`, [`${user}`, `${name}`])
-    .then(res => res.rows)
+    .then(res => {console.log('post/favorites', res.rows)})
     .catch(err => (console.log('post/favorites', err)));
   })
 

@@ -74,11 +74,7 @@ $(document).ready(() => {
   function loadFeaturedProducts() {
     $.ajax("/api/products/", { method: "GET" })
     .then((data) => {
-<<<<<<< HEAD
       console.log(data)
-=======
-      console.log(data.products);
->>>>>>> delete1
       $main.empty();
         renderFeaturedProducts(data);
         $main.prepend(`<div class="container" id="products">

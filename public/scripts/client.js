@@ -22,9 +22,7 @@ $(document).ready(() => {
       }
     })
   }
-
-  getLoginStatus();
-
+getLoginStatus();
   //This section populates header with login form or logout button
 
   const renderLogin = function(loginData) {
@@ -39,7 +37,6 @@ $(document).ready(() => {
       if (loginData.isAdmin === true) {
         $admins.removeClass('invisible');
         $admins.addClass('visible');
-
       }
       if (loginData.isAdmin === false) {
         $('.customers-only').removeClass('invisible');

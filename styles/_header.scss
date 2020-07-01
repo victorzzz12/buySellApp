@@ -72,7 +72,7 @@ header {
     .login {
       display: flex;
       flex-direction: row;
-      align-items: right;
+      justify-content: flex-end;
       padding-top: 10px;
       height: 30%;
     }

@@ -2,17 +2,22 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
+  function getProducts() {
+    return db.query(`SELECT products.name as product,
+      products.id,
+      products.photo_url as photo_url,
+      products.price as price,
+      products.description as description,
+      products.date_added as date_added,
+      admins.name as seller,
+      admins.email as email,
+      products.sold as sold
+      FROM products JOIN admins
+      ON admins.id = admin_id;`);
+  }
+
   router.get("/", (req, res) => {
-    db.query(`SELECT products.name as product,
-    products.photo_url as photo_url,
-    products.price as price,
-    products.description as description,
-    products.date_added as date_added,
-    admins.name as seller,
-    admins.email as email,
-    products.sold as sold
-    FROM products JOIN admins
-    ON admins.id = admin_id;`)
+    getProducts()
       .then(data => {
         const products = data.rows;
         res.json({ products });
@@ -24,7 +29,7 @@ module.exports = (db) => {
       });
   });
   //this route is the destination for product search
-    router.post("/search", (req, res) => {
+  router.post("/search", (req, res) => {
 
     const options = req.body;
     console.log(options);
@@ -69,7 +74,7 @@ module.exports = (db) => {
           queryString += `AND products.type IN ($${queryParams.length}`;
         } else {
           queryString += `, $${queryParams.length}`;
-        }
+        }    console.log(req.params);
       }
       queryString += ') ';
     }
@@ -108,35 +113,45 @@ module.exports = (db) => {
     .then(res => res.rows);
   });
 
+
+
+
   router.post('/delete', (req, res) => {
-    console.log(req.body);
+    console.log(req.body)
+
     return db.query(`
-    DELETE FROM products
-    WHERE product.name = $1;` , [`${req.body.name}`])
-    .then(data => {
-      const products = data.rows;
-      console.log(products);
-      res.json({ products });
+      DELETE FROM favorites
+      WHERE favorites.product_id = $1;` , [`${req.body.id}`])
+    .then(db.query(`
+      DELETE FROM products
+      WHERE products.id = $1;` , [`${req.body.id}`]))
+    .then(() => {
+      getProducts()
+      .then(data => {
+        const products = data.rows;
+        res.json({ products });
+      })
     })
     .catch(err => {
+      console.log(err)
       res
         .status(500)
         .json({ error: err.message });
-    });
+    })
   });
 
   router.post('/sold', (req, res) => {
-    console.log(req.body)
     return db.query(`
     UPDATE products
     SET sold = true
-    WHERE product.name = $1;` , [`3-D Printed Skull`])
+    WHERE products.id = $1;` , [`${req.body.id}`])
     .then(data => {
       const products = data.rows;
       console.log(products);
       res.json({ products });
     })
     .catch(err => {
+      console.log(err);
       res
         .status(500)
         .json({ error: err.message });

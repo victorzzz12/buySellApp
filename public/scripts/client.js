@@ -74,7 +74,11 @@ $(document).ready(() => {
   function loadFeaturedProducts() {
     $.ajax("/api/products/", { method: "GET" })
     .then((data) => {
+<<<<<<< HEAD
       console.log(data)
+=======
+      console.log(data.products);
+>>>>>>> delete1
       $main.empty();
         renderFeaturedProducts(data);
         $main.prepend(`<div class="container" id="products">
@@ -353,18 +357,22 @@ $(document).ready(() => {
       })
     })
     $(document).on('click', '.product-buttons .sold', function(event) {
-      $('.sold').hide();
-      if ($('.product-popup h2').hasClass('invisible')) {
-        $('.product-popup h2').removeClass('invisible');
-        $('.product-popup h2').addClass('visible');
-      }
-      if ($('.product-popup h2').hasClass('visible')) {
-        $('.sold').hide();
-      }
+      $.ajax("/api/products/sold", { method: "post" })
+        .then((data) => {
+        console.log(data);
+        // if ($('.product-popup h2').hasClass('invisible')) {
+        //   $('.product-popup h2').removeClass('invisible');
+        //   $('.product-popup h2').addClass('visible');
+        // }
+        // if ($('.product-popup h2').hasClass('visible')) {
+        //   $('.sold').hide();
+        // }
+      });
     });
     $(document).on('click', '.product-buttons .delete', function(event) {
-      $.ajax("/api/products", { method: "get" })
+      $.ajax("/api/products/delete", { method: "post" })
       .then((data) => {
+        data.products.slice(0,9);
         console.log(data.products);
         console.log('deleted');
       })

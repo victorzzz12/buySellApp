@@ -119,18 +119,18 @@ $(document).ready(() => {
 
   const renderProductPopup = function(id, name, image, description, seller, sold, price) {
     const $productPopup = $(`<div class="container product-popup">
-      <div class="product-buttons">
-        <button data-product-id="${id}" class="delete btn btn-danger admins-only invisible">Delete</button>
-        <button data-product-id="${id}" class="sold btn btn-success admins-only invisible">Mark as sold</button>
-      </div>
-      <h1 class='product-name'>${name}</h1>
-      <img src="${image}" alt="cute embroidered shirt">
-      <a href="#"><p class="customers-only invisible add-to-favorites">⭐️Add To Favorites</p></a>
-      <a href="#"><p class="customers-only invisible message-seller">✉️Message seller</p></a>
-      <h2>SOLD</h2>
-      <p>${description}</p>
-      <p>Price: ${price}</p>
-      <p class='seller-name'>${seller}</p>
+        <div class="product-buttons">
+          <button data-product-id="${id}" class="delete btn btn-danger admins-only invisible">Delete</button>
+          <button data-product-id="${id}" class="sold btn btn-success admins-only invisible">Mark as sold</button>
+        </div>
+        <h1 class='product-name'>${name}</h1>
+        <img src="${image}" alt="cute embroidered shirt">
+        <a href="#"><p class="customers-only invisible add-to-favorites">⭐️Add To Favorites</p></a>
+        <a href="#"><p class="customers-only invisible message-seller">✉️Message seller</p></a>
+        <h2>SOLD</h2>
+        <p>${description}</p>
+        <p>Price: ${price}</p>
+        <p class='seller-name'>${seller}</p>
       </div>
     `);
     getLoginStatus();
@@ -447,8 +447,7 @@ $(document).on('click','.message-seller', function(event) {
         url: "/api/products/sold",
         method: "POST",
         data: {id: $(this).data("product-id")}
-      }).done((products) => {
-        console.log(products);
+      }).done(() => {
         $('.product-popup h2').show();
       })
     });

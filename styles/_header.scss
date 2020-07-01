@@ -72,7 +72,7 @@ header {
     .login {
       display: flex;
       flex-direction: row;
-      align-items: right;
+      justify-content: flex-end;
       padding-top: 10px;
       height: 30%;
     }
@@ -93,7 +93,7 @@ header {
     button {
       display: flex;
       justify-content: center;
-      margin: 30px;
+      margin: 5px;
     }
   }
 

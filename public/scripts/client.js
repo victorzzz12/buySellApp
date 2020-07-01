@@ -31,20 +31,33 @@ $(document).ready(() => {
     $login.empty();
     console.log(loginData);
     if (loginData.isLoggedIn === false) {
+      $('.right-buttons').removeClass('visible');
+      $('.right-buttons').addClass('invisible');
+      $('.logout').removeClass('visible');
+      $('.logout').addClass('invisible');
+      $('.admins-only').addClass('invisible');
+      $('.customers-only').addClass('invisible');
       const $loginForm = `<input type="text" name="email" placeholder="username@example.com">
       <input type="text" name="password" placeholder="password">
       <button type="submit" action="POST">Login</button>`
       $login.append($loginForm);
     } else {
+      $('.right-buttons').removeClass('invisible');
+      $('.right-buttons').addClass('visible');
+      $('.logout').removeClass('invisible');
+      $('.logout').addClass('visible');
       if (loginData.isAdmin === true) {
         $('.admins-only').removeClass('invisible');
         $('.admins-only').addClass('visible');
+        $('.customers-only').removeClass('visible');
+        $('.customers-only').addClass('invisible');
       }
       if (loginData.isAdmin === false) {
+        $('.admins-only').removeClass('visible');
+        $('.admins-only').addClass('invisible');
         $('.customers-only').removeClass('invisible');
         $('.customers-only').addClass('visible');
       }
-      //logout form later
     }
   }
 
@@ -74,7 +87,11 @@ $(document).ready(() => {
   function loadFeaturedProducts() {
     $.ajax("/api/products/", { method: "GET" })
     .then((data) => {
+<<<<<<< HEAD
       console.log(data)
+=======
+      console.log(data.products);
+>>>>>>> f8f82b57ad4652d5c40f0e4619807b88a7b22130
       $main.empty();
         renderFeaturedProducts(data);
         $main.prepend(`<div class="container" id="products">
@@ -275,6 +292,14 @@ $(document).ready(() => {
         getLoginStatus();
       });
   });
+
+ //This section takes care of logout
+ $(document).on('click', '.logout', function(event) {
+  event.preventDefault();
+  logOut()
+  .then(() => getLoginStatus())
+  .then(()=> loadFeaturedProducts());
+});
 
   //This section takes care of search bar
   const $searchForm = $(`<form action="/api/products/search" method="get" class="search-popup"><div class='form-top-row'><h2>Search Creations</h2><a href="#"><p style="color:maroon" class='close-search'>(close)</p></a></div><div class="form-keyword">

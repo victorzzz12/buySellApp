@@ -81,5 +81,11 @@ module.exports = (db) => {
     }
     login(email, password);
   });
+
+  router.post("/logout", (req, res) => {
+    req.session = null;
+    res.send(null);
+  });
+
   return router;
 };

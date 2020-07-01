@@ -106,5 +106,18 @@ module.exports = (db) => {
     .then(res => res.rows);
   });
 
+  router.post('/favorites',(req, res) => {
+    const name = req.body.name;
+    const user = req.session.userId;
+    console.log(user);
+    return db.query(`
+    INSERT INTO favorites(user_id, product_id)
+    SELECT id FROM, $2
+    SELECT products.id, users.id
+    FROM products OUTER JOIN users
+    WHERE `, [`${name}`, `${user}`])
+    .then();
+  })
+
   return router;
 };

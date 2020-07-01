@@ -5,7 +5,7 @@ $(document).ready(() => {
   const $login = $('.login');
   const $search = $('.search-div')
   const $admins = $(".admins-only")
-  const $customers = $('.customers-only');
+  const $favorites = $('#add-to-favorites');
 
   //This Ajax request returns object containing user status details
 
@@ -23,8 +23,6 @@ $(document).ready(() => {
     })
   }
 
-  getLoginStatus();
-
   //This section populates header with login form or logout button
 
   const renderLogin = function(loginData) {
@@ -41,8 +39,8 @@ $(document).ready(() => {
         $admins.addClass('visible')
       }
       if (loginData.isAdmin === false) {
-        $customers.removeClass('invisible');
-        $customers.addClass('visible');
+        $('.customers-only').removeClass('invisible');
+        $('.customers-only').addClass('visible');
       }
       //logout form later
     }
@@ -99,7 +97,8 @@ $(document).ready(() => {
 
   const renderProductPopup = function(name, image, description, seller, time) {
     const $productPopup = $(`<div class="container product-popup">
-      <h1>${name}</h1>
+      <a href="#"><p class="customers-only invisible customer-options" id="add-to-favorites">Add To Favorites</p></a>
+      <h1 class="product-name">${name}</h1>
       <img src="${image}" alt="cute embroidered shirt">
       <h2 class="invisible">SOLD</h2>
       <a href="#"><p class="customers-only invisible">Message seller</a></p>
@@ -108,6 +107,7 @@ $(document).ready(() => {
       <p>Listed on: ${time}</p>
       </div>
     `);
+    getLoginStatus();
     $main.append($productPopup);
   };
 
@@ -126,6 +126,14 @@ $(document).ready(() => {
         renderProductPopup($name, $img, $description, $seller, $time);
       });
     }
+  })
+
+  //This section handles the "add to favorites" link
+
+  $(document).on('click', '#add-to-favorites', function(event) {
+    event.preventDefault();
+    let name = $(this).parent().parent().find('.product-name').html();
+    addToFavorites({name});
   })
 
   //This section pops up an add listing page

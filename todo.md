@@ -27,6 +27,10 @@
 * Decrease size of text box on featured page - V
 * Make images not stretch on popup boxes -V
 
+## Bugs List
+* The product popup does not show up with add to favorites right away; it quickly reloads before it appears
+* search queries not perfect
+
 ## Stretch/cleanup
 * debug search results
 * refactor

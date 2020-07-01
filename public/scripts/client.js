@@ -39,11 +39,10 @@ $(document).ready(() => {
       if (loginData.isAdmin === true) {
         $admins.removeClass('invisible');
         $admins.addClass('visible');
-
       }
       if (loginData.isAdmin === false) {
-        $customers.removeClass('invisible');
-        $customers.addClass('visible');
+        $('customers-only').removeClass('invisible');
+        $('customers-only').addClass('visible');
       }
       //logout form later
     }

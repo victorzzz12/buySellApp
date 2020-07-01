@@ -2,18 +2,20 @@
 
 ## Routes/Features
 * users 
-  * featured products (actually show featured rather than all)
-  * send message to other users listing the items
-  * favorite products
+  * featured products (actually show featured rather than all) - E
+  * send message to other users listing the items - 
+  * favorite products - E
 * admin
-  * post items, which can be seen by others
-  * remove items from the site
-  * mark items as SOLD!
-  * send a message via app, email, or text back on negotiations in buying the said item
+  * remove items from the site - V
+  * mark items as SOLD! - V
+    * add sold display to product popup if product is sold - V
+  * send a message via app, email, or text back on negotiations in buying the said item - V & E
+* fix dates - V
 
 ## Nav bar
-  *adjust nav bar based on admin/user(OR show a dashboard)
-  *Welcome back message for user (stretch)
+  *adjust nav bar based on admin/user(OR show a dashboard) - E
+  *Logout button - E 
+  *Welcome back message for user (stretch) - E
 
 ## Signup (Stretch)
 
@@ -21,9 +23,9 @@
 * Make Everything Pretty
 * Responsive Design for Mobile
   * Adjust/remove header
-  * Stack login
-* Decrease size of text box on featured page
-* Make images not stretch on popup boxes 
+  * Stack login - E
+* Decrease size of text box on featured page - V
+* Make images not stretch on popup boxes -V
 
 ## Stretch/cleanup
 * debug search results

@@ -86,7 +86,6 @@ module.exports = (db) => {
     db.query(queryString, queryParams)
       .then(data => {
         const products = data.rows;
-        console.log(products);
         res.json({ products });
       })
       .catch(err => {
@@ -106,19 +105,39 @@ module.exports = (db) => {
     .then(res => res.rows);
   });
 
+  //favorites post; favorites get
   router.post('/favorites',(req, res) => {
+    console.log('issahit');
     const name = req.body.name;
     const user = req.session.userId;
-    console.log(user);
     return db.query(`
     INSERT INTO favorites(user_id, product_id)
     SELECT $1, id
     FROM products
-    WHERE name = $2
-    RETURNING product_id
-    FROM favorites
-    WHERE user_id = $1;`, [`${user}`, `${name}`])
-    .then(res => {console.log(res)});
+    WHERE name = $2;`, [`${user}`, `${name}`])
+    .then(res => {console.log(res.rows)})
+    .catch(err => (console.log('post/favorites', err)));
+  })
+  router.get('/favorites', (req, res) => {
+    const user = req.session.userId;
+    return db.query(`
+    SELECT products.name as product,
+    products.photo_url as photo_url,
+    products.price as price,
+    products.description as description,
+    products.date_added as date_added,
+    admins.name as seller,
+    admins.email as email
+    FROM products JOIN admins
+    ON admins.id = admin_id
+    JOIN users ON users.id = user_id
+    WHERE user_id = $1;`, [`${user}`])
+    .then(res => {
+      console.log('hit');
+      const favoriteProducts = res.rows;
+      res.json({ favoriteProducts })
+    })
+    .catch(err => (console.log('get/favorites', err)));
   })
 
   router.post('/delete', (req, res) => {

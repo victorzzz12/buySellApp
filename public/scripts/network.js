@@ -1,3 +1,5 @@
+const { json } = require("body-parser");
+
 function logIn(data) {
   return $.ajax({
     method: "POST",
@@ -19,6 +21,14 @@ const addToFavorites = function(data) {
     method: "POST",
     url: "/api/products/favorites",
     data
+  });
+}
+
+const getFavorites = function() {
+  return $.ajax({
+    method:'GET',
+    dataType: 'json',
+    url: "/api/products/favorites"
   });
 }
 

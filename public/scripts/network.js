@@ -10,7 +10,7 @@ function logIn(data) {
 const submitProducts = function(data) {
   return $.ajax({
     method: "POST",
-    url: "/api/products",
+    url: "/",
     data
   });
 }

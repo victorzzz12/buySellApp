@@ -23,6 +23,8 @@ $(document).ready(() => {
     })
   }
 
+  getLoginStatus();
+
   //This section populates header with login form or logout button
 
   const renderLogin = function(loginData) {
@@ -103,7 +105,7 @@ $(document).ready(() => {
         <button class="delete btn btn-danger">Delete</button>
         <button class="sold btn btn-success">Mark as sold</button>
       </div>
-      <h1>${name}</h1>
+      <h1 class='product-name'>${name}</h1>
       <img src="${image}" alt="cute embroidered shirt">
       <h2 class="invisible">SOLD</h2>
       <a href="#"><p class="customers-only invisible">Message seller</a></p>

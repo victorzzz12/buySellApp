@@ -1,4 +1,3 @@
-const { json } = require("body-parser");
 
 function logIn(data) {
   return $.ajax({

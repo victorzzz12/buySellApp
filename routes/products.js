@@ -3,7 +3,8 @@ const router  = express.Router();
 
 module.exports = (db) => {
   function getProducts() {
-    return db.query(`SELECT products.name as product,
+    return db.query(`
+      SELECT products.name as product,
       products.id,
       products.photo_url as photo_url,
       products.price as price,
@@ -13,7 +14,8 @@ module.exports = (db) => {
       admins.email as email,
       products.sold as sold
       FROM products JOIN admins
-      ON admins.id = admin_id;`);
+      ON admins.id = admin_id
+      LIMIT 8;`);
   }
 
   router.get("/", (req, res) => {
@@ -120,8 +122,13 @@ module.exports = (db) => {
     console.log('/delete', req.body)
 
     return db.query(`
+      DELETE FROM messages
+      WHERE messages.product_id = $1;` , [`${req.body.id}`])
+    .then(()=> {
+      db.query(`
       DELETE FROM favorites
       WHERE favorites.product_id = $1;` , [`${req.body.id}`])
+    })
     .then(()=> {
       db.query(`
       DELETE FROM products

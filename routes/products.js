@@ -169,26 +169,17 @@ module.exports = (db) => {
   })
 
   router.post('/favorites',(req, res) => {
-    console.log('issahit');
+    console.log('/favorites issahit');
     const name = req.body.name;
     const user = req.session.userId;
     console.log(name);
     console.log(user);
-    return db.query(`
-    SELECT * FROM favorites
-    JOIN users ON users.id = favorites.user_id
-    WHERE products.user_id = $1 AND
-    users. = $2`, [`${user}`, `${name}`])
-    .then(data =>
-      { if (data) {
         return db.query(`
         INSERT INTO favorites(user_id, product_id)
         SELECT $1, id
         FROM products
         WHERE name = $2;`, [`${user}`, `${name}`])
-        .then(res => res.rows)
-      }
-    .catch(err => (console.log('post/favorites', err)));
+        .then(res => res.rows).catch(err => (console.log('post/favorites', err)));
   })
 
   router.get('/favorites', (req, res) => {

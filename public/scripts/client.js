@@ -262,10 +262,10 @@ $(document).on('click','.message-seller', function(event) {
    })
 
    $(document).on('submit', '.message-form', function(event) {
-     event.preventDefault();
-     const data = $(this).serialize();
-     console.log(data);
-   submitMessage(data)
+      event.preventDefault();
+      const data = $(this).serialize();
+      console.log(data);
+      submitMessage(data);
     // .then(() => {
     // })
     // .catch((error) => {
@@ -461,6 +461,7 @@ $(document).on('click','.message-seller', function(event) {
         data: {id: $(this).data("product-id")}
       }).done((products) => {
         console.log(products);
+        console.log(products.products.length);
       })
       $main.empty();
       loadFeaturedProducts();

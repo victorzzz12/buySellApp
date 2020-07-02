@@ -35,7 +35,7 @@ $(document).ready(() => {
       $('.logout').removeClass('visible');
       $('.logout').addClass('invisible');
       $('.messages-button').removeClass('visible');
-      $('.see-messages-button').addClass('invisible');
+      $('.messages-button').addClass('invisible');
       $('.admins-only').addClass('invisible');
       $('.customers-only').addClass('invisible');
       const $loginForm = `<input type="text" name="email" placeholder="username@example.com">
@@ -144,6 +144,40 @@ $(document).ready(() => {
     }
   };
 
+  const loadFavoriteProducts = function() {
+    $.ajax("/api/products/favorites", { method: "GET"})
+    .then((data) => {
+      for (let i = 0; i < data.products.length; i++) {
+        $('.main-container').on('click',`.product-display-${data.products[i].id}`, function(event) {
+          event.preventDefault();
+          event.stopPropagation();
+          console.log('loadProducts');
+          let $id = data.products[i].id;
+          console.log($id);
+          $main.empty();
+          renderProductPopup(data.products[i]);
+        });
+      }
+    })
+  }
+
+  const loadSearchedProducts = function(data) {
+    $.ajax("/api/products/search", { method: "post", data})
+    .then((data) => {
+      for (let i = 0; i < data.products.length; i++) {
+        $('.main-container').on('click',`.product-display-${data.products[i].id}`, function(event) {
+          event.preventDefault();
+          event.stopPropagation();
+          console.log('loadProducts');
+          let $id = data.products[i].id;
+          console.log($id);
+          $main.empty();
+          renderProductPopup(data.products[i]);
+        });
+      }
+    })
+  }
+
   const loadProducts = function() {
     $.ajax("/api/products/", { method: "GET"})
     .then((data) => {
@@ -161,6 +195,7 @@ $(document).ready(() => {
     })
   }
 
+
   loadProducts();
 
    //this section handles the see favorites button
@@ -168,6 +203,8 @@ $(document).ready(() => {
    $('nav').on('click','.see-favorites', function(event) {
     event.preventDefault();
     getFavorites()
+    $search.empty();
+    $search.append($searchButton);
   });
 
   //This section handles the "add to favorites" link
@@ -186,7 +223,8 @@ $(document).ready(() => {
         <div class="row product-row justify-content-left">
         </div>
         </div>`);
-      }
+      },
+    complete: loadFavoriteProducts()
     })
   };
 
@@ -195,7 +233,7 @@ $(document).ready(() => {
       method: "POST",
       url: "/api/products/favorites",
       data,
-      success: console.log('favorite added')
+      success: () => console.log('favorite added')
     });
   }
 
@@ -204,7 +242,7 @@ $(document).ready(() => {
     let name = $(this).parent().parent().find('.product-name').html();
     console.log(name);
     addToFavorites({name})
-    .then(getFavorites())
+    .then(getFavorites());
   })
 
 
@@ -301,6 +339,7 @@ $(document).ready(() => {
       .then((data) => {
         $main.empty();
         renderFeaturedProducts(data);
+        loadSearchedProducts(data);
         $main.prepend(`<div class="container" id="products">
         <h2 class="featured-title">Search Results</h2>
         <div class="row product-row justify-content-left">

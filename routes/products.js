@@ -39,6 +39,7 @@ module.exports = (db) => {
     let queryString =`SELECT products.name as product,
     products.photo_url as photo_url,
     products.price as price,
+    products.id as id,
     products.description as description,
     products.date_added as date_added,
     products.sold as sold,
@@ -187,6 +188,7 @@ module.exports = (db) => {
     return db.query(`
     SELECT products.name as product,
     products.photo_url as photo_url,
+    products.id as id,
     products.price as price,
     products.description as description,
     products.date_added as date_added,
@@ -199,6 +201,7 @@ module.exports = (db) => {
     WHERE user_id = $1;`, [`${user}`])
     .then(data => {
       const products = data.rows;
+      console.log(products);
       res.json({ products });
     })
     .catch(err => (console.log('get/favorites', err)));

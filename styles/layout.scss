@@ -1,10 +1,11 @@
 @import 'header';
 
 %box {
-  background-color: maroon;
+  background-color: #FC4445;
   padding: 10px;
   padding-top: 30px;
   display: flex;
+  border-radius: 20px;
 }
 
 @media only screen and (min-width: 768px){
@@ -79,8 +80,9 @@ body {
 }
 
 .featured-title {
-  background-color: orange;
+  // background-color: orange;
   color: white;
+  font-family: 'Notable', sans-serif;
 }
 
 .product-row {
@@ -131,4 +133,23 @@ body {
       opacity: 50%;
     }
   }
+}
+
+.message-box {
+  color: white;
+  margin-bottom: 40px;
+  border: 4px solid white;
+  padding: 20px;
+  border-radius: 20px;
+  width: 100%;
+  div {
+    margin-left: 2%;
+  }
+}
+
+.your-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  margin-bottom: 20px;
 }

@@ -131,7 +131,7 @@ $(document).ready(() => {
       <h2>SOLD</h2>
       <p>${product.description}</p>
       <p>Price: ${product.price}</p>
-      <p class='seller-name'>${product.seller}</p>
+      <p class='seller-name'>Made By: ${product.seller}</p>
       </div>
     `)
     getLoginStatus();

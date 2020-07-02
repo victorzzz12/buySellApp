@@ -4,6 +4,7 @@ $(document).ready(() => {
   const renderMessageForm = function(object) {
     const productName = object.name;
     const sellerName = object.seller;
+    console.log(object);
     const fromCustomer = object.fromCustomer;
     const $messageForm = `<div class="listing-container">
     <h2>Conduct A Message</h2>
@@ -27,8 +28,7 @@ $(document).ready(() => {
        <button class="add-listing-button btn btn-primary">Send Message</button>
          <p class="listing-message">Sent! Await a response from the seller. </p>
        </div>
-     </form>
-    /div>`;
+     </form>`;
      $('.search-popup').hide();
      $('.search-div').hide();
      $main.empty();

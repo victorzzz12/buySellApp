@@ -160,12 +160,6 @@ $(document).ready(() => {
           console.log('loadProducts');
           let $id = data.products[i].id;
           console.log($id);
-          // let $name = $(`.product-display-${i} .name`).text();
-          // let $img = $(`.product-display-${i} .image`).text();
-          // let $price = $(`.product-display-${i} .price`).text();
-          // let $description = $(`.product-display-${i} .description`).text();
-          // let $seller = $(`.product-display-${i} .admin`).text();
-          // let $sold = data.products[i].sold;
           $main.empty();
           renderProductPopup(data.products[i]);
         });

@@ -274,6 +274,7 @@ $(document).on('click','.message-seller', function(event) {
      renderMessageForm({name, seller, fromCustomer});
    })
 
+<<<<<<< HEAD
 
 $(document).on('submit', '.message-form', function(event) {
      event.preventDefault();
@@ -288,6 +289,22 @@ $(document).on('submit', '.message-form', function(event) {
     $('.add-listing-button').hide();
     $('#product-form__cancel').hide();
     $('.listing-message').show();;
+=======
+   $(document).on('submit', '.message-form', function(event) {
+      event.preventDefault();
+      const data = $(this).serialize();
+      console.log(data);
+      submitMessage(data);
+    // .then(() => {
+    // })
+    // .catch((error) => {
+    //   console.log('fail');
+    //   console.error(error);
+    // })
+    // $('.add-listing-button').hide();
+    // $('#product-form__cancel').hide();
+    // $('.listing-message').show();;
+>>>>>>> bugs
   })
 
 //this section takes care of messages-button click
@@ -501,6 +518,7 @@ product_name*/
         data: {id: $(this).data("product-id")}
       }).done((products) => {
         console.log(products);
+        console.log(products.products.length);
       })
       $main.empty();
       loadFeaturedProducts();

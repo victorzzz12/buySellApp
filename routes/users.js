@@ -104,29 +104,35 @@ module.exports = (db) => {
   })
 
   router.post("/messages", (req, res) => {
+    console.log(req.body);
     const fromId = req.session.userId;
+    const productName = req.body['product-name']
     const toName = req.body['product-seller'];
     const message = req.body.message;
+    console.log({fromId,productName, toName, message});
     const customerSendQuery = `
-    INSERT INTO messages (user_id, admin_id, content, from_user)
-    SELECT $1 as user_id, admins.id as admin_id, $3, TRUE
-    FROM admins
-    WHERE admins.name = $2;`
-    const customerParams = [`${fromId}`, `${toName}`, `${message}`]
-    // const sellerSendQuery;
-    // const sellerParams;
-    let query;
-    let params;
+    INSERT INTO messages (user_id, admin_id, content, from_user, product_id)
+    SELECT $1, admins.id, $3, TRUE, products.id
+    FROM admins, products
+    WHERE admins.name = $2 AND products.name = $4;`
+    const params = [`${fromId}`, `${toName}`, `${message}`, `${productName}`]
+    const sellerSendQuery = `
+    INSERT INTO messages (user_id, admin_id, content, from_user, product_id)
+    SELECT users.id, $1, $3, FALSE, products.id
+    FROM users, products
+    WHERE users.name = $2 AND products.name = $4;`;
+    let query = "";
     console.log(req.body);
-    // if (req.body.fromCustomer === true) {
+    console.log(req.body.fromCustomer);
+    if (req.body.fromCustomer === 'true') {
       query = customerSendQuery;
-      params = customerParams;
-    // } else {
-    //   query = sellerSendQuery;
-    //   params = sellerParams;
-    // }
+      console.log(query);
+    } else {
+      query = sellerSendQuery;
+      console.log(query);
+    }
     return db.query(query, params)
-    .then(() => console.log('success'))
+    .then((res) => console.log(res.rows))
   });
 
   return router;

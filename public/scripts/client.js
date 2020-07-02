@@ -118,7 +118,6 @@ $(document).ready(() => {
     $('.search-popup').show();
     loadFeaturedProducts();
   });
-
 //This section replaces whatever's in the .main-container with an individual product
 
   const renderProductPopup = function(id, name, image, description, seller, sold, price) {
@@ -136,7 +135,16 @@ $(document).ready(() => {
       <p>Price: ${price}</p>
       <p class='seller-name'>${seller}</p>
       </div>
-    `);
+    `)
+    // .then(data=> {
+      //   if (data.isAdmin === 'true') {
+      //     $.ajax({
+      //       method: "GET",
+      //       url: "/api/users/messages/admin"
+      //     })
+      //     .then((messages)=>loadMessages(messages));
+      //   }
+      // });
     getLoginStatus();
     $main.append($productPopup);
     $('.product-popup h2').hide();
@@ -243,7 +251,7 @@ const renderMessageForm = function(object) {
       </div>
       <input class='invisible' name = "fromCustomer" type="text" value="${fromCustomer}">
       <div class="new-product-form__field-wrapper">
- <button class="add-listing-button">Send Message</button>
+ <button class="add-listing-button">Send Message</button><br>
         <a id="product-form__cancel" href="/">Cancel</a>
         <p class="listing-message">Sent! Await a response from the seller. </p>
       </div>
@@ -284,19 +292,29 @@ $(document).on('submit', '.message-form', function(event) {
 //this section takes care of messages-button click
 
   const loadMessages = function(messages) {
-    const
+/* content: "hi"
+sender: "Alice"
+user_id: 1
+product_name*/
+    // const
     // for (let message of messages)
-    console.log(messages[0]);
+    console.log(messages);
     // const $inbox = ``
+
   }
 
   $(document).on('click', '.messages-button', function(event) {
     event.preventDefault();
-    $.ajax({
-      method: "GET",
-      url: "/api/users/messages/admin"
-    })
-    .then((messages)=>loadMessages(messages));
+    console.log(getLoginStatus());
+    // .then(data=> {
+    //   if (data.isAdmin === 'true') {
+    //     $.ajax({
+    //       method: "GET",
+    //       url: "/api/users/messages/admin"
+    //     })
+    //     .then((messages)=>loadMessages(messages));
+    //   }
+    // });
   })
 
 

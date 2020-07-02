@@ -146,7 +146,8 @@ module.exports = (db) => {
     return db.query(`
     UPDATE products
     SET sold = true
-    WHERE products.id = $1;` , [`${req.body.id}`])
+    WHERE products.id = $1
+    RETURNING *;` , [`${req.body.id}`])
     .then(data => {
       const products = data.rows;
       console.log(products);

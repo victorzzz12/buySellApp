@@ -90,7 +90,7 @@ $(document).ready(() => {
     $.ajax("/api/products/",
     { method: "GET",
     success: function(data) {
-      console.log(data);
+      console.log('get api/products success', data);
       $main.empty();
       renderFeaturedProducts(data);
       $main.prepend(`<div class="container" id="products">
@@ -113,11 +113,12 @@ $(document).ready(() => {
     $('.search-div').show();
     $('.search-popup').show();
     loadFeaturedProducts();
+    loadProducts();
   });
 //This section replaces whatever's in the .main-container with an individual product
 
   const renderProductPopup = function(product) {
-    console.log(product);
+    console.log('render-popup', product);
     const $productPopup = $(`<div class="container product-popup">
       <div class="product-buttons">
         <button data-product-id="${product.id}" class="delete btn btn-danger admins-only invisible">Delete</button>
@@ -133,15 +134,6 @@ $(document).ready(() => {
       <p class='seller-name'>${product.seller}</p>
       </div>
     `)
-    // .then(data=> {
-      //   if (data.isAdmin === 'true') {
-      //     $.ajax({
-      //       method: "GET",
-      //       url: "/api/users/messages/admin"
-      //     })
-      //     .then((messages)=>loadMessages(messages));
-      //   }
-      // });
     getLoginStatus();
     $main.append($productPopup);
     $('.product-popup h2').hide();
@@ -262,7 +254,7 @@ const renderMessageForm = function(object) {
     $('.listing-message').hide();
   }
 
-$(document).on('click','.message-seller', function(event) {
+  $(document).on('click','.message-seller', function(event) {
      event.preventDefault();
      console.log('issahit');
      let name = $(this).parent().parent().find('.product-name').html();
@@ -448,7 +440,7 @@ product_name*/
     <label for="search-property-form__maximum-price-per-night">Maximum Cost</label>
     <input type="number" name="maximum_price" placeholder="Maximum Cost" id="search-maximum-price">
   </div>
-  <div class="form-sold-radio">
+  <div class="form-sold-radio invisible">
     <p>Only show available (unsold) creations?</p>
     <label for="yes">Yes</label>
     <input type="radio" name="sold" value="false" checked>
@@ -462,6 +454,7 @@ product_name*/
     <button type="submit" class='search-button'>Search Creations</button>
   </form>
   </div>`
+
   $(document).on('click', $search, function(event) {
     const target = $(event.target);
     // console.log(target)

@@ -38,7 +38,7 @@ $(document).ready(() => {
       $('.admins-only').addClass('invisible');
       $('.customers-only').addClass('invisible');
       const $loginForm = `<input type="text" name="email" placeholder="username@example.com">
-      <input type="text" name="password" placeholder="password">
+      <input type="password" name="password" placeholder="password">
       <button type="submit" action="POST">Login</button>`
       $login.append($loginForm);
     } else {
@@ -153,24 +153,28 @@ $(document).ready(() => {
     }
   };
 
-  $.ajax("/api/products/", { method: "GET" })
-  .then((data) => {
-    for (let i = 0; i < data.products.length; i++) {
-      $(document).on('click',`.product-display-${i}`, function(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        let $id = data.products[i].id;
-        let $name = $(`.product-display-${i} .name`).text();
-        let $img = $(`.product-display-${i} .image`).text();
-        let $price = $(`.product-display-${i} .price`).text();
-        let $description = $(`.product-display-${i} .description`).text();
-        let $seller = $(`.product-display-${i} .admin`).text();
-        let $sold = data.products[i].sold;
-        $main.empty();
-        renderProductPopup($id, $name, $img, $description, $seller, $sold, $price);
-      });
-    }
-  })
+  const loadProducts = function() {
+    $.ajax("/api/products/", { method: "GET" })
+    .then((data) => {
+      for (let i = 0; i < data.products.length; i++) {
+        $(document).on('click',`.product-display-${i}`, function(event) {
+          event.preventDefault();
+          event.stopPropagation();
+          let $id = data.products[i].id;
+          let $name = $(`.product-display-${i} .name`).text();
+          let $img = $(`.product-display-${i} .image`).text();
+          let $price = $(`.product-display-${i} .price`).text();
+          let $description = $(`.product-display-${i} .description`).text();
+          let $seller = $(`.product-display-${i} .admin`).text();
+          let $sold = data.products[i].sold;
+          $main.empty();
+          renderProductPopup($id, $name, $img, $description, $seller, $sold, $price);
+        });
+      }
+    })
+  }
+
+  loadProducts();
 
    //this section handles the see favorites button
 
@@ -274,22 +278,6 @@ $(document).on('click','.message-seller', function(event) {
      renderMessageForm({name, seller, fromCustomer});
    })
 
-<<<<<<< HEAD
-
-$(document).on('submit', '.message-form', function(event) {
-     event.preventDefault();
-     const data = $(this).serialize();
-     console.log(data);
-    submitMessage(data)
-    .then(() => {
-    })
-    .catch((error) => {
-      console.log('fail', error);
-    })
-    $('.add-listing-button').hide();
-    $('#product-form__cancel').hide();
-    $('.listing-message').show();;
-=======
    $(document).on('submit', '.message-form', function(event) {
       event.preventDefault();
       const data = $(this).serialize();
@@ -304,7 +292,6 @@ $(document).on('submit', '.message-form', function(event) {
     // $('.add-listing-button').hide();
     // $('#product-form__cancel').hide();
     // $('.listing-message').show();;
->>>>>>> bugs
   })
 
 //this section takes care of messages-button click
@@ -522,5 +509,6 @@ product_name*/
       })
       $main.empty();
       loadFeaturedProducts();
+      loadProducts();
     });
 });

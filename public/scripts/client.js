@@ -1,4 +1,67 @@
 $(document).ready(() => {
+  console.log('jQuery is go');
+
+  const $main = $('.product-row');
+  const $login = $('.login');
+  const $search = $('.search-div')
+
+  //This Ajax request returns object containing user status details
+
+  const getLoginStatus = function() {
+   $.ajax({
+      url: '/api/users/userStatus',
+      method: 'get',
+      dataType: 'json',
+      success: (data) => {
+        renderLogin(data);
+      },
+      error: (jqxr, textStatus, error) => {
+        console.log(error);
+      }
+    })
+  }
+
+  getLoginStatus();
+
+  //This section populates header with login form or logout button
+
+  const renderLogin = function(loginData) {
+    $login.empty();
+    console.log(loginData);
+    if (loginData.isLoggedIn === false) {
+      $('.right-buttons').removeClass('visible');
+      $('.right-buttons').addClass('invisible');
+      $('.logout').removeClass('visible');
+      $('.logout').addClass('invisible');
+      $('.see-messages').removeClass('visible');
+      $('.see-messages').addClass('invisible');
+      $('.admins-only').addClass('invisible');
+      $('.customers-only').addClass('invisible');
+      const $loginForm = `<input type="text" name="email" placeholder="username@example.com">
+      <input type="password" name="password" placeholder="password">
+      <button type="submit" action="POST">Login</button>`
+      $login.append($loginForm);
+    } else {
+      $('.right-buttons').removeClass('invisible');
+      $('.right-buttons').addClass('visible');
+      $('.logout').removeClass('invisible');
+      $('.logout').addClass('visible');
+      $('.messages-button').removeClass('invisible');
+      $('.messages-button').addClass('visible');
+      if (loginData.isAdmin === true) {
+        $('.admins-only').removeClass('invisible');
+        $('.admins-only').addClass('visible');
+        $('.customers-only').removeClass('visible');
+        $('.customers-only').addClass('invisible');
+      }
+      if (loginData.isAdmin === false) {
+        $('.admins-only').removeClass('visible');
+        $('.admins-only').addClass('invisible');
+        $('.customers-only').removeClass('invisible');
+        $('.customers-only').addClass('visible');
+      }
+    }
+  }
 
   //This section renders featured products on pageload
 
@@ -38,7 +101,7 @@ $(document).ready(() => {
       $search.empty();
       $search.append($searchButton); }
       })
-  }
+}
 
   loadFeaturedProducts();
 
@@ -151,6 +214,7 @@ $(document).ready(() => {
     .then(getFavorites())
     .then((data) => {
       $main.empty();
+      // renderFeaturedProducts(data);
     })
   })
 
@@ -264,64 +328,6 @@ product_name*/
     //   }
     // });
   })
-
-
-  //This section handles the add listing button
-  $(document).on('click','.add-listing', function(event) {
-    const $addListing = $(`
-    <div class="listing-container">
-      <h2>Add New Listing</h2>
-      <form action="/api/products" method="post" class="new-product-form">
-        <div class="new-product-form__field-wrapper">
-          <label for="new-product-form__title"></label>
-          <input type="text" name="product-name" placeholder="Product Name" id="new-product-form__product-name">
-        </div>
-        <div class="new-product-form__field-wrapper">
-          <label for="new-product-form__cost"></label>
-          <input placeholder="Price" type="number" name="price" id="new-product-form__price">
-        </div>
-        <div class="new-product-form__field-wrapper">
-          <label for="new-product-form__type"></label>
-          <input type="text" name="product-type" placeholder="Type" id="new-product-form__type">
-        </div>
-        <div class="new-product-form__field-wrapper">
-          <label for="new-product-form__image"></label>
-          <input type="text" name="product-image" placeholder="Image url" size="40" id="new-product-form__image">
-        </div>
-        <div class="new-product-form__field-wrapper">
-          <label for="new-product-form__description"></label>
-          <textarea placeholder="Description" name="description" id="product-form__description" cols="50" rows="5"></textarea>
-        </div>
-        <div class="new-product-form__field-wrapper">
-          <button class="add-listing-button">Add Listing</button>
-          <a id="product-form__cancel" href="/">Cancel</a>
-          <p class="listing-message">Added! Please return to the homepage or add more by clicking the button above!</p>
-        </div>
-      </form>
-    </div>`)
-    $('.search-popup').hide();
-    $('.search-div').hide();
-    $main.empty();
-    $main.append($addListing);
-    $('.listing-message').hide();
-  });
-
-  //this section handles submission of new listing form
-
-  $(document).on('submit', '.new-product-form', function(event) {
-    event.preventDefault();
-    const data = $(this).serialize();
-    submitProducts(data)
-    .then(() => {
-    })
-    .catch((error) => {
-      console.log('fail');
-      console.error(error);
-    })
-    $('.add-listing-button').hide();
-    $('#product-form__cancel').hide();
-    $('.listing-message').show();
-  });
 
   //This section takes care of login
 

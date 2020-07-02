@@ -1,4 +1,5 @@
 $(document).ready(() => {
+  const $main = $('.product-row');
   $(document).on('click','.add-listing', function(event) {
     const $addListing = $(`
     <div class="listing-container">
@@ -37,4 +38,21 @@ $(document).ready(() => {
     $main.append($addListing);
     $('.listing-message').hide();
   });
+
+    //this section handles submission of new listing form
+
+    $(document).on('submit', '.new-product-form', function(event) {
+      event.preventDefault();
+      const data = $(this).serialize();
+      submitProducts(data)
+      .then(() => {
+      })
+      .catch((error) => {
+        console.log('fail');
+        console.error(error);
+      })
+      $('.add-listing-button').hide();
+      $('#product-form__cancel').hide();
+      $('.listing-message').show();
+    });
 });

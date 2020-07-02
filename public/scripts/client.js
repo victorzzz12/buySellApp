@@ -72,8 +72,8 @@ $(document).ready(() => {
         <a href><div class="product-display-${i} product-box">
         <img src="${e.products[i].photo_url}" style="width: 100%; height: 100px" alt="item">
         <p class="image">${e.products[i].photo_url}</p>
-        <p class="name">${e.products[i].product}</p>
-        <p class="price">$${e.products[i].price}</p>
+        <p class="name">Product Name: ${e.products[i].product}</p>
+        <p class="price">Price: $${e.products[i].price}</p>
         <p class="description">${e.products[i].description}</p>
         <p class="date-added">${e.products[i].date_added}</p>
         <p class="admin">Made by: ${e.products[i].seller}</p>
@@ -238,21 +238,22 @@ const renderMessageForm = function(object) {
    <h2>Conduct A Message</h2>
    <form action = "" method="" class="message-form">
      <div class="new-product-form__field-wrapper">
-       <label for="product-name">Subject: ${productName}</label><br>
+       <label for="product-name">Product: ${productName}</label><br>
        <input class="invisible" type="text" name="product-name" value="${productName}">
      </div>
      <div class="new-product-form__field-wrapper">
        <label for="product-seller">Seller: ${sellerName}</label><br>
        <input class="invisible" value="${sellerName}" type="text" name="product-seller">
-  </div>
+     </div>
       <div class="new-product-form__field-wrapper">
-        <label for="message">Your message:</label>
-        <textarea placeholder="Description" name="message" cols="50" rows="5"></textarea>
+        <div class="your-message">
+          <label for="message">Your message:</label>
+          <textarea placeholder="Message" name="message" cols="50" rows="5"></textarea>
+        </div>
       </div>
       <input class='invisible' name = "fromCustomer" type="text" value="${fromCustomer}">
       <div class="new-product-form__field-wrapper">
- <button class="add-listing-button">Send Message</button><br>
-        <a id="product-form__cancel" href="/">Cancel</a>
+      <button class="add-listing-button btn btn-primary">Send Message</button>
         <p class="listing-message">Sent! Await a response from the seller. </p>
       </div>
     </form>
@@ -292,22 +293,20 @@ $(document).on('submit', '.message-form', function(event) {
 
 //this section takes care of messages-button click
   const renderMessages = function(messages) {
+    const $messageContainer = `
+    <div class="message-container"></div>`
+    $main.append($messageContainer);
     for (let i = 0; i < messages.length; i++) {
       const $messagesBox = `
-    <div class="message-container">
+    <div class="message-box">
       <h2>Message ${i+1}</h2>
-        <div class="new-product-form__field-wrapper">
+        <div>
+          <p>Product: ${messages[i].name}</p>
           <p>Message: ${messages[i].content}</p>
-        </div>
-        <div class="new-product-form__field-wrapper">
           <p>Sender: ${messages[i].sender}</p>
-        </div>
-        <div class="new-product-form__field-wrapper">
-          <button class="reply">Reply</button><br>
-          <a id="product-form__cancel" href="/">Cancel</a>
-        </div>
-    </div>`;
-    $main.append($messagesBox);
+          <button class="reply btn btn-primary">Reply</button>
+          </div>`;
+    $('.message-container').append($messagesBox);
     }
   }
 

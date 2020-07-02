@@ -117,14 +117,16 @@ module.exports = (db) => {
 
 
   router.post('/delete', (req, res) => {
-    console.log(req.body)
+    console.log('/delete', req.body)
 
     return db.query(`
       DELETE FROM favorites
       WHERE favorites.product_id = $1;` , [`${req.body.id}`])
-    .then(db.query(`
+    .then(()=> {
+      db.query(`
       DELETE FROM products
-      WHERE products.id = $1;` , [`${req.body.id}`]))
+      WHERE products.id = $1;` , [`${req.body.id}`])
+    })
     .then(() => {
       getProducts()
       .then(data => {

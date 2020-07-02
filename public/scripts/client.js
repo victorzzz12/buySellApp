@@ -69,7 +69,7 @@ $(document).ready(() => {
     for (let i = 0; i < e.products.length; i++) {
       const $featuredProducts = $(`
       <div class="col-6 col-sm-4 col-md-3">
-        <a href><div class="product-display-${i} product-box">
+        <a href><div class="product-display-${e.products[i].id} product-box">
         <img src="${e.products[i].photo_url}" style="width: 100%; height: 100px" alt="item">
         <p class="image">${e.products[i].photo_url}</p>
         <p class="name">${e.products[i].product}</p>
@@ -87,8 +87,10 @@ $(document).ready(() => {
   }
 
   function loadFeaturedProducts() {
-    $.ajax("/api/products/", { method: "GET"})
-    .then((data) => {
+    $.ajax("/api/products/",
+    { method: "GET",
+    success: function(data) {
+      console.log(data);
       $main.empty();
       renderFeaturedProducts(data);
       $main.prepend(`<div class="container" id="products">
@@ -97,16 +99,9 @@ $(document).ready(() => {
       </div>
       </div>`);
       $search.empty();
-      $search.append($searchButton);
-      return data;
-    })
-
-    $main.append(`<div class="container" id="products">
-    <h2 class="featured-title">Featured Creations</h2>
-    <div class="row product-row justify-content-left">
-    </div>
-    </div>`);
-  }
+      $search.append($searchButton); }
+      })
+}
 
   loadFeaturedProducts();
 
@@ -121,20 +116,21 @@ $(document).ready(() => {
   });
 //This section replaces whatever's in the .main-container with an individual product
 
-  const renderProductPopup = function(id, name, image, description, seller, sold, price) {
+  const renderProductPopup = function(product) {
+    console.log(product);
     const $productPopup = $(`<div class="container product-popup">
       <div class="product-buttons">
-        <button data-product-id="${id}" class="delete btn btn-danger admins-only invisible">Delete</button>
-        <button data-product-id="${id}" class="sold btn btn-success admins-only invisible">Mark as sold</button>
+        <button data-product-id="${product.id}" class="delete btn btn-danger admins-only invisible">Delete</button>
+        <button data-product-id="${product.id}" class="sold btn btn-success admins-only invisible">Mark as sold</button>
       </div>
-      <h1 class='product-name'>${name}</h1>
-      <img src="${image}" alt="cute embroidered shirt">
+      <h1 class='product-name'>${product.product}</h1>
+      <img src="${product.photo_url}" alt="cute embroidered shirt">
       <a href="#"><p class="customers-only invisible add-to-favorites">⭐️Add To Favorites</p></a>
       <a href="#"><p class="customers-only invisible message-seller">✉️Message seller</p></a>
       <h2>SOLD</h2>
-      <p>${description}</p>
-      <p>Price: ${price}</p>
-      <p class='seller-name'>${seller}</p>
+      <p>${product.description}</p>
+      <p>Price: ${product.price}</p>
+      <p class='seller-name'>${product.seller}</p>
       </div>
     `)
     // .then(data=> {
@@ -149,7 +145,7 @@ $(document).ready(() => {
     getLoginStatus();
     $main.append($productPopup);
     $('.product-popup h2').hide();
-    if (sold === true) {
+    if (product.sold === true) {
       $('.product-popup h2').show();
     }
   };
@@ -158,18 +154,20 @@ $(document).ready(() => {
     $.ajax("/api/products/", { method: "GET"})
     .then((data) => {
       for (let i = 0; i < data.products.length; i++) {
-        $(document).on('click',`.product-display-${i}`, function(event) {
+        $('.main-container').on('click',`.product-display-${data.products[i].id}`, function(event) {
           event.preventDefault();
           event.stopPropagation();
+          console.log('loadProducts');
           let $id = data.products[i].id;
-          let $name = $(`.product-display-${i} .name`).text();
-          let $img = $(`.product-display-${i} .image`).text();
-          let $price = $(`.product-display-${i} .price`).text();
-          let $description = $(`.product-display-${i} .description`).text();
-          let $seller = $(`.product-display-${i} .admin`).text();
-          let $sold = data.products[i].sold;
+          console.log($id);
+          // let $name = $(`.product-display-${i} .name`).text();
+          // let $img = $(`.product-display-${i} .image`).text();
+          // let $price = $(`.product-display-${i} .price`).text();
+          // let $description = $(`.product-display-${i} .description`).text();
+          // let $seller = $(`.product-display-${i} .admin`).text();
+          // let $sold = data.products[i].sold;
           $main.empty();
-          renderProductPopup($id, $name, $img, $description, $seller, $sold, $price);
+          renderProductPopup(data.products[i]);
         });
       }
     })
@@ -399,7 +397,7 @@ product_name*/
   });
 
  //This section takes care of logout
- $(document).on('click', '.logout', function(event) {
+ $('nav').on('click', '.logout', function(event) {
   event.preventDefault();
   logOut()
   .then(() => getLoginStatus())
@@ -487,6 +485,7 @@ product_name*/
 
     $(document).on('click', '.product-buttons .sold', function(event) {
       event.preventDefault();
+      console.log('MARK SOLD');
       $.ajax({
         url: "/api/products/sold",
         method: "POST",
@@ -498,14 +497,20 @@ product_name*/
     });
 
     //Deleting an item from the database
-    $(document).on('click', '.product-buttons .delete', function(event) {
+    $(`.main-container`).on('click', '.product-buttons .delete', function(event) {
       event.preventDefault();
+      console.log($(this).data("product-id"));
       $.ajax({
         url: "/api/products/delete",
         method: "POST",
-        data: {id: $(this).data("product-id")}
-      }).done(() => {
+        data: {id:
+          $(this).data("product-id")
+        }
+      }).then(() => {
+        console.log('called delete')
         loadFeaturedProducts()
       })
+      .catch(err=> console.log(err))
+
   })
 });

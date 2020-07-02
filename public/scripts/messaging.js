@@ -82,17 +82,8 @@ $(document).ready(() => {
   }
 
   const loadMessages = function(messages) {
-    // const $messageBox = {`
-    // <h1>HI</h1>`};
-/* content: "hi"
-sender: "Alice"
-user_id: 1
-product_name*/
-    // const
-    // for (let message of messages)
     console.log(messages);
     console.log(messages.length);
-    // const $inbox = ``
     $main.empty();
     renderMessages(messages);
 

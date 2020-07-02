@@ -87,18 +87,19 @@ $(document).ready(() => {
   }
 
   function loadFeaturedProducts() {
-    $.ajax("/api/products/", { method: "GET" })
+    $.ajax("/api/products/", { method: "GET"})
     .then((data) => {
       $main.empty();
-        renderFeaturedProducts(data);
-        $main.prepend(`<div class="container" id="products">
-        <h2 class="featured-title">Featured Creations</h2>
-        <div class="row product-row justify-content-left">
-        </div>
-        </div>`);
-        $search.empty();
-        $search.append($searchButton);
-    });
+      renderFeaturedProducts(data);
+      $main.prepend(`<div class="container" id="products">
+      <h2 class="featured-title">Featured Creations</h2>
+      <div class="row product-row justify-content-left">
+      </div>
+      </div>`);
+      $search.empty();
+      $search.append($searchButton);
+      return data;
+    })
 
     $main.append(`<div class="container" id="products">
     <h2 class="featured-title">Featured Creations</h2>
@@ -154,7 +155,7 @@ $(document).ready(() => {
   };
 
   const loadProducts = function() {
-    $.ajax("/api/products/", { method: "GET" })
+    $.ajax("/api/products/", { method: "GET"})
     .then((data) => {
       for (let i = 0; i < data.products.length; i++) {
         $(document).on('click',`.product-display-${i}`, function(event) {
@@ -503,12 +504,8 @@ product_name*/
         url: "/api/products/delete",
         method: "POST",
         data: {id: $(this).data("product-id")}
-      }).done((products) => {
-        console.log(products);
-        console.log(products.products.length);
+      }).done(() => {
+        loadFeaturedProducts()
       })
-      $main.empty();
-      loadFeaturedProducts();
-      loadProducts();
-    });
+  })
 });

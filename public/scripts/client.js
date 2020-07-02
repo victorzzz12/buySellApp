@@ -274,7 +274,6 @@ $(document).on('click','.message-seller', function(event) {
      renderMessageForm({name, seller, fromCustomer});
    })
 
-<<<<<<< HEAD
 
 $(document).on('submit', '.message-form', function(event) {
      event.preventDefault();
@@ -289,27 +288,32 @@ $(document).on('submit', '.message-form', function(event) {
     $('.add-listing-button').hide();
     $('#product-form__cancel').hide();
     $('.listing-message').show();;
-=======
-   $(document).on('submit', '.message-form', function(event) {
-      event.preventDefault();
-      const data = $(this).serialize();
-      console.log(data);
-      submitMessage(data);
-    // .then(() => {
-    // })
-    // .catch((error) => {
-    //   console.log('fail');
-    //   console.error(error);
-    // })
-    // $('.add-listing-button').hide();
-    // $('#product-form__cancel').hide();
-    // $('.listing-message').show();;
->>>>>>> bugs
   })
 
 //this section takes care of messages-button click
+  const renderMessages = function(messages) {
+    for (let i = 0; i < messages.length; i++) {
+      const $messagesBox = `
+    <div class="message-container">
+      <h2>Message ${i+1}</h2>
+        <div class="new-product-form__field-wrapper">
+          <p>Message: ${messages[i].content}</p>
+        </div>
+        <div class="new-product-form__field-wrapper">
+          <p>Sender: ${messages[i].sender}</p>
+        </div>
+        <div class="new-product-form__field-wrapper">
+          <button class="reply">Reply</button><br>
+          <a id="product-form__cancel" href="/">Cancel</a>
+        </div>
+    </div>`;
+    $main.append($messagesBox);
+    }
+  }
 
   const loadMessages = function(messages) {
+    // const $messageBox = {`
+    // <h1>HI</h1>`};
 /* content: "hi"
 sender: "Alice"
 user_id: 1
@@ -317,20 +321,22 @@ product_name*/
     // const
     // for (let message of messages)
     console.log(messages);
+    console.log(messages.length);
     // const $inbox = ``
+    $main.empty();
+    renderMessages(messages);
 
   }
 
   $(document).on('click', '.messages-button', function(event) {
     event.preventDefault();
-    console.log(getLoginStatus());
     // .then(data=> {
     //   if (data.isAdmin === 'true') {
-    //     $.ajax({
-    //       method: "GET",
-    //       url: "/api/users/messages/admin"
-    //     })
-    //     .then((messages)=>loadMessages(messages));
+        $.ajax({
+          method: "GET",
+          url: "/api/users/messages/admin"
+        })
+        .then((messages)=>loadMessages(messages));
     //   }
     // });
   })

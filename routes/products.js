@@ -179,13 +179,15 @@ module.exports = (db) => {
     JOIN users ON users.id = favorites.user_id
     WHERE products.user_id = $1 AND
     users. = $2`, [`${user}`, `${name}`])
-    .then(data => console.log(data));
-    return db.query(`
-    INSERT INTO favorites(user_id, product_id)
-    SELECT $1, id
-    FROM products
-    WHERE name = $2;`, [`${user}`, `${name}`])
-    .then(res => res.rows)
+    .then(data =>
+      { if (data) {
+        return db.query(`
+        INSERT INTO favorites(user_id, product_id)
+        SELECT $1, id
+        FROM products
+        WHERE name = $2;`, [`${user}`, `${name}`])
+        .then(res => res.rows)
+      }
     .catch(err => (console.log('post/favorites', err)));
   })
 

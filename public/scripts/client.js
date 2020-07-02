@@ -13,6 +13,7 @@ $(document).ready(() => {
       method: 'get',
       dataType: 'json',
       success: (data) => {
+        console.log('login status checked');
         renderLogin(data);
       },
       error: (jqxr, textStatus, error) => {
@@ -33,8 +34,8 @@ $(document).ready(() => {
       $('.right-buttons').addClass('invisible');
       $('.logout').removeClass('visible');
       $('.logout').addClass('invisible');
-      $('.see-messages').removeClass('visible');
-      $('.see-messages').addClass('invisible');
+      $('.messages-button').removeClass('visible');
+      $('.see-messages-button').addClass('invisible');
       $('.admins-only').addClass('invisible');
       $('.customers-only').addClass('invisible');
       const $loginForm = `<input type="text" name="email" placeholder="username@example.com">
@@ -89,7 +90,7 @@ $(document).ready(() => {
   function loadFeaturedProducts() {
     $.ajax("/api/products/",
     { method: "GET",
-    success: function(data) {
+    success: (data) => {
       console.log('get api/products success', data);
       $main.empty();
       renderFeaturedProducts(data);
@@ -99,8 +100,10 @@ $(document).ready(() => {
       </div>
       </div>`);
       $search.empty();
-      $search.append($searchButton); }
-      })
+      $search.append($searchButton);
+      loadProducts();
+    }
+  })
 }
 
   loadFeaturedProducts();
@@ -113,7 +116,6 @@ $(document).ready(() => {
     $('.search-div').show();
     $('.search-popup').show();
     loadFeaturedProducts();
-    loadProducts();
   });
 //This section replaces whatever's in the .main-container with an individual product
 
@@ -163,30 +165,12 @@ $(document).ready(() => {
 
    //this section handles the see favorites button
 
-   $(document).on('click','.see-favorites', function(event) {
+   $('nav').on('click','.see-favorites', function(event) {
     event.preventDefault();
     getFavorites()
-    .then((data) => {
-      $main.empty();
-      renderFeaturedProducts(data);
-      $main.prepend(`<div class="container" id="products">
-      <h2 class="featured-title">Favorites</h2>
-      <div class="row product-row justify-content-left">
-      </div>
-      </div>`);
-    })
   });
 
   //This section handles the "add to favorites" link
-
-  const addToFavorites = function(data) {
-    return $.ajax({
-      method: "POST",
-      url: "/api/products/favorites",
-      data,
-      success: console.log('success')
-    });
-  }
 
   const getFavorites = function() {
     return $.ajax({
@@ -206,16 +190,21 @@ $(document).ready(() => {
     })
   };
 
+  const addToFavorites = function(data) {
+    return $.ajax({
+      method: "POST",
+      url: "/api/products/favorites",
+      data,
+      success: console.log('favorite added')
+    });
+  }
+
   $(document).on('click', '.add-to-favorites', function(event) {
     event.preventDefault();
     let name = $(this).parent().parent().find('.product-name').html();
     console.log(name);
     addToFavorites({name})
     .then(getFavorites())
-    .then((data) => {
-      $main.empty();
-      // renderFeaturedProducts(data);
-    })
   })
 
 
@@ -319,7 +308,7 @@ $(document).ready(() => {
         </div>`);
         $search.empty();
         $search.append($searchButton);
-      })
+      }).done(() => loadProducts());
     })
 
     //Changing whether an item is sold or not

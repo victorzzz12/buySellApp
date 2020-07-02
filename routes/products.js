@@ -178,8 +178,8 @@ module.exports = (db) => {
         INSERT INTO favorites(user_id, product_id)
         SELECT $1, id
         FROM products
-        WHERE name = $2;`, [`${user}`, `${name}`])
-        .then(res => res.rows).catch(err => (console.log('post/favorites', err)));
+        WHERE name = $2 RETURNING *;`, [`${user}`, `${name}`])
+        .then(res => res.rows).catch(err => (err));
   })
 
   router.get('/favorites', (req, res) => {

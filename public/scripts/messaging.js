@@ -57,9 +57,9 @@ $(document).ready(() => {
     //   console.log('fail');
     //   console.error(error);
     // })
-    // $('.add-listing-button').hide();
-    // $('#product-form__cancel').hide();
-    // $('.listing-message').show();;
+    $('.add-listing-button').hide();
+    $('#product-form__cancel').hide();
+    $('.listing-message').show();;
   })
 
 //this section takes care of messages-button click

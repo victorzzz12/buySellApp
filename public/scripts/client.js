@@ -130,7 +130,7 @@ $(document).ready(() => {
       <a href="#"><p class="customers-only invisible message-seller">✉️Message seller</p></a>
       <h2>SOLD</h2>
       <p>${product.description}</p>
-      <p>Price: ${product.price}</p>
+      <p>Price: $${product.price}</p>
       <p class='seller-name'>Made By: ${product.seller}</p>
       </div>
     `)

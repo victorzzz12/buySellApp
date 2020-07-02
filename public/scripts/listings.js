@@ -1,5 +1,7 @@
 $(document).ready(() => {
   const $main = $('.product-row');
+  //This section handles the add listing button
+
   $(document).on('click','.add-listing', function(event) {
     const $addListing = $(`
     <div class="listing-container">

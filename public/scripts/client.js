@@ -274,6 +274,7 @@ $(document).on('click','.message-seller', function(event) {
      renderMessageForm({name, seller, fromCustomer});
    })
 
+
 $(document).on('submit', '.message-form', function(event) {
      event.preventDefault();
      const data = $(this).serialize();

@@ -168,6 +168,12 @@ module.exports = (db) => {
     console.log(name);
     console.log(user);
     return db.query(`
+    SELECT * FROM favorites
+    JOIN users ON users.id = favorites.user_id
+    WHERE products.user_id = $1 AND
+    users. = $2`, [`${user}`, `${name}`])
+    .then(data => console.log(data));
+    return db.query(`
     INSERT INTO favorites(user_id, product_id)
     SELECT $1, id
     FROM products

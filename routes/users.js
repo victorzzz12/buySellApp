@@ -86,7 +86,22 @@ module.exports = (db) => {
     req.session = null;
     res.send(null);
   });
+
   //messaging routes
+
+  router.get('/messages/admin', (req, res) => {
+    const recipient = req.session.userId;
+    const query = `SELECT messages.user_id, users.name as sender, messages.content
+    FROM messages JOIN users
+    ON users.id = user_id
+    WHERE admin_id = ${recipient}`;
+    return db.query(query)
+    .then(data => {
+      const messages = data.rows
+      res.json(messages)
+    })
+    .catch(err => console.log('/messages/admin', err));
+  })
 
   router.post("/messages", (req, res) => {
     const fromId = req.session.userId;

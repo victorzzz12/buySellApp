@@ -15,7 +15,9 @@ header {
   @extend %flex-col-center;
   width: 100%;
   margin-bottom: 10px;
-
+  * {
+    align-items: center;
+  }
   .search-div {
     @extend %flex-col-center;
     width: 100%;
@@ -94,6 +96,10 @@ header {
       display: flex;
       justify-content: center;
       margin: 5px;
+    }
+    .right-buttons {
+      @extend %flex-row-center;
+      height: 50%;
     }
   }
 

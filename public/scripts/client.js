@@ -33,6 +33,8 @@ $(document).ready(() => {
       $('.right-buttons').addClass('invisible');
       $('.logout').removeClass('visible');
       $('.logout').addClass('invisible');
+      $('.see-messages').removeClass('visible');
+      $('.see-messages').addClass('invisible');
       $('.admins-only').addClass('invisible');
       $('.customers-only').addClass('invisible');
       const $loginForm = `<input type="text" name="email" placeholder="username@example.com">
@@ -44,6 +46,8 @@ $(document).ready(() => {
       $('.right-buttons').addClass('visible');
       $('.logout').removeClass('invisible');
       $('.logout').addClass('visible');
+      $('.messages-button').removeClass('invisible');
+      $('.messages-button').addClass('visible');
       if (loginData.isAdmin === true) {
         $('.admins-only').removeClass('invisible');
         $('.admins-only').addClass('visible');
@@ -251,6 +255,7 @@ const renderMessageForm = function(object) {
     $main.append($messageForm);
     $('.listing-message').hide();
   }
+
 $(document).on('click','.message-seller', function(event) {
      event.preventDefault();
      console.log('issahit');
@@ -261,7 +266,7 @@ $(document).on('click','.message-seller', function(event) {
      renderMessageForm({name, seller, fromCustomer});
    })
 
-   $(document).on('submit', '.message-form', function(event) {
+$(document).on('submit', '.message-form', function(event) {
      event.preventDefault();
      const data = $(this).serialize();
      console.log(data);
@@ -276,7 +281,23 @@ $(document).on('click','.message-seller', function(event) {
     $('.listing-message').show();;
   })
 
+//this section takes care of messages-button click
 
+  const loadMessages = function(messages) {
+    const
+    // for (let message of messages)
+    console.log(messages[0]);
+    // const $inbox = ``
+  }
+
+  $(document).on('click', '.messages-button', function(event) {
+    event.preventDefault();
+    $.ajax({
+      method: "GET",
+      url: "/api/users/messages/admin"
+    })
+    .then((messages)=>loadMessages(messages));
+  })
 
 
   //This section handles the add listing button

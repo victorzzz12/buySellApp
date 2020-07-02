@@ -14,6 +14,7 @@
 
 ## Nav bar
   *adjust nav bar based on admin/user(OR show a dashboard) - E
+  *Find a way to get login to flush right - E
   *Logout button - E 
   *Welcome back message for user (stretch) - E
 
@@ -25,7 +26,7 @@
   * Adjust/remove header
   * Stack login - E
 * Decrease size of text box on featured page - V
-* Make images not stretch on popup boxes -V
+* Make images not stretch on featured display -V
 
 ## Stretch/cleanup
 * debug search results

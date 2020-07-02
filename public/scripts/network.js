@@ -29,3 +29,9 @@ const submitMessage = function(data) {
   });
 }
 
+// const getInbox = function() {
+//   return $.ajax({
+//     method: "GET",
+//     url: "/api/users/messages/admin"
+//   }));
+// }

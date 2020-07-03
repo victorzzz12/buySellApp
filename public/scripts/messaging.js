@@ -2,7 +2,7 @@ $(document).ready(() => {
 
   const $main = $('.product-row');
 
-  const adminOrCustomerCheck = function() {
+  const adminOrCustomerMessagePreCheck = function() {
     $.ajax({
        url: '/api/users/userStatus',
        method: 'get',
@@ -12,6 +12,34 @@ $(document).ready(() => {
         adminOrCustomerMessages(data);
       },
      })
+   }
+
+   const adminOrCustomerMessageSendPreCheck = function(messageBody) {
+    $.ajax({
+       url: '/api/users/userStatus',
+       method: 'get',
+       dataType: 'json',
+       success: (data) => {
+        console.log('login status checked');
+        adminOrCustomerMessageSend(data, messageBody);
+      },
+     })
+   }
+
+   const adminOrCustomerMessageSend = function(loginStatus, messageBody) {
+    if (loginStatus.isAdmin === true) {
+      $.ajax({
+        method: "POST",
+        url: "/api/users/messages/admin",
+        data: { messageBody, fromUser: 'false'}
+      }).then((messages)=>console.log('admin message sent'));
+    } else {
+      $.ajax({
+        method: "POST",
+        url: "/api/users/messages/customer",
+        data: { messageBody, fromUser: 'true'}
+      }).then((messages)=>console.log('user message sent'));
+    }
    }
 
   //This section handles the "message seller" link
@@ -64,7 +92,6 @@ $(document).ready(() => {
       event.preventDefault();
       const data = $(this).serialize();
       console.log(data);
-      submitMessage(data);
     $('.add-listing-button').hide();
     $('#product-form__cancel').hide();
     $('.listing-message').show();
@@ -85,7 +112,7 @@ $(document).ready(() => {
           <p class = 'interested-buyer'>Interested Buyer: ${messages[i].sender}</p>
           <p class = 'seller'>Seller: ${messages[i].seller}</p>
           <button type="button" class="reply btn btn-primary">Reply</button>
-          </div>`;
+          </div></div>`;
     $('.message-container').append($messagesBox);
     }
   }
@@ -115,28 +142,14 @@ $(document).ready(() => {
 
   $(document).on('click', '.messages-button', function(event) {
     event.preventDefault();
-    adminOrCustomerCheck();
+    adminOrCustomerMessagePreCheck();
   })
 
   $(document).on('click', '.reply', function(event) {
 
     event.preventDefault();
-    const data = $(this).serialize();
-    console.log(data);
-    submitMessage(data);
-
-    // <div class="message-box">
-    //   <h2>Message ${i+1}</h2>
-    //     <div class="box">
-    //       <p class = 'product-name' >Product: ${messages[i].name}</p>
-    //       <p class = 'message-content'>Message: ${messages[i].content}</p>
-    //       <p class = 'interested-buyer'>Interested Buyer: ${messages[i].sender}</p>
-    //       <p class = 'seller'>Seller: ${messages[i].seller}</p>
-    //       <button type="button" class="reply btn btn-primary">Reply</button>
-    //       </div>`;
 
     const $replyForm = `
-    <div class="reply-container">
       <form action = "" method="" class="message-form">
         <div class="new-product-form__field-wrapper">
          <div class="your-message">
@@ -144,22 +157,37 @@ $(document).ready(() => {
            <textarea placeholder="Message" name="message" cols="50" rows="5"></textarea>
          </div>
        </div>
-       <input class='invisible' name = "fromCustomer" type="text" value="${0}">
        <div class="new-product-form__field-wrapper">
        <button class="reply-button btn btn-primary">Send Reply</button>
          <p class="replied-message">Reply sent!</p>
-       </div>
-     </form>`;
+         </form>
+     `;
      $('.reply').addClass('invisible');
      $('.message-box').append($replyForm);
      $('.replied-message').hide();
 
   })
+      // <div class="message-box">
+    //   <h2>Message ${i+1}</h2>
+    //     <div class="box">
+    //       <p class = 'product-name' >Product: ${messages[i].name}</p>
+    //       <p class = 'message-content'>Message: ${messages[i].content}</p>
+    //       <p class = 'interested-buyer'>Interested Buyer: ${messages[i].sender}</p>
+    //       <p class = 'seller'>Seller: ${messages[i].seller}</p>
+    //       <button type="button" class="reply btn btn-primary">Reply</button>
+    //       </div></div>`;
 
-  $('.main-container').on('click', '.reply-button', function(event) {
-    console.log('reply-button hit')
+  $('.main-container').on('submit', '.message-form', function(event) {
     event.preventDefault();
-   $('.replied-message').show();
+    const message = $(this).serialize().slice(8);
+    const productName =  $(this).parent().find('.product-name').html().slice(9);
+    const userName =  $(this).parent().find('.interested-buyer').html().slice(18);
+    const adminName =  $(this).parent().find('.seller').html().slice(8);
+    const allData = { message, productName, userName, adminName}
+    adminOrCustomerMessageSendPreCheck(allData);
+    console.log('reply-button hit, message content: ', allData )
+    $('.reply-button').addClass('invisible');
+    $('.replied-message').show();
  })
 
 });

@@ -38,7 +38,7 @@ $(document).ready(() => {
       $('.messages-button').addClass('invisible');
       $('.admins-only').addClass('invisible');
       $('.customers-only').addClass('invisible');
-      const $loginForm = `<input type="text" name="email" placeholder="username@example.com">
+      const $loginForm = `<input type="text" name="email" placeholder="Your email">
       <input type="password" name="password" placeholder="password">
       <button type="submit" action="POST">Login</button>`
       $login.append($loginForm);

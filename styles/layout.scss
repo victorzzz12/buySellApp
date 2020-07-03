@@ -20,6 +20,12 @@
   }
 }
 
+@media only screen and (max-width: 525px) {
+  header .search-div .search-popup .search-submit-button, header .search-form, header .search, header nav, header nav .right-buttons {
+    flex-direction: column;
+  }
+}
+
 body {
   background-color: aqua;
 }
@@ -94,6 +100,13 @@ body {
   color: white;
   background-color: rgb(29, 0, 109);
   background-size: contain;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  img {
+    border-radius: 20px;
+  }
 }
 
 .listing-container h2 {
@@ -144,6 +157,9 @@ body {
   width: 100%;
   div {
     margin-left: 2%;
+  }
+  .box {
+    margin-bottom: 20px;
   }
 }
 

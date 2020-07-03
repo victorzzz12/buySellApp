@@ -230,7 +230,7 @@ $(document).ready(() => {
   };
 
   const addToFavorites = function(data) {
-    $.ajax({
+    return $.ajax({
       method: "POST",
       url: "/api/products/favorites",
       data,

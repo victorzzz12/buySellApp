@@ -44,6 +44,8 @@ body {
 
 .main-container {
   margin-bottom: 20px;
+  max-width: 950px;
+  margin: auto;
 }
 
 .product-popup {
@@ -89,6 +91,7 @@ body {
 .featured-title {
   // background-color: orange;
   color: white;
+  -webkit-text-stroke: 0.5px dodgerblue;
   font-family: 'Notable', sans-serif;
 }
 

@@ -46,6 +46,7 @@ module.exports = (db) => {
   });
 
   router.post('/login', (req, res) => {
+    console.log(req.body);
     const {email, password} = req.body;
     const login = function(email, password) {
       db.query(`SELECT * FROM admins

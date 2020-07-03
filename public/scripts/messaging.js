@@ -59,7 +59,7 @@ $(document).ready(() => {
     // })
     $('.add-listing-button').hide();
     $('#product-form__cancel').hide();
-    $('.listing-message').show();;
+    $('.listing-message').show();
   })
 
 //this section takes care of messages-button click
@@ -71,10 +71,11 @@ $(document).ready(() => {
       const $messagesBox = `
     <div class="message-box">
       <h2>Message ${i+1}</h2>
-        <div>
+        <div class="box">
           <p>Product: ${messages[i].name}</p>
           <p>Message: ${messages[i].content}</p>
-          <p>Sender: ${messages[i].sender}</p>
+          <p>Interested Buyer: ${messages[i].sender}</p>
+          <p>Seller: ${messages[i].seller}</p>
           <button class="reply btn btn-primary">Reply</button>
           </div>`;
     $('.message-container').append($messagesBox);
@@ -100,6 +101,36 @@ $(document).ready(() => {
         .then((messages)=>loadMessages(messages));
     //   }
     // });
+  })
+
+
+
+  $(document).on('click', '.reply', function(event) {
+    event.preventDefault();
+    const data = $(this).serialize();
+    console.log(data);
+    submitMessage(data);
+    const $replyForm = `
+    <div class="reply-container">
+      <form action = "" method="" class="message-form">
+        <div class="new-product-form__field-wrapper">
+         <div class="your-message">
+           <label for="message">Your reply:</label>
+           <textarea placeholder="Message" name="message" cols="50" rows="5"></textarea>
+         </div>
+       </div>
+       <input class='invisible' name = "fromCustomer" type="text" value="${0}">
+       <div class="new-product-form__field-wrapper">
+       <button class="reply-button btn btn-primary">Send Reply</button>
+         <p class="replied-message">Reply sent!</p>
+       </div>
+     </form>`;
+     $('.message-box').append($replyForm);
+     $('.replied-message').hide();
+     $(document).on('click', '.reply-button', function(event) {
+       event.preventDefault();
+       $('.replied-message').show();
+    })
   })
 
 });

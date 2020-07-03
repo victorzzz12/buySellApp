@@ -92,10 +92,11 @@ module.exports = (db) => {
   router.get('/messages/admin', (req, res) => {
     const recipient = req.session.userId;
     const query = `
-    SELECT messages.user_id, users.name as sender, messages.content, products.name
+    SELECT messages.user_id, users.name as sender, messages.content, products.name, messages.admin_id, admins.name as seller
     FROM messages
     JOIN users ON users.id = user_id
     JOIN products ON products.id = product_id
+    JOIN admins ON admins.id = messages.admin_id
     WHERE products.admin_id = ${recipient}`;
     return db.query(query)
     .then(data => {

@@ -19,7 +19,7 @@ The Buy and Sell App is a full-stack, single-page and retro like web application
 !["Screenshot of URLs page"](https://github.com/victorzzz12/buySellApp/blob/master/docs/small-view.png)
 !["Screenshot of URLs page"](https://github.com/victorzzz12/buySellApp/blob/master/docs/add-listing.png)
 !["Screenshot of URLs page"](https://github.com/victorzzz12/buySellApp/blob/master/docs/messages.png)
-!["Screenshot of URLs page"](https://github.com/victorzzz12/buySellApp/blob/master/docs/search.png | width=100)
+!["Screenshot of URLs page"](https://github.com/victorzzz12/buySellApp/blob/master/docs/search.png)
 
 ## Dependencies
 

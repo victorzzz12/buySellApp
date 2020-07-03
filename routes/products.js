@@ -31,11 +31,11 @@ module.exports = (db) => {
       });
   });
   //this route is the destination for product search
-  router.post("/search", (req, res) => {
+  router.get("/search:query", (req, res) => {
+    let search = req.params.query;
+    let options = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) })
 
-    const options = req.body;
-    console.log(options);
-
+    console.log('options', options);
     let queryString =`SELECT products.name as product,
     products.photo_url as photo_url,
     products.price as price,
@@ -58,11 +58,11 @@ module.exports = (db) => {
 
     if (options.keywords) {
       queryParams.push(`%${options.keywords}%`);
-      queryString += `AND products.name ILIKE $${queryParams.length}
-      OR products.description ILIKE $${queryParams.length} `
+      queryString += `AND (products.name ILIKE $${queryParams.length}
+      OR products.description ILIKE $${queryParams.length}) `
     }
     if (options.seller) {
-      queryParams.push(`%${options.seller}%`);
+      queryParams.push(`${options.seller}`);
       queryString += `AND admins.name ILIKE $${queryParams.length} `;
     }
     if (options.type) {
@@ -77,7 +77,7 @@ module.exports = (db) => {
           queryString += `AND products.type IN ($${queryParams.length}`;
         } else {
           queryString += `, $${queryParams.length}`;
-        }    console.log(req.params);
+        }
       }
       queryString += ') ';
     }
@@ -91,7 +91,8 @@ module.exports = (db) => {
     }
 
     queryString += `ORDER BY products.price;`
-
+    console.log(queryString);
+    console.log(queryParams);
     db.query(queryString, queryParams)
       .then(data => {
         const products = data.rows;
@@ -104,7 +105,6 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-
 
   router.post('/', (req, res) => {
     const userId = req.session.userId;

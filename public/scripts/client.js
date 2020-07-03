@@ -162,8 +162,9 @@ $(document).ready(() => {
   }
 
   const loadSearchedProducts = function(data) {
-    $.ajax("/api/products/search", { method: "post", data})
+    $.ajax("/api/products/search" + data, { method: "get", data})
     .then((data) => {
+      console.log('search results,', data);
       for (let i = 0; i < data.products.length; i++) {
         $('.main-container').on('click',`.product-display-${data.products[i].id}`, function(event) {
           event.preventDefault();
@@ -335,7 +336,11 @@ $(document).ready(() => {
       event.preventDefault();
       const data = $(this).serialize();
       console.log(data);
-      $.ajax("/api/products/search", { method: "POST", data: data })
+      $.ajax({
+      url: "/api/products/search" + data,
+      method: "get",
+      data: data,
+      dataType: "json", })
       .then((data) => {
         $main.empty();
         renderFeaturedProducts(data);

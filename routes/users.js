@@ -98,10 +98,30 @@ module.exports = (db) => {
     JOIN users ON users.id = user_id
     JOIN products ON products.id = product_id
     JOIN admins ON admins.id = messages.admin_id
-    WHERE products.admin_id = ${recipient}`;
+    WHERE products.admin_id = ${recipient}
+    AND messages.from_user = 'true'`;
     return db.query(query)
     .then(data => {
       const messages = data.rows
+      res.json(messages)
+    })
+    .catch(err => console.log('/messages/admin', err));
+  })
+
+  router.get('/messages/customer', (req, res) => {
+    const recipient = req.session.userId;
+    const query = `
+    SELECT messages.user_id, users.name as sender, messages.content, products.name, messages.admin_id, admins.name as seller
+    FROM messages
+    JOIN users ON users.id = user_id
+    JOIN products ON products.id = product_id
+    JOIN admins ON admins.id = messages.admin_id
+    WHERE messages.user_id = $1
+    AND messages.from_user = 'false'`;
+    return db.query(query, [`${recipient}`])
+    .then(data => {
+      const messages = data.rows;
+      console.log(messages);
       res.json(messages)
     })
     .catch(err => console.log('/messages/admin', err));

@@ -20,9 +20,10 @@
   }
 }
 
-@media only screen and (max-width: 525px) {
+@media only screen and (max-width: 700px) {
   header .search-div .search-popup .search-submit-button, header .search-form, header .search, header nav, header nav .right-buttons {
     flex-direction: column;
+    padding-left: 0;
   }
 }
 

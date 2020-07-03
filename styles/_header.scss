@@ -79,7 +79,8 @@ header {
       height: 30%;
     }
     input {
-      width: 30%;
+      width: 10em;
+      margin-left: 2%;
     }
     .nav-left {
       display: flex;
@@ -109,3 +110,18 @@ header {
 
 }
 
+@media only screen and (max-width: 420px){
+  header nav .login {
+    flex-direction: column;
+    padding-left: 0;
+    input {
+      width: 13em;
+    }
+  }
+}
+
+@media only screen and (min-width: 701px) {
+  header nav .login {
+    padding-left: 10%;
+  }
+}

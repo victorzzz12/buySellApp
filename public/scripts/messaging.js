@@ -1,5 +1,19 @@
 $(document).ready(() => {
+
   const $main = $('.product-row');
+
+  const adminOrCustomerCheck = function() {
+    $.ajax({
+       url: '/api/users/userStatus',
+       method: 'get',
+       dataType: 'json',
+       success: (data) => {
+        console.log('login status checked');
+        adminOrCustomerMessages(data);
+      },
+     })
+   }
+
   //This section handles the "message seller" link
   const renderMessageForm = function(object) {
     const productName = object.name;
@@ -51,12 +65,6 @@ $(document).ready(() => {
       const data = $(this).serialize();
       console.log(data);
       submitMessage(data);
-    // .then(() => {
-    // })
-    // .catch((error) => {
-    //   console.log('fail');
-    //   console.error(error);
-    // })
     $('.add-listing-button').hide();
     $('#product-form__cancel').hide();
     $('.listing-message').show();
@@ -76,7 +84,7 @@ $(document).ready(() => {
           <p>Message: ${messages[i].content}</p>
           <p>Interested Buyer: ${messages[i].sender}</p>
           <p>Seller: ${messages[i].seller}</p>
-          <button class="reply btn btn-primary">Reply</button>
+          <button type="button" class="reply btn btn-primary">Reply</button>
           </div>`;
     $('.message-container').append($messagesBox);
     }
@@ -90,20 +98,25 @@ $(document).ready(() => {
 
   }
 
+  const adminOrCustomerMessages = function(loginStatus) {
+    if (loginStatus.isAdmin === true) {
+      $.ajax({
+        method: "GET",
+        url: "/api/users/messages/admin"
+      }).then((messages)=>loadMessages(messages));
+    } else {
+      $.ajax({
+        method: "GET",
+        url: "/api/users/messages/customer"
+      }).then((messages)=>loadMessages(messages));
+    }
+    console.log('loginStatus,', loginStatus);
+  }
+
   $(document).on('click', '.messages-button', function(event) {
     event.preventDefault();
-    // .then(data=> {
-    //   if (data.isAdmin === 'true') {
-        $.ajax({
-          method: "GET",
-          url: "/api/users/messages/admin"
-        })
-        .then((messages)=>loadMessages(messages));
-    //   }
-    // });
+    adminOrCustomerCheck();
   })
-
-
 
   $(document).on('click', '.reply', function(event) {
     event.preventDefault();

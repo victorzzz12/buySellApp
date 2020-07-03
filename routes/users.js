@@ -88,13 +88,6 @@ module.exports = (db) => {
     res.send(null);
   });
 
-  //messaging routes
-
-  // INSERT INTO messages (user_id, admin_id, content, from_user, product_id)
-  // SELECT $1, admins.id, $3, TRUE, products.id
-  // FROM admins, products
-  // WHERE admins.name = $2 AND products.name = $4
-
   router.post('/messages/admin', (req, res) => {
     const adminId = req.session.userId;
     const customerName = req.body.messageBody.userName;
@@ -132,11 +125,6 @@ module.exports = (db) => {
     .then(data=> console.log(data.rows()))
     .catch(e=>console.log('error,', e))
   })
-
-  // INSERT INTO messages (user_id, admin_id, content, from_user, product_id)
-  //   SELECT $1, admins.id, $3, TRUE, products.id
-  //   FROM admins, products
-  //   WHERE admins.name = $2 AND products.name = $4;`
 
   router.get('/messages/admin', (req, res) => {
     const recipient = req.session.userId;

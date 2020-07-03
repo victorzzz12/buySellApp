@@ -4,18 +4,22 @@ Buy And Sell App for your Creations
 
 The Buy and Sell App is a full-stack, single-page and retro like web application built with Node, Express, Jquery, Bootstrap CSS and AJAX. It is an app where artists, creators and others could have their work posted up for sale. Prospective customers are able to contact the sellers and work out deals with them.
 
-Users are able to view listings, search through listings, message sellers and put items on their favourites list when they want to look back on an item they had their eye on previously.
+- Users are able to view listings, search through listings, message sellers and put items on their favourites list when they want to look back on an item they had their eye on previously.
 
-Sellers(Admins in our case) are able to add and delete listings of items, mark items as sold and reply to messages of users of the website.
+- Sellers(Admins in our case) are able to add and delete listings of items, mark items as sold and reply to messages of users of the website.
 
-The application also includes changes to different viewports based on the viewport sizes.
+- The application also includes changes to different viewports based on the viewport sizes.
 
-It is still in development and only functions to the requirements of a midterm project given by Lighthouse Labs.
-More functional changes will be applied in the future!
+- It is still in development and only functions to the requirements of the midterm project given by Lighthouse Labs.
 
-## Screenshots
+## Final Product Screenshots
 
-
+!["Screenshot of URLs page"](https://github.com/victorzzz12/buySellApp/blob/master/docs/full-view.png)
+!["Screenshot of URLs page"](https://github.com/victorzzz12/buySellApp/blob/master/docs/medium-view.png)
+!["Screenshot of URLs page"](https://github.com/victorzzz12/buySellApp/blob/master/docs/small-view.png)
+!["Screenshot of URLs page"](https://github.com/victorzzz12/buySellApp/blob/master/docs/add-listing.png)
+!["Screenshot of URLs page"](https://github.com/victorzzz12/buySellApp/blob/master/docs/messages.png)
+!["Screenshot of URLs page"](https://github.com/victorzzz12/buySellApp/blob/master/docs/search.png)
 
 ## Dependencies
 
@@ -43,5 +47,8 @@ More functional changes will be applied in the future!
   - Note: you will lose all newly created (test) data each time this is run, since the schema files will tend to `DROP` the data tables and recreate them.
 
 
-Thank you for your time!
+**Thank you for your time!**
+
+More functional changes will be applied in the future!
+
 Hope you have fun playing with our app!

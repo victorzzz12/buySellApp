@@ -162,9 +162,9 @@ $(document).ready(() => {
   }
 
   const loadSearchedProducts = function(data) {
-    $.ajax("/api/products/search" + data, { method: "get", data})
+    console.log('search results,', data);
+    $.ajax("/api/products/search", { method: "post", data})
     .then((data) => {
-      console.log('search results,', data);
       for (let i = 0; i < data.products.length; i++) {
         $('.main-container').on('click',`.product-display-${data.products[i].id}`, function(event) {
           event.preventDefault();
@@ -213,7 +213,7 @@ $(document).ready(() => {
   const getFavorites = function() {
     return $.ajax({
       url: "/api/products/favorites",
-      method:'GET',
+      method:'get',
       dataType: 'json',
       success: function(data) {
         console.log(data)
@@ -337,11 +337,12 @@ $(document).ready(() => {
       const data = $(this).serialize();
       console.log(data);
       $.ajax({
-      url: "/api/products/search" + data,
-      method: "get",
+      url: "/api/products/search",
+      method: "post",
       data: data,
-      dataType: "json", })
+      dataType: "json"})
       .then((data) => {
+        console.log('search results', data);
         $main.empty();
         renderFeaturedProducts(data);
         loadSearchedProducts(data);

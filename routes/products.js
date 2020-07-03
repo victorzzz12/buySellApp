@@ -31,10 +31,8 @@ module.exports = (db) => {
       });
   });
   //this route is the destination for product search
-  router.get("/search:query", (req, res) => {
-    let search = req.params.query;
-    let options = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) })
-
+  router.post("/search", (req, res) => {
+    const options = req.body;
     console.log('options', options);
     let queryString =`SELECT products.name as product,
     products.photo_url as photo_url,

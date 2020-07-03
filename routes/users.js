@@ -90,6 +90,49 @@ module.exports = (db) => {
 
   //messaging routes
 
+  router.post('/messages/admin', (req, res) => {
+    const adminId = req.session.userId;
+    const customerName = req.body.messageBody.userName;
+    const productName = req.body.messageBody.productName;
+    const fromUserBoolean = req.body.fromUser;
+    const message = decodeURI(req.body.messageBody.message);
+    const query = `INSERT INTO messages (admin_id, user_id, product_id, content, from_user)
+    SELECT ${adminId}, users.id, products.id, $1, TRUE
+    FROM users, products
+    WHERE users.name = $2 AND products.name = $3`;
+    const params = [`${message}`, `${customerName}`, `${productName}`];
+    console.log(query);
+    console.log(params);
+    // console.log(req.body)
+    console.log({adminId, customerName, productName, message})
+    return db.query(query, params)
+    .then(data => res.send(data))
+    .catch(e=>console.log('error,', e))
+  })
+
+  router.post('/messages/customer', (req, res) => {
+    const userId = req.session.userId;
+    const sellerName = req.body.messageBody.userName;
+    const productName = req.body.messageBody.productName;
+    const fromUserBoolean = req.body.fromUser;
+    const message = decodeURI(req.body.messageBody.message);
+    const query = `INSERT INTO messages (admin_id, user_id, product_id, content, from_user)
+    SELECT admins.id, ${userId}, products.id, $1, FALSE
+    FROM admins, products
+    WHERE admins.name = $2 AND products.name = $3;`;
+    const params = [`${message}`, `${sellerName}`, `${productName}`];
+    console.log(query);
+    console.log(params);
+    return db.query(query, params)
+    .then(data=> data)
+    .catch(e=>console.log('error,', e))
+  })
+
+  // INSERT INTO messages (user_id, admin_id, content, from_user, product_id)
+  //   SELECT $1, admins.id, $3, TRUE, products.id
+  //   FROM admins, products
+  //   WHERE admins.name = $2 AND products.name = $4;`
+
   router.get('/messages/admin', (req, res) => {
     const recipient = req.session.userId;
     const query = `
@@ -103,6 +146,7 @@ module.exports = (db) => {
     return db.query(query)
     .then(data => {
       const messages = data.rows
+      console.log(messages);
       res.json(messages)
     })
     .catch(err => console.log('/messages/admin', err));

@@ -2,13 +2,13 @@ $(document).ready(() => {
 
   const $main = $('.product-row');
 
-  const adminOrCustomerMessagePreCheck = function() {
+  const adminOrCustomerMessageReadPreCheck = function() {
     $.ajax({
        url: '/api/users/userStatus',
        method: 'get',
        dataType: 'json',
        success: (data) => {
-        console.log('login status checked');
+        console.log('login status checked', data);
         adminOrCustomerMessages(data);
       },
      })
@@ -20,7 +20,7 @@ $(document).ready(() => {
        method: 'get',
        dataType: 'json',
        success: (data) => {
-        console.log('login status checked');
+        console.log('login status checked,', data);
         adminOrCustomerMessageSend(data, messageBody);
       },
      })
@@ -32,7 +32,7 @@ $(document).ready(() => {
         method: "POST",
         url: "/api/users/messages/admin",
         data: { messageBody, fromUser: 'false'}
-      }).then((messages)=>console.log('admin message sent'));
+      }).then((messages) => console.log('admin message sent'));
     } else {
       $.ajax({
         method: "POST",
@@ -50,7 +50,7 @@ $(document).ready(() => {
     const fromCustomer = object.fromCustomer;
     const $messageForm = `<div class="listing-container">
     <h2>Conduct A Message</h2>
-    <form action = "" method="" class="message-form">
+    <form action = "" method="" class="message-form" id="message-seller-form">
       <div class="new-product-form__field-wrapper">
         <label for="product-name">Product: ${productName}</label><br>
         <input class="invisible" type="text" name="product-name" value="${productName}">
@@ -83,19 +83,20 @@ $(document).ready(() => {
      console.log('issahit');
      let name = $(this).parent().parent().find('.product-name').html();
      let seller =$(this).parent().parent().find('.seller-name').html();
+     console.log({name, seller})
      seller = seller.slice(9);
      let fromCustomer = true;
      renderMessageForm({name, seller, fromCustomer});
    })
 
-   $(document).on('submit', '.message-form', function(event) {
-      event.preventDefault();
-      const data = $(this).serialize();
-      console.log(data);
-    $('.add-listing-button').hide();
-    $('#product-form__cancel').hide();
-    $('.listing-message').show();
-  })
+  //  $(document).on('submit', '.message-form', function(event) {
+  //     event.preventDefault();
+  //     const data = $(this).serialize();
+  //     console.log(data);
+  //   $('.add-listing-button').hide();
+  //   $('#product-form__cancel').hide();
+  //   $('.listing-message').show();
+  // })
 
 //this section takes care of messages-button click
   const renderMessages = function(messages) {
@@ -126,31 +127,41 @@ $(document).ready(() => {
   }
 
   const adminOrCustomerMessages = function(loginStatus) {
-    if (loginStatus.isAdmin === true) {
+    console.log('login status', loginStatus);
+    if (loginStatus.isAdmin === 'true') {
+      console.log('admin send attempt');
       $.ajax({
         method: "GET",
         url: "/api/users/messages/admin"
-      }).then((messages)=>loadMessages(messages));
+      }).then((messages)=> {
+        console.log('here-admin');
+        loadMessages(messages)
+      });
     } else {
+      console.log('customer send attempt');
       $.ajax({
         method: "GET",
         url: "/api/users/messages/customer"
-      }).then((messages)=>loadMessages(messages));
+      }).then((messages)=> {
+        console.log('here-customer');
+        loadMessages(messages)
+      });
     }
     console.log('loginStatus,', loginStatus);
   }
 
-  $(document).on('click', '.messages-button', function(event) {
+  $('nav').on('click', '.messages-button', function(event) {
     event.preventDefault();
-    adminOrCustomerMessagePreCheck();
+    console.log('message-utton-clicked');
+    adminOrCustomerMessageReadPreCheck();
   })
 
-  $(document).on('click', '.reply', function(event) {
+  $('.main-container').on('click', '.reply', function(event) {
 
     event.preventDefault();
 
     const $replyForm = `
-      <form action = "" method="" class="message-form">
+      <form action = "" method="" class="message-form" id="reply-message-form">
         <div class="new-product-form__field-wrapper">
          <div class="your-message">
            <label for="message">Your reply:</label>
@@ -177,8 +188,39 @@ $(document).ready(() => {
     //       <button type="button" class="reply btn btn-primary">Reply</button>
     //       </div></div>`;
 
-  $('.main-container').on('submit', '.message-form', function(event) {
+  //   $('.main-container').on('submit', '.message-form', function(event) {
+  //     event.preventDefault();
+  //     const message = $(this).serialize().slice(8);
+  //     const productName =  $(this).parent().find('.product-name').html().slice(9);
+  //     const userName =  $(this).parent().find('.interested-buyer').html().slice(18);
+  //     const adminName =  $(this).parent().find('.seller').html().slice(8);
+  //     const allData = { message, productName, userName, adminName}
+  //     adminOrCustomerMessageSendPreCheck(allData);
+  //     console.log('reply-button hit, message content: ', allData )
+  //     $('.reply-button').addClass('invisible');
+  //     $('.replied-message').show();
+  //  })
+
+  $(document).on('submit', '#message-seller-form', function(event) {
+    console.log('message send to seller attempt');
     event.preventDefault();
+    const data = $(this).serialize();
+    console.log(data);
+    submitMessage(data);
+  // .then(() => {
+  // })
+  // .catch((error) => {
+  //   console.log('fail');
+  //   console.error(error);
+  // })
+  $('.add-listing-button').hide();
+  $('#product-form__cancel').hide();
+  $('.listing-message').show();
+})
+
+  $('.main-container').on('submit', '#reply-message-form', function(event) {
+    event.preventDefault();
+    console.log('reply-message-Ttempt');
     const message = $(this).serialize().slice(8);
     const productName =  $(this).parent().find('.product-name').html().slice(9);
     const userName =  $(this).parent().find('.interested-buyer').html().slice(18);

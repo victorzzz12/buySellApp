@@ -80,10 +80,10 @@ $(document).ready(() => {
     <div class="message-box">
       <h2>Message ${i+1}</h2>
         <div class="box">
-          <p>Product: ${messages[i].name}</p>
-          <p>Message: ${messages[i].content}</p>
-          <p>Interested Buyer: ${messages[i].sender}</p>
-          <p>Seller: ${messages[i].seller}</p>
+          <p class = 'product-name' >Product: ${messages[i].name}</p>
+          <p class = 'message-content'>Message: ${messages[i].content}</p>
+          <p class = 'interested-buyer'>Interested Buyer: ${messages[i].sender}</p>
+          <p class = 'seller'>Seller: ${messages[i].seller}</p>
           <button type="button" class="reply btn btn-primary">Reply</button>
           </div>`;
     $('.message-container').append($messagesBox);
@@ -119,10 +119,22 @@ $(document).ready(() => {
   })
 
   $(document).on('click', '.reply', function(event) {
+
     event.preventDefault();
     const data = $(this).serialize();
     console.log(data);
     submitMessage(data);
+
+    // <div class="message-box">
+    //   <h2>Message ${i+1}</h2>
+    //     <div class="box">
+    //       <p class = 'product-name' >Product: ${messages[i].name}</p>
+    //       <p class = 'message-content'>Message: ${messages[i].content}</p>
+    //       <p class = 'interested-buyer'>Interested Buyer: ${messages[i].sender}</p>
+    //       <p class = 'seller'>Seller: ${messages[i].seller}</p>
+    //       <button type="button" class="reply btn btn-primary">Reply</button>
+    //       </div>`;
+
     const $replyForm = `
     <div class="reply-container">
       <form action = "" method="" class="message-form">
@@ -138,12 +150,16 @@ $(document).ready(() => {
          <p class="replied-message">Reply sent!</p>
        </div>
      </form>`;
+     $('.reply').addClass('invisible');
      $('.message-box').append($replyForm);
      $('.replied-message').hide();
-     $(document).on('click', '.reply-button', function(event) {
-       event.preventDefault();
-       $('.replied-message').show();
-    })
+
   })
+
+  $('.main-container').on('click', '.reply-button', function(event) {
+    console.log('reply-button hit')
+    event.preventDefault();
+   $('.replied-message').show();
+ })
 
 });

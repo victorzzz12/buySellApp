@@ -127,7 +127,7 @@ $(document).ready(() => {
         <button data-product-id="${product.id}" class="sold btn btn-success admins-only invisible">Mark as sold</button>
       </div>
       <h1 class='product-name'>${product.product}</h1>
-      <img src="${product.photo_url}" alt="cute embroidered shirt">
+      <img src="${product.photo_url}" alt="product image">
       <a href="#"><p class="customers-only invisible add-to-favorites">⭐️Add To Favorites</p></a>
       <a href="#"><p class="customers-only invisible message-seller">✉️Message seller</p></a>
       <h2>SOLD</h2>

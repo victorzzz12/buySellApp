@@ -317,7 +317,6 @@ $(document).ready(() => {
 
   $(document).on('click', $search, function(event) {
     const target = $(event.target);
-    // console.log(target)
     if (target.is('.search-button')) {
       event.preventDefault();
       $search.empty();

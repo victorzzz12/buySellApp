@@ -90,6 +90,11 @@ module.exports = (db) => {
 
   //messaging routes
 
+  // INSERT INTO messages (user_id, admin_id, content, from_user, product_id)
+  // SELECT $1, admins.id, $3, TRUE, products.id
+  // FROM admins, products
+  // WHERE admins.name = $2 AND products.name = $4
+
   router.post('/messages/admin', (req, res) => {
     const adminId = req.session.userId;
     const customerName = req.body.messageBody.userName;
@@ -97,7 +102,7 @@ module.exports = (db) => {
     const fromUserBoolean = req.body.fromUser;
     const message = decodeURI(req.body.messageBody.message);
     const query = `INSERT INTO messages (admin_id, user_id, product_id, content, from_user)
-    SELECT ${adminId}, users.id, products.id, $1, TRUE
+    SELECT ${adminId}, users.id, products.id, $1, FALSE
     FROM users, products
     WHERE users.name = $2 AND products.name = $3`;
     const params = [`${message}`, `${customerName}`, `${productName}`];
@@ -110,21 +115,21 @@ module.exports = (db) => {
     .catch(e=>console.log('error,', e))
   })
 
-  router.post('/messages/customer', (req, res) => {
+  router.post("/messages/customer", (req, res) => {
     const userId = req.session.userId;
     const sellerName = req.body.messageBody.userName;
     const productName = req.body.messageBody.productName;
     const fromUserBoolean = req.body.fromUser;
     const message = decodeURI(req.body.messageBody.message);
-    const query = `INSERT INTO messages (admin_id, user_id, product_id, content, from_user)
-    SELECT admins.id, ${userId}, products.id, $1, FALSE
+    const query = `INSERT INTO messages ( user_id, admin_id, content, from_user, product_id)
+    SELECT $4, admins.id, $1, TRUE, products.id
     FROM admins, products
-    WHERE admins.name = $2 AND products.name = $3;`;
-    const params = [`${message}`, `${sellerName}`, `${productName}`];
+    WHERE admins.name = $2 AND products.name = $3 RETURNING *;`;
+    const params = [`${message}`, `${sellerName}`, `${productName}`, `${userId}`];
     console.log(query);
     console.log(params);
     return db.query(query, params)
-    .then(data=> data)
+    .then(data=> console.log(data.rows()))
     .catch(e=>console.log('error,', e))
   })
 
@@ -184,21 +189,11 @@ module.exports = (db) => {
     FROM admins, products
     WHERE admins.name = $2 AND products.name = $4;`
     const params = [`${fromId}`, `${toName}`, `${message}`, `${productName}`]
-    const sellerSendQuery = `
-    INSERT INTO messages (user_id, admin_id, content, from_user, product_id)
-    SELECT users.id, $1, $3, FALSE, products.id
-    FROM users, products
-    WHERE users.name = $2 AND products.name = $4;`;
     let query = "";
     console.log(req.body);
     console.log(req.body.fromCustomer);
-    if (req.body.fromCustomer === 'true') {
       query = customerSendQuery;
       console.log(query);
-    } else {
-      query = sellerSendQuery;
-      console.log(query);
-    }
     return db.query(query, params)
     .then((res) => console.log(res.rows))
   });

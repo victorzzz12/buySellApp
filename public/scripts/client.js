@@ -40,7 +40,7 @@ $(document).ready(() => {
       $('.customers-only').addClass('invisible');
       const $loginForm = `<input type="text" name="email" placeholder="Your email">
       <input type="password" name="password" placeholder="password">
-      <button type="submit" action="POST" class="btn btn-primary">Login</button>`
+      <button type="submit" action="POST">Login</button>`
       $login.append($loginForm);
     } else {
       $('.right-buttons').removeClass('invisible');
@@ -211,7 +211,7 @@ $(document).ready(() => {
   //This section handles the "add to favorites" link
 
   const getFavorites = function() {
-    return $.ajax({
+    $.ajax({
       url: "/api/products/favorites",
       method:'get',
       dataType: 'json',
@@ -230,7 +230,7 @@ $(document).ready(() => {
   };
 
   const addToFavorites = function(data) {
-    return $.ajax({
+    $.ajax({
       method: "POST",
       url: "/api/products/favorites",
       data,

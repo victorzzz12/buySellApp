@@ -2,7 +2,7 @@ Buy And Sell App for your Creations
 =========
 ## Introduction
 
-The Buy and Sell App is a full-stack, single-page and retro like web application built with Node, Express, Jquery, HTML, Bootstrap CSS and AJAX. It is an app where artists, creators and others could have their work posted up for sale. Prospective customers are able to contact the sellers and work out deals with them.
+The Buy and Sell App is a full-stack, single-page and retro like web application built with Node, Express, jQuery, HTML, Bootstrap CSS and AJAX. It is an app where artists, creators and others could have their work posted up for sale. Prospective customers are able to contact the sellers and work out deals with them.
 
 - Users are able to view listings, search through listings, message sellers and put items on their favourites list when they want to look back on an item they had their eye on previously.
 
